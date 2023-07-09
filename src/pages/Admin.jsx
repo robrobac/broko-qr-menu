@@ -1,9 +1,10 @@
 import React from 'react'
+import NewItemForm from '../components/NewItemForm'
 
 function Admin() {
     return (
         <div>
-            Admin
+            <NewItemForm />
         </div>
     )
 }
