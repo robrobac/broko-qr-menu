@@ -8,12 +8,14 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
 import { useCollectionData } from "react-firebase-hooks/firestore"
 import { collection, doc, query, setDoc } from 'firebase/firestore';
 import NewCategoryForm from './NewCategoryForm';
+import Compressor from 'compressorjs';
 
 function NewItemForm({ handleClose }) {
     const [title, setTitle] = useState("")
     const [category, setCategory] = useState("")
     const [description, setDescription] = useState("")
     const [file, setFile] = useState(null)
+    const [compressedFile, setCompressedFile] = useState(null)
     const [addingCategory, setAddingCategory] = useState(false)
 
     const fileInputRef = useRef(null);
@@ -21,15 +23,27 @@ function NewItemForm({ handleClose }) {
     const categoriesQuery = query(collection(db, "menu/food/categories"))
     const [docs, loading, error] = useCollectionData(categoriesQuery)
 
+    const handleCompressedImage = (e) => {
+        const image = e.target.files[0]
+
+        new Compressor(image, {
+            quality: 0.8,
+            maxWidth: 425,
+            success: (compressedResult) => {
+                setCompressedFile(compressedResult)
+            }
+        })
+    }
+
 
     const handleFileSubmit = async (e) => {
         e.preventDefault();
-        if (file == null) return;
+        if (compressedFile == null) return;
 
-        const fileRef = ref(storage, `images/${file.name + Date.now()}`);
+        const fileRef = ref(storage, `images/${compressedFile.name + Date.now()}`);
 
         try {
-            const snapshot = await uploadBytes(fileRef, file);
+            const snapshot = await uploadBytes(fileRef, compressedFile);
             const url = await getDownloadURL(snapshot.ref)
             const path = `menu/food/categories/${category}/items`
 
@@ -105,9 +119,10 @@ function NewItemForm({ handleClose }) {
                     <Form.Group className="mb-3" id="fileForm">
                         <Form.Label>Choose an image</Form.Label>
                         <Form.Control
+                        accept='image/*'
                         type="file"
                         ref={fileInputRef}
-                        onChange={(e) => {setFile(e.target.files[0])}}/>
+                        onChange={handleCompressedImage}/>
                     </Form.Group>
 
                     <Button variant="primary" type="submit">
