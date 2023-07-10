@@ -1,22 +1,27 @@
 import React from 'react'
 import Logout from '../components/Logout'
-import { collection, query } from 'firebase/firestore'
-import { useCollectionData } from 'react-firebase-hooks/firestore'
-import { db } from '../firebase/config'
-import Category from '../components/Category'
+import { Tab, Tabs } from 'react-bootstrap'
+import Food from './Food'
+import Drink from './Drink'
+
 
 function Home() {
-    const categoriesQuery = query(collection(db, "menu/food/categories"))
-    const [docs, loading, error] = useCollectionData(categoriesQuery)
-
     return (
         <div>
             <h1>Broko Menu</h1>
             <Logout />
-
-            {docs?.map((doc) => (
-                <Category doc={doc} key={doc.id}/>
-            ))}
+            <Tabs
+            defaultActiveKey="food"
+            id="justify-tab-example"
+            className="mb-3"
+            justify>
+                <Tab eventKey="drink" title="Drink">
+                    <Drink />
+                </Tab>
+                <Tab eventKey="food" title="Food">
+                    <Food />
+                </Tab>
+            </Tabs>
         </div>
     )
 }

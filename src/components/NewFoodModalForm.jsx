@@ -7,27 +7,28 @@ import { db, storage } from '../firebase/config';
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
 import { useCollectionData } from "react-firebase-hooks/firestore"
 import { collection, doc, query, setDoc } from 'firebase/firestore';
-import NewCategoryForm from './NewCategoryForm';
+import NewFoodCategoryModalForm from './NewFoodCategoryModalForm';
 import Compressor from 'compressorjs';
 
-function NewItemForm({ handleClose }) {
+
+function NewFoodModalForm({ handleClose }) {
     const [title, setTitle] = useState("")
     const [category, setCategory] = useState("")
     const [description, setDescription] = useState("")
-    const [file, setFile] = useState(null)
     const [compressedFile, setCompressedFile] = useState(null)
     const [addingCategory, setAddingCategory] = useState(false)
+
 
     const fileInputRef = useRef(null);
 
     const categoriesQuery = query(collection(db, "menu/food/categories"))
-    const [docs, loading, error] = useCollectionData(categoriesQuery)
+    const [categories, loading, error] = useCollectionData(categoriesQuery)
 
     const handleCompressedImage = (e) => {
         const image = e.target.files[0]
 
         new Compressor(image, {
-            quality: 0.8,
+            quality: 0.6,
             maxWidth: 425,
             success: (compressedResult) => {
                 setCompressedFile(compressedResult)
@@ -62,7 +63,6 @@ function NewItemForm({ handleClose }) {
             setTitle("")
             setCategory("")
             setDescription("")
-            setFile(null)
             fileInputRef.current.value = '';
             handleClose();
 
@@ -80,7 +80,7 @@ function NewItemForm({ handleClose }) {
             {!addingCategory ? 
                 <Form id="newItemForm" onSubmit={handleFileSubmit}>
                     <Form.Group className="mb-3" id="titleForm">
-                        <Form.Label htmlFor="inputTitle">Title</Form.Label>
+                        <Form.Label htmlFor="inputTitle">Food Title</Form.Label>
                         <Form.Control
                         autoFocus
                         type="text"
@@ -90,23 +90,23 @@ function NewItemForm({ handleClose }) {
                     </Form.Group>
 
                     <Form.Group className="mb-3" id="categoryForm">
-                        <Form.Label htmlFor="inputCategory">Category</Form.Label>
+                        <Form.Label htmlFor="inputCategory">Food Category</Form.Label>
                         <Button variant="link" size="sm" onClick={handleAddingCategory}>
-                        Add Category
+                        Add New Food Category
                     </Button>
                         <Form.Select
                         id='inputCategory'
                         value={category}
                         onChange={(e) => setCategory(e.target.value)}>
                             <option key="0"></option>
-                            {docs?.map((doc, index) => (
-                                <option value={doc.category} key={index}>{doc.category}</option>
+                            {categories?.map((category) => (
+                                <option value={category.id} key={category.id}>{category.category}</option>
                             ))}
                         </Form.Select>
                     </Form.Group>
 
                     <Form.Group className="mb-3" id="descriptionForm">
-                        <Form.Label htmlFor="inputDescription">Description</Form.Label>
+                        <Form.Label htmlFor="inputDescription">Food Description</Form.Label>
                         <Form.Control
                         as="textarea"
                         id="inputDescription"
@@ -126,15 +126,15 @@ function NewItemForm({ handleClose }) {
                     </Form.Group>
 
                     <Button variant="primary" type="submit">
-                        Submit
+                        Submit New Food
                     </Button>
                     
                 </Form>
                 :
-                <NewCategoryForm handleAddingCategory={handleAddingCategory}/>
+                <NewFoodCategoryModalForm handleAddingCategory={handleAddingCategory}/>
             }  
         </div>
     )
 }
 
-export default NewItemForm
+export default NewFoodModalForm

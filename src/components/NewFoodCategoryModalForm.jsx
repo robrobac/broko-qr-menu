@@ -1,22 +1,20 @@
-import React, { useRef, useState } from 'react'
+import React, { useState } from 'react'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { db, storage } from '../firebase/config';
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
-import { useCollectionData } from "react-firebase-hooks/firestore"
-import { collection, doc, query, setDoc } from 'firebase/firestore';
+import { db } from '../firebase/config';
+import { doc, setDoc } from 'firebase/firestore';
 
-function NewCategoryForm({ handleClose, handleAddingCategory }) {
+function NewFoodCategoryModalForm({ handleAddingCategory }) {
     const [category, setCategory] = useState("")
 
-    const categoriesQuery = query(collection(db, "menu/food/categories"))
-    const [docs, loading, error] = useCollectionData(categoriesQuery)
+
 
 
     const handleCategorySubmit = async (e) => {
         e.preventDefault();
+        if (!category) return
 
         try {
             const path = `menu/food/categories`
@@ -42,7 +40,7 @@ function NewCategoryForm({ handleClose, handleAddingCategory }) {
         <Form id="newItemForm" onSubmit={handleCategorySubmit}>
 
             <Form.Group className="mb-3" id="categoryForm">
-                <Form.Label htmlFor="inputCategory">Category</Form.Label>
+                <Form.Label htmlFor="inputCategory">New Food Category</Form.Label>
                 <Form.Control
                 autoFocus
                 id='inputCategory'
@@ -52,7 +50,7 @@ function NewCategoryForm({ handleClose, handleAddingCategory }) {
             </Form.Group>
 
             <Button variant="primary" type="submit">
-                Submit
+                Submit New Food Category
             </Button>
             <Button variant="secondary" onClick={handleAddingCategory}>
                 Back
@@ -61,4 +59,4 @@ function NewCategoryForm({ handleClose, handleAddingCategory }) {
     )
 }
 
-export default NewCategoryForm
+export default NewFoodCategoryModalForm
