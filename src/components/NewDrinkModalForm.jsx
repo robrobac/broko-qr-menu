@@ -79,7 +79,7 @@ function NewDrinkModalForm({ handleClose }) {
             setCategory("")
             setDescription("")
             fileInputRef.current.value = '';
-            handleClose();
+            // handleClose();
 
         } catch (error) {
             console.error("error creating a new item", error)
