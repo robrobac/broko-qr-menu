@@ -13,6 +13,8 @@ import Compressor from 'compressorjs';
 
 function NewFoodModalForm({ handleClose }) {
     const [title, setTitle] = useState("")
+    const [priceEUR, setPriceEUR] = useState("")
+    const [priceKN, setPriceKN] = useState("")
     const [category, setCategory] = useState("")
     const [description, setDescription] = useState("")
     const [compressedFile, setCompressedFile] = useState(null)
@@ -37,6 +39,16 @@ function NewFoodModalForm({ handleClose }) {
     }
 
 
+    const eurToKn = (e) => {
+        const tecaj = 7.53450
+        const eur = e.target.value
+        const kn = (eur * tecaj).toFixed(2)
+
+        setPriceEUR(eur);
+        setPriceKN(kn);
+    }
+
+
     const handleFileSubmit = async (e) => {
         e.preventDefault();
         if (compressedFile == null) return;
@@ -54,6 +66,8 @@ function NewFoodModalForm({ handleClose }) {
 
             await setDoc(doc(db, path, newId), {
                 title: title,
+                priceEUR: priceEUR,
+                priceKN: priceKN,
                 category: category,
                 description: description,
                 fileUrl: url,
@@ -61,6 +75,8 @@ function NewFoodModalForm({ handleClose }) {
             })
             
             setTitle("")
+            setPriceEUR("")
+            setPriceKN("")
             setCategory("")
             setDescription("")
             fileInputRef.current.value = '';
@@ -75,6 +91,8 @@ function NewFoodModalForm({ handleClose }) {
         setAddingCategory(!addingCategory)
     }
 
+
+
     return (
         <div>
             {!addingCategory ? 
@@ -87,6 +105,17 @@ function NewFoodModalForm({ handleClose }) {
                         id="inputTitle" placeholder="Title"
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}/>
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" id="priceForm">
+                        <Form.Label htmlFor="inputPrice">Price</Form.Label>
+                        <Form.Control
+                        autoFocus
+                        type="number"
+                        id="inputPrice" placeholder="€"
+                        value={priceEUR}
+                        onChange={(e) => eurToKn(e)}/>
+                        <p className='small text-secondary'>{priceEUR}€ * 7.53450 = <span style={{ fontWeight: 'bold' }}>{priceKN}kn</span></p>
                     </Form.Group>
 
                     <Form.Group className="mb-3" id="categoryForm">
