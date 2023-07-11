@@ -1,48 +1,49 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth, db } from './firebase/config';
-
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Admin from "./pages/Admin";
 import { createContext, useEffect, useState } from "react";
 import { collection, getDocs, query } from "firebase/firestore";
+import "./App.scss"
 
 export const MenuContext = createContext()
 
 function App() {
+    //  Food
     const foodCategoriesQuery = query(collection(db, "menu/food/categories"))
     const [foodCategoriesAndItems, setFoodCategoriesAndItems] = useState([])
-    console.log("Fetched Food", foodCategoriesAndItems)
 
-
+    //  Drink
     const drinkCategoriesQuery = query(collection(db, "menu/drink/categories"))
     const [drinkCategoriesAndItems, setDrinkCategoriesAndItems] = useState([])
-    console.log("Fetched Drink", drinkCategoriesAndItems)
 
+    //  Auth Check
     const [isAuth, setIsAuth] = useState(null);
     onAuthStateChanged(auth, (user) => {
         setIsAuth(!!user)
     })
 
+    //  Fetching food from database
     useEffect(() => {
         const fetchFoodCategoriesAndItems = async () => {
             try {
+                //  Get food categories
                 const querySnapshot = await getDocs(foodCategoriesQuery)
                 const categoryData = querySnapshot.docs.map((doc) => doc.data())
                 setFoodCategoriesAndItems(categoryData)
 
-                // Fetch items for each category
+                //  get items for each category
                 categoryData.forEach(async (category) => {
                     const itemsQuery = query(collection(db, `menu/food/categories/${category.id}/items`))
                     const itemsSnapshot = await getDocs(itemsQuery)
                     const itemsData = itemsSnapshot.docs.map((doc) => doc.data())
 
-                    // Update the category object with the fetched items
+                    //  Update the category object with the fetched items
                     category.items = itemsData
 
-                    // Update the state to trigger a re-render
+                    //  Store the fetched data in state
                     setFoodCategoriesAndItems([...categoryData])
                 })
             } catch (error) {
@@ -52,23 +53,25 @@ function App() {
         fetchFoodCategoriesAndItems()
     }, [])
 
+    //  Fetch drink from database
     useEffect(() => {
         const fetchDrinkCategoriesAndItems = async () => {
             try {
+                //  Get drink categories
                 const querySnapshot = await getDocs(drinkCategoriesQuery)
                 const categoryData = querySnapshot.docs.map((doc) => doc.data())
                 setDrinkCategoriesAndItems(categoryData)
 
-                // Fetch items for each category
+                //  get items for each category
                 categoryData.forEach(async (category) => {
                     const itemsQuery = query(collection(db, `menu/drink/categories/${category.id}/items`))
                     const itemsSnapshot = await getDocs(itemsQuery)
                     const itemsData = itemsSnapshot.docs.map((doc) => doc.data())
 
-                    // Update the category object with the fetched items
+                    //  Update the category object with the fetched items
                     category.items = itemsData
 
-                    // Update the state to trigger a re-render
+                    //  store the fetched data in state
                     setDrinkCategoriesAndItems([...categoryData])
                 })
             } catch (error) {
@@ -77,6 +80,7 @@ function App() {
         }
         fetchDrinkCategoriesAndItems()
     }, [])
+
 
     return (
         <MenuContext.Provider value={{

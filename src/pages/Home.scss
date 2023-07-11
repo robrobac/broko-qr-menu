@@ -1,0 +1,24 @@
+.tabs {
+    background-color: white;
+    padding-bottom: 0.6rem;
+    border-bottom: none !important;
+    height: 4rem;
+}
+
+.nav-link {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: 100%;
+}
+
+.nav-link.active {
+    color: black !important;
+    font-weight: 700;
+
+}
+
+.nav-link:not(.active) {
+    color: rgba(0, 0, 0, 0.603) !important;
+    background-color: rgba(0, 0, 0, 0.11) !important;
+}

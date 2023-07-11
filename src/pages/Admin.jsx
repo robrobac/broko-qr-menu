@@ -1,16 +1,17 @@
 import React, { useState } from 'react'
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal';
-import NewDrinkModalForm from '../components/NewDrinkModalForm';
-import NewFoodModalForm from '../components/NewFoodModalForm';
+import NewItemModalForm from '../components/NewItemModalForm';
 
 function Admin() {
     const [showFoodModal, setShowFoodModal] = useState(false);
     const [showDrinkModal, setShowDrinkModal] = useState(false);
 
+    //  Opening and closing new food modal
     const handleCloseFood = () => setShowFoodModal(false);
     const handleShowFood = () => setShowFoodModal(true);
 
+    //  Opening and closing new drink modal
     const handleCloseDrink = () => setShowDrinkModal(false);
     const handleShowDrink = () => setShowDrinkModal(true);
 
@@ -24,7 +25,7 @@ function Admin() {
                     <Modal.Title>Add New Food</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <NewFoodModalForm handleClose={handleCloseFood}/>
+                    <NewItemModalForm handleClose={handleCloseFood} isDrink={false} />
                 </Modal.Body>
             </Modal>
             ) : (
@@ -33,7 +34,7 @@ function Admin() {
                         <Modal.Title>Add New Drink</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <NewDrinkModalForm handleClose={handleCloseDrink}/>
+                    <NewItemModalForm handleClose={handleCloseFood} isDrink={true} />
                     </Modal.Body>
                 </Modal>
             )}
