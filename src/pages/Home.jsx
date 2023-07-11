@@ -3,6 +3,7 @@ import Logout from '../components/Logout'
 import { Tab, Tabs } from 'react-bootstrap'
 import Food from './Food'
 import Drink from './Drink'
+import CategoryNav from '../components/CategoryNav'
 
 
 function Home() {
@@ -16,9 +17,11 @@ function Home() {
             className="mb-3"
             justify>
                 <Tab eventKey="drink" title="Drink">
+                    <CategoryNav category="drink"/>
                     <Drink />
                 </Tab>
                 <Tab eventKey="food" title="Food">
+                    <CategoryNav category="food"/>
                     <Food />
                 </Tab>
             </Tabs>
