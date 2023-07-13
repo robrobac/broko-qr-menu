@@ -2,13 +2,13 @@ import React, { useRef, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { db, storage } from '../firebase/config';
+import { db, storage } from '../../../../firebase/config';
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { collection, doc, query, setDoc } from 'firebase/firestore';
 import Compressor from 'compressorjs';
 import NewCategoryModalForm from './NewCategoryModalForm';
-import noimage from "../noimage.png"
+import noimage from "../../../../noimage.png"
 
 function NewItemModalForm({ isDrink }) {
     const [title, setTitle] = useState("");

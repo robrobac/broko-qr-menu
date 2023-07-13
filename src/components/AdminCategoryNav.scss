@@ -1,0 +1,18 @@
+.categoryNav {
+    padding: 0 1rem;
+    display: flex;
+    justify-items: center;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    /* Hide standard scrollbar */
+    -ms-overflow-style: none;
+    /* Hide Internet Explorer scrollbar */
+    background-color: white;
+    border-bottom: 1px solid black;
+}
+
+.categoryNav::-webkit-scrollbar {
+    width: 0px;
+    /* Hide Chrome, Safari, and Opera scrollbar */
+}
