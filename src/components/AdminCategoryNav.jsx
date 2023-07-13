@@ -1,33 +1,30 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Button from 'react-bootstrap/Button';
 import "./AdminCategoryNav.scss"
-
-import { MenuContext } from '../App';
-
 import Stack from 'react-bootstrap/Stack';
 import { Link } from 'react-scroll';
+import { collection, query } from 'firebase/firestore';
+import { db } from '../firebase/config';
+import { useCollectionData } from 'react-firebase-hooks/firestore';
 
-function AdminCategoryNav({category, refreshNav}) {
-    const { foodCategoriesAndItems, drinkCategoriesAndItems } = useContext(MenuContext)
-    const [categories, setCategories] = useState([])
+function AdminCategoryNav({mainCategory}) {
+
     const [activeCategory, setActiveCategory] = useState()
+
+    const categoriesPath = `menu/${mainCategory}/categories`;
+    const categoriesQuery = query(collection(db, categoriesPath));
+    const [categories] = useCollectionData(categoriesQuery);
+    console.log(activeCategory)
     const scrollContainerRef = useRef(null);
 
-    //  Set showing categories in the navigation, either drink or food
-    useEffect(() => {
-        if (category === "drink") {
-            setCategories(drinkCategoriesAndItems)
-        } else if (category === "food") {
-            setCategories(foodCategoriesAndItems)
-        }
-    }, [category, drinkCategoriesAndItems, foodCategoriesAndItems])
+    
 
     //  set initial active category
     useEffect(() => {
-        if (categories.length > 0) {
+        if (categories?.length > 0) {
             setActiveCategory(categories[0].id)
         }
-    }, [categories, category, refreshNav])
+    }, [categories, mainCategory])
 
     //  Set new active category
     const handleActive = (e) => {
@@ -49,7 +46,7 @@ function AdminCategoryNav({category, refreshNav}) {
                 });
             }
         }
-    }, [activeCategory, refreshNav]);
+    }, [activeCategory, categories]);
 
     return (
         <ul className='categoryNav sticky-top pb-3 pt-3' style={{ top: "64px" }} ref={scrollContainerRef}>

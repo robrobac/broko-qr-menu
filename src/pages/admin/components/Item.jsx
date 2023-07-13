@@ -5,17 +5,17 @@ import { collection, query } from 'firebase/firestore'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
 import { db } from '../../../firebase/config'
 
-function AdminDrinkItem({category, drinkCategoriesPath}) {
-    const categoryItemsQuery = query(collection(db, `${drinkCategoriesPath}/${category.id}/items`))
-    const [categoryItems] = useCollectionData(categoryItemsQuery)
-    
+function Item({category, categoriesPath}) {
+    const itemsQuery = query(collection(db, `${categoriesPath}/${category.id}/items`))
+    const [items] = useCollectionData(itemsQuery)
+
     return (
         <div>
-            {categoryItems?.map((item) => (
+            {items?.map((item) => (
                 <ItemCard item={item} key={item.id}/>
             ))}
         </div>
     )
 }
 
-export default AdminDrinkItem
+export default Item
