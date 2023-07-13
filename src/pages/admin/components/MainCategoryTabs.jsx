@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { Tab, Tabs } from 'react-bootstrap'
-import AdminCategoryNav from '../../../components/AdminCategoryNav'
 import NewItemModal from './newItemModal/NewItemModal'
 import DrinkItems from './DrinkItems'
 import FoodItems from './FoodItems'
+import CategoriesNav from './CategoriesNav'
 
 function MainCategoryTabs() {
     const [mainCategory, setMainCategory] = useState("food")
@@ -23,12 +23,12 @@ function MainCategoryTabs() {
         className="sticky-top tabs mt-2 pb-0"
         justify>
             <Tab eventKey="drink" title="Drink" >
-                <AdminCategoryNav mainCategory={mainCategory}/>
+                <CategoriesNav mainCategory={mainCategory}/>
                 <DrinkItems />
                 <NewItemModal isDrink={true}/>
             </Tab>
             <Tab eventKey="food" title="Food" >
-                <AdminCategoryNav mainCategory={mainCategory}/>
+                <CategoriesNav mainCategory={mainCategory}/>
                 <FoodItems />
                 <NewItemModal isDrink={false}/>
             </Tab>

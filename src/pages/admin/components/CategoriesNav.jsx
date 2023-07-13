@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Button from 'react-bootstrap/Button';
-import "./AdminCategoryNav.scss"
+import "./CategoriesNav.scss"
 import Stack from 'react-bootstrap/Stack';
 import { Link } from 'react-scroll';
 import { collection, query } from 'firebase/firestore';
-import { db } from '../firebase/config';
+import { db } from '../../../firebase/config';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 
-function AdminCategoryNav({mainCategory}) {
+function CategoriesNav({mainCategory}) {
 
     const [activeCategory, setActiveCategory] = useState()
 
@@ -75,4 +75,4 @@ function AdminCategoryNav({mainCategory}) {
     
 }
 
-export default AdminCategoryNav
+export default CategoriesNav
