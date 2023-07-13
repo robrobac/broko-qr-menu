@@ -55,11 +55,14 @@ function NewItemModalForm({ isDrink }) {
         e.preventDefault();
         //  If no image is selected, set the dummy image url.
         let url = noimage
+        let filePath = ""
         
         //  if image is selected and compressed.
         if (compressedFile) {
             //  Get firebase storage path and filename
-            const fileRef = ref(storage, `images/${compressedFile.name + Date.now()}`);
+            const path = `images/${compressedFile.name + Date.now()}`
+            filePath = path
+            const fileRef = ref(storage, path);
             
             try {
                 // upload it to Firebase and get its url.
@@ -87,7 +90,9 @@ function NewItemModalForm({ isDrink }) {
                 category: category,
                 description: description,
                 fileUrl: url,
+                filePath: filePath,
                 id: newId,
+                fullPath: `${itemsPath}/categories/${category}/items/${newId}`,
             });
 
             //  Reset form states
@@ -128,7 +133,6 @@ function NewItemModalForm({ isDrink }) {
                     <Form.Group className="mb-3" id="priceForm">
                         <Form.Label htmlFor="inputPrice">Price</Form.Label>
                         <Form.Control
-                        autoFocus
                         type="number"
                         id="inputPrice"
                         placeholder="€"

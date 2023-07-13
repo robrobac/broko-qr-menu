@@ -14,7 +14,6 @@ function CategoriesNav({mainCategory}) {
     const categoriesPath = `menu/${mainCategory}/categories`;
     const categoriesQuery = query(collection(db, categoriesPath));
     const [categories] = useCollectionData(categoriesQuery);
-    console.log(activeCategory)
     const scrollContainerRef = useRef(null);
 
     

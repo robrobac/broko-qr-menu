@@ -4,8 +4,11 @@ import { auth } from './firebase/config';
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Admin from "./pages/admin/Admin";
-import { useState } from "react";
+import { createContext, useState } from "react";
 import "./App.scss"
+
+
+export const AuthContext = createContext();
 
 function App() {
 
@@ -16,13 +19,17 @@ function App() {
     })
 
     return (
-        <div className="App">
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/login" element={!isAuth ? <Login /> : <Navigate to="/admin" />} />
-                <Route path="/admin" element={isAuth ? <Admin /> : <Navigate to="/login" />} />
-            </Routes>
-        </div>
+        <AuthContext.Provider value={{
+            isAuth,
+        }}>
+            <div className="App">
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/login" element={!isAuth ? <Login /> : <Navigate to="/admin" />} />
+                    <Route path="/admin" element={isAuth ? <Admin /> : <Navigate to="/login" />} />
+                </Routes>
+            </div>
+        </AuthContext.Provider>
     );
 }
 
