@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import ItemCard from '../../../components/ItemCard'
 import { collection, deleteDoc, doc, query, updateDoc } from 'firebase/firestore'
-
 import { useCollectionData } from 'react-firebase-hooks/firestore'
 import { db, storage } from '../../../firebase/config'
 import { deleteObject, ref } from 'firebase/storage'
@@ -20,14 +19,12 @@ function Items({category, categoriesPath}) {
             if (item.filePath !== "") {
                 const fileRef = ref(storage, item.filePath)
                 deleteObject(fileRef).then(() => {
-                    console.log("image deleted")
                 }).catch((error) => {
                     
                 });
             }
             //  Delete item
             await deleteDoc(doc(db, item.fullPath));
-            console.log("item deleted")
         }
     }
 

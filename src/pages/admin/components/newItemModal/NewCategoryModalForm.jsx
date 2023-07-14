@@ -28,6 +28,8 @@ function NewCategoryModalForm({ handleAddingCategory, isDrink }) {
             await setDoc(doc(db, path, newId), {
                 category: category,
                 id: newId,
+                dateCreated: Date.now(),
+                dateEdited: Date.now(),
             });
 
             //  Reset form states

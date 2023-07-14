@@ -8,15 +8,12 @@ import { db } from '../../../firebase/config';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 
 function CategoriesNav({mainCategory}) {
-
     const [activeCategory, setActiveCategory] = useState()
-
+    
     const categoriesPath = `menu/${mainCategory}/categories`;
     const categoriesQuery = query(collection(db, categoriesPath));
     const [categories] = useCollectionData(categoriesQuery);
     const scrollContainerRef = useRef(null);
-
-    
 
     //  set initial active category
     useEffect(() => {

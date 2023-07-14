@@ -12,10 +12,8 @@ function Logout() {
 
     const handleLogout = async () => {
         try {
-            console.log("User signed out:", user.email, user)
             await signOut(auth);
         } catch (error) {
-            console.log(error.message);
         }
     };
     return (

@@ -94,6 +94,8 @@ function NewItemModalForm({ isDrink }) {
                 filePath: filePath,
                 id: newId,
                 fullPath: `${itemsPath}/categories/${category}/items/${newId}`,
+                dateCreated: Date.now(),
+                dateEdited: Date.now(),
             });
 
             //  Reset form states

@@ -83,10 +83,11 @@ function EditItemForm({ item, handlePassEditedItem }) {
             title: title,
             priceEUR: priceEUR,
             priceKN: priceKN,
-            category: category,
+            // category: category, Got to find out how to change categories of already created item, how to move the document from one collection to another
             description: description,
             fileUrl: url,
             filePath: filePath,
+            dateEdited: Date.now(),
         }
         handlePassEditedItem(editedItem, item.fullPath)
     };
@@ -121,6 +122,7 @@ function EditItemForm({ item, handlePassEditedItem }) {
                 <Form.Group className="mb-3" id="categoryForm">
                     <Form.Label htmlFor="inputCategory">Category</Form.Label>
                     <Form.Select
+                    disabled
                     id='inputCategory'
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
