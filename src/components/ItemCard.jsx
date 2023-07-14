@@ -2,6 +2,7 @@ import React from 'react'
 import Card from 'react-bootstrap/Card';
 import noimage from "../noimage.png"
 import DeleteItemButton from '../pages/admin/components/DeleteItemButton';
+import EditItemButton from '../pages/admin/components/EditItemButton';
 
 function ItemCard({item}) {
 
@@ -13,6 +14,7 @@ function ItemCard({item}) {
                 <Card.Title>{item.title}</Card.Title>
                 <Card.Text>{item.description}</Card.Text>
                 <DeleteItemButton item={item}/>
+                <EditItemButton item={item}/>
             </Card.Body>
         </Card>
     )

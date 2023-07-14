@@ -2,29 +2,24 @@ import React, { useRef, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { db, storage } from '../../../../firebase/config';
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { db, storage } from '../../../firebase/config';
+import { ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
 import { useCollectionData } from "react-firebase-hooks/firestore";
-import { collection, doc, query, setDoc } from 'firebase/firestore';
+import { collection, doc, query, updateDoc } from 'firebase/firestore';
 import Compressor from 'compressorjs';
-import NewCategoryModalForm from './NewCategoryModalForm';
-import noimage from "../../../../noimage.png"
 
-function NewItemModalForm({ isDrink }) {
-    const [title, setTitle] = useState("");
-    const [priceEUR, setPriceEUR] = useState("");
-    const [priceKN, setPriceKN] = useState("");
-    const [category, setCategory] = useState("");
-    const [description, setDescription] = useState("");
+function EditItemForm({ item, handleClose }) {
+    const [title, setTitle] = useState(item.title);
+    const [priceEUR, setPriceEUR] = useState(item.priceEUR);
+    const [priceKN, setPriceKN] = useState(item.priceKN);
+    const [category, setCategory] = useState(item.category);
+    const [description, setDescription] = useState(item.description);
     const [compressedFile, setCompressedFile] = useState(null);
-    const [addingCategory, setAddingCategory] = useState(false);
 
     const fileInputRef = useRef(null);
 
-    const categoriesPath = isDrink ? "menu/drink/categories" : "menu/food/categories";
-    const itemsPath = isDrink ? "menu/drink" : "menu/food";
-
-    //  Live show categories in new item form, handling showing new category right after creating it.
+    //  Live show categories in category select dropdown
+    const categoriesPath = `menu/${item.mainCategory}/categories`;
     const categoriesQuery = query(collection(db, categoriesPath));
     const [categories] = useCollectionData(categoriesQuery);
 
@@ -50,16 +45,16 @@ function NewItemModalForm({ isDrink }) {
         setPriceKN(kn);
     };
 
-    //  Handle submitting item to Firestore
-    const handleFileSubmit = async (e) => {
+    //  Handle editing item
+    const handleEdit = async (e) => {
         e.preventDefault();
-        //  If no image is selected, set the dummy image url.
-        let url = noimage
-        let filePath = ""
+        //  If no new image is selected, keep the old url and path.
+        let url = item.fileUrl
+        let filePath = item.filePath
         
-        //  if image is selected and compressed.
+        //  if new image is selected and compressed.
         if (compressedFile) {
-            //  Get firebase storage path and filename
+            //  Get new firebase storage path
             const path = `images/${compressedFile.name + Date.now()}`
             filePath = path
             const fileRef = ref(storage, path);
@@ -71,56 +66,42 @@ function NewItemModalForm({ isDrink }) {
             } catch (error) {
                 console.log(error)
             }
+
+            //  Delete old image from the storage
+            if (item.filePath !== "") {
+                const oldFileRef = ref(storage, item.filePath)
+                
+                deleteObject(oldFileRef).then(() => {
+                    console.log("image deleted")
+                }).catch((error) => {
+                    
+                });
+            }
         }
 
+        //  Update the edited item.
         try {
-            //  Create firestore path
-            const path = `${itemsPath}/categories/${category}/items`;
-
-            //  Create custom item ID
-            const id = title;
-            const formattedId = id.replace(/\s/g, "").toLowerCase();
-            const newId = formattedId.slice(0, 10) + Date.now();
-
-            //  Store the item in the firestore
-            await setDoc(doc(db, path, newId), {
+            const docRef = doc(db, item.fullPath)
+            await updateDoc(docRef, {
                 title: title,
                 priceEUR: priceEUR,
                 priceKN: priceKN,
-                mainCategory: isDrink ? "drink" : "food",
                 category: category,
                 description: description,
                 fileUrl: url,
                 filePath: filePath,
-                id: newId,
-                fullPath: `${itemsPath}/categories/${category}/items/${newId}`,
-            });
-
-            //  Reset form states
-            setTitle("");
-            setPriceEUR("");
-            setPriceKN("");
-            setCategory("");
-            setDescription("");
-            setCompressedFile(null)
-            fileInputRef.current.value = null;
-            // handleClose();
+            })
+            handleClose(false)
         } catch (error) {
             console.error("error creating a new item", error);
         }
     };
 
-    //  Handling addingCategory state, if it's true the new category modal will appear
-    const handleAddingCategory = () => {
-        setAddingCategory(!addingCategory);
-    };
-
     return (
         <div>
-            {!addingCategory ? 
-                <Form id="newItemForm" onSubmit={handleFileSubmit}>
+                <Form id="newItemForm" onSubmit={handleEdit}>
                     <Form.Group className="mb-3" id="titleForm">
-                        <Form.Label htmlFor="inputTitle">{isDrink ? "Drink" : "Food"} Title</Form.Label>
+                        <Form.Label htmlFor="inputTitle">Title</Form.Label>
                         <Form.Control
                         autoFocus
                         type="text"
@@ -144,10 +125,7 @@ function NewItemModalForm({ isDrink }) {
                     </Form.Group>
 
                     <Form.Group className="mb-3" id="categoryForm">
-                        <Form.Label htmlFor="inputCategory">{isDrink ? "Drink" : "Food"} Category</Form.Label>
-                        <Button variant="link" size="sm" onClick={handleAddingCategory}>
-                            Add New {isDrink ? "Drink" : "Food"} Category
-                        </Button>
+                        <Form.Label htmlFor="inputCategory">Category</Form.Label>
                         <Form.Select
                         id='inputCategory'
                         value={category}
@@ -161,7 +139,7 @@ function NewItemModalForm({ isDrink }) {
                     </Form.Group>
 
                     <Form.Group className="mb-3" id="descriptionForm">
-                        <Form.Label htmlFor="inputDescription">{isDrink ? "Drink" : "Food"} Description</Form.Label>
+                        <Form.Label htmlFor="inputDescription">Description</Form.Label>
                         <Form.Control
                         as="textarea"
                         id="inputDescription"
@@ -172,8 +150,10 @@ function NewItemModalForm({ isDrink }) {
                         />
                     </Form.Group>
 
+                    <img src={item?.fileUrl} class="img-thumbnail mx-auto d-block" alt="..."></img>
+
                     <Form.Group className="mb-3" id="fileForm">
-                        <Form.Label>Choose an image</Form.Label>
+                        <Form.Label>Choose new image</Form.Label>
                         <Form.Control
                         accept='image/*'
                         type="file"
@@ -183,18 +163,11 @@ function NewItemModalForm({ isDrink }) {
                     </Form.Group>
 
                     <Button variant="primary" type="submit">
-                        Submit New {isDrink ? "Drink" : "Food"}
+                        Save Changes
                     </Button>
                 </Form>
-            :
-            isDrink ? (
-                <NewCategoryModalForm handleAddingCategory={handleAddingCategory} isDrink={true}/>
-            ) : (
-                <NewCategoryModalForm handleAddingCategory={handleAddingCategory} isDrink={false}/>
-            )
-            }
         </div>
     );
 }
 
-export default NewItemModalForm;
+export default EditItemForm;
