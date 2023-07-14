@@ -3,23 +3,24 @@ import { Element } from 'react-scroll';
 import { collection, query } from 'firebase/firestore';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { db } from '../../../firebase/config';
-import Item from './Item';
+import Items from './Items';
 
-function FoodItems() {
-    const foodCategoriesPath = "menu/food/categories";
-    const foodCategoriesQuery = query(collection(db, foodCategoriesPath));
-    const [foodCategories] = useCollectionData(foodCategoriesQuery);
+function DrinkCategories() {
+    const drinkCategoriesPath = "menu/drink/categories";
+    const drinkCategoriesQuery = query(collection(db, drinkCategoriesPath));
+    const [drinkCategories] = useCollectionData(drinkCategoriesQuery);
 
     return (
         <div>
-            {foodCategories?.map((category) => (
+            {drinkCategories?.map((category) => (
                 <Element key={category.id} name={category.id}>
                         <h2 className="text-center" id={category.id}>{category.category}</h2>
-                        <Item category={category} categoriesPath={foodCategoriesPath}/>
+                        <Items category={category} categoriesPath={drinkCategoriesPath}/>
                 </Element>
             ))}
+
         </div>
     )
 }
 
-export default FoodItems
+export default DrinkCategories

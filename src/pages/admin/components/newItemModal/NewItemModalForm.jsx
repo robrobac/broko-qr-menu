@@ -122,6 +122,7 @@ function NewItemModalForm({ isDrink }) {
                     <Form.Group className="mb-3" id="titleForm">
                         <Form.Label htmlFor="inputTitle">{isDrink ? "Drink" : "Food"} Title</Form.Label>
                         <Form.Control
+                        required
                         autoFocus
                         type="text"
                         id="inputTitle"
@@ -134,6 +135,7 @@ function NewItemModalForm({ isDrink }) {
                     <Form.Group className="mb-3" id="priceForm">
                         <Form.Label htmlFor="inputPrice">Price</Form.Label>
                         <Form.Control
+                        required
                         type="number"
                         id="inputPrice"
                         placeholder="€"
@@ -149,6 +151,7 @@ function NewItemModalForm({ isDrink }) {
                             Add New {isDrink ? "Drink" : "Food"} Category
                         </Button>
                         <Form.Select
+                        required
                         id='inputCategory'
                         value={category}
                         onChange={(e) => setCategory(e.target.value)}
