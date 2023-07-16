@@ -27,6 +27,7 @@ function NewCategoryModalForm({ handleAddingCategory, isDrink }) {
             //  Store the category in the firestore
             await setDoc(doc(db, path, newId), {
                 category: category,
+                categoryPath: `${path}/${newId}`,
                 id: newId,
                 dateCreated: Date.now(),
                 dateEdited: Date.now(),

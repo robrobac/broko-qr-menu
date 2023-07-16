@@ -1,14 +1,15 @@
-import React, { useRef, useState } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import { db, storage } from '../../../firebase/config';
-import { ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
-import { useCollectionData } from "react-firebase-hooks/firestore";
 import { collection, query } from 'firebase/firestore';
+import React, { useContext, useRef, useState } from 'react'
+import { useCollectionData } from 'react-firebase-hooks/firestore';
+import { db, storage } from '../../../../firebase/config';
 import Compressor from 'compressorjs';
+import { deleteObject, getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { EditContext } from '../Items';
+import { Button, Form } from 'react-bootstrap';
 
-function EditItemForm({ item, handlePassEditedItem }) {
+function EditItemModalForm({item, setIsEditing}) {
+    const {handleEdit} = useContext(EditContext)
+
     const [title, setTitle] = useState(item.title);
     const [priceEUR, setPriceEUR] = useState(item.priceEUR);
     const [priceKN, setPriceKN] = useState(item.priceKN);
@@ -18,12 +19,12 @@ function EditItemForm({ item, handlePassEditedItem }) {
 
     const fileInputRef = useRef(null);
 
-    //  Live show categories in category select dropdown
-    const categoriesPath = `menu/${item.mainCategory}/categories`;
-    const categoriesQuery = query(collection(db, categoriesPath));
-    const [categories] = useCollectionData(categoriesQuery);
+     //  Live show categories in category select dropdown
+     const categoriesPath = `menu/${item.mainCategory}/categories`;
+     const categoriesQuery = query(collection(db, categoriesPath));
+     const [categories] = useCollectionData(categoriesQuery);
 
-    //  Compressing the image before upload to Firebase
+     //  Compressing the image before upload to Firebase
     const handleCompressedImage = (e) => {
         const image = e.target.files[0];
         new Compressor(image, {
@@ -78,7 +79,7 @@ function EditItemForm({ item, handlePassEditedItem }) {
             }
         }
 
-        //  Prepare editedItem and path and send it as an argument to ItemCard component so it can send it up to Items component to handle edit.
+        //  Prepare editedItem and path and send it as an argument to Items component to handle delete.
         const editedItem = {
             title: title,
             priceEUR: priceEUR,
@@ -89,11 +90,12 @@ function EditItemForm({ item, handlePassEditedItem }) {
             filePath: filePath,
             dateEdited: Date.now(),
         }
-        handlePassEditedItem(editedItem, item.fullPath)
+        handleEdit(editedItem, item.fullPath)
+        setIsEditing(false)
     };
 
     return (
-		<div>
+        <div>
             <Form id="newItemForm" onSubmit={handleEditedItem}>
                 <Form.Group className="mb-3" id="titleForm">
                     <Form.Label htmlFor="inputTitle">Title</Form.Label>
@@ -163,7 +165,7 @@ function EditItemForm({ item, handlePassEditedItem }) {
                 </Button>
             </Form>
     	</div>
-    );
+    )
 }
 
-export default EditItemForm;
+export default EditItemModalForm

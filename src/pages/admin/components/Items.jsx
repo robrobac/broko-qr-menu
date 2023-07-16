@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { createContext } from 'react'
 import ItemCard from '../../../components/ItemCard'
 import { collection, deleteDoc, doc, query, updateDoc } from 'firebase/firestore'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
 import { db, storage } from '../../../firebase/config'
 import { deleteObject, ref } from 'firebase/storage'
+
+export const EditContext = createContext()
 
 function Items({category, categoriesPath}) {
     const itemsQuery = query(collection(db, `${categoriesPath}/${category.id}/items`))
@@ -40,11 +42,15 @@ function Items({category, categoriesPath}) {
     }
 
     return (
+        <EditContext.Provider value={{
+            handleEdit,
+        }}>
         <div>
             {items?.map((item) => (
-                <ItemCard item={item} key={item.id} handleDelete={handleDelete} handleEdit={handleEdit}/>
+                <ItemCard item={item} key={item.id} handleDelete={handleDelete}/>
             ))}
         </div>
+        </EditContext.Provider>
     )
 }
 

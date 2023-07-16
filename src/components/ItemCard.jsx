@@ -1,20 +1,11 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import Card from 'react-bootstrap/Card';
 import noimage from "../noimage.png"
 import { AuthContext } from '../App'
-import { Modal } from 'react-bootstrap';
-import EditItemForm from '../pages/admin/components/EditItemForm';
+import EditItemModal from '../pages/admin/components/editItemModal/EditItemModal';
 
-function ItemCard({item, handleDelete, handleEdit }) {
-    const [isEditing, setIsEditing] = useState(false)
+function ItemCard({item, handleDelete}) {
     const {isAuth} = useContext(AuthContext)
-
-    //  handles passing argument needed to handle edit, arguments are passed from EditItemForm
-    const handlePassEditedItem = (itemObject, itemPath) => {
-        //  Passing edited item object to Items component to handle edit
-        handleEdit(itemObject, itemPath)
-        setIsEditing(false)
-    }
 
     const dateCreatedTimestamp = item.dateCreated
     const dateCreated = new Date(dateCreatedTimestamp)
@@ -47,18 +38,8 @@ function ItemCard({item, handleDelete, handleEdit }) {
                 <button type="button" className="btn btn-danger btn-sm" onClick={() => handleDelete(item)} hidden={!isAuth}>
                     Delete
                 </button>
-                <button type="button" className="btn btn-secondary btn-sm" onClick={() => setIsEditing(true)}>
-                    EDIT
-                </button>
+                <EditItemModal item={item}/>
             </Card.Body>
-            <Modal show={isEditing} onHide={() => setIsEditing(false)} animation={false}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Add New Drink</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <EditItemForm item={item} handlePassEditedItem={handlePassEditedItem}/>
-                </Modal.Body>
-            </Modal>
         </Card>
     )
 }
