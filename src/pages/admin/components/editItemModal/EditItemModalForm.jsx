@@ -79,7 +79,7 @@ function EditItemModalForm({item, setIsEditing}) {
             }
         }
 
-        //  Prepare editedItem and path and send it as an argument to Items component to handle delete.
+        //  Prepare editedItem and path and send it as an argument to Items component to handle editing.
         const editedItem = {
             title: title,
             priceEUR: priceEUR,

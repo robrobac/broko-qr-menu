@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Tab, Tabs } from 'react-bootstrap'
 import NewItemModal from './components/newItemModal/NewItemModal'
-import DrinkCategories from './components/DrinkCategories'
-import FoodCategories from './components/FoodCategories'
 import CategoriesNav from './components/CategoriesNav'
+import Categories from './components/Categories'
 
 function MainCategoryTabs() {
     const [mainCategory, setMainCategory] = useState("food")
@@ -24,12 +23,12 @@ function MainCategoryTabs() {
         justify>
             <Tab eventKey="drink" title="Drink" >
                 <CategoriesNav mainCategory={mainCategory}/>
-                <DrinkCategories />
+                <Categories isDrink={true}/>
                 <NewItemModal isDrink={true}/>
             </Tab>
             <Tab eventKey="food" title="Food" >
                 <CategoriesNav mainCategory={mainCategory}/>
-                <FoodCategories />
+                <Categories isDrink={false}/>
                 <NewItemModal isDrink={false}/>
             </Tab>
         </Tabs>
