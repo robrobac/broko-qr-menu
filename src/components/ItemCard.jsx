@@ -1,17 +1,19 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import Card from 'react-bootstrap/Card';
 import noimage from "../noimage.png"
 import { AuthContext } from '../App'
 import { Modal } from 'react-bootstrap';
 import EditItemForm from '../pages/admin/components/EditItemForm';
 
-function ItemCard({item, handleDelete, handleEdit, isEditing, setIsEditing}) {
+function ItemCard({item, handleDelete, handleEdit }) {
+    const [isEditing, setIsEditing] = useState(false)
     const {isAuth} = useContext(AuthContext)
 
     //  handles passing argument needed to handle edit, arguments are passed from EditItemForm
     const handlePassEditedItem = (itemObject, itemPath) => {
         //  Passing edited item object to Items component to handle edit
         handleEdit(itemObject, itemPath)
+        setIsEditing(false)
     }
 
     const dateCreatedTimestamp = item.dateCreated
