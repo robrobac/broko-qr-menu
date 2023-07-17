@@ -3,6 +3,7 @@ import Card from 'react-bootstrap/Card';
 import noimage from "../noimage.png"
 import { AuthContext } from '../App'
 import EditItemModal from '../pages/admin/components/editItemModal/EditItemModal';
+import "./ItemCard.scss"
 
 function ItemCard({item, handleDelete}) {
     const {isAuth} = useContext(AuthContext)
@@ -26,21 +27,28 @@ function ItemCard({item, handleDelete}) {
     const formattedDateEdited = dateEdited.toLocaleString('en-US', dateOptions)
 
     return (
-        <Card style={{ maxWidth: '400px', margin: "auto"}}>
+        <Card>
             <Card.Img variant="top" src={item?.fileUrl} key={item?.id} onError={(e) => { e.target.src = noimage}}/>
-            <Card.Body>
-                <Card.Title>{item.title}</Card.Title>
-                <p>{item.priceEUR}</p>
-                <p>{item.priceKN}</p>
-                <p>Created: {formattedDateCreated}</p>
-                <p>Edited: {formattedDateEdited}</p>
-                <Card.Text>{item.description}</Card.Text>
+            <Card.Body className='cardBody'>
+                <div className="cardContentHeader">
+                    <Card.Title className='cardTitle'>{item.title}</Card.Title>
+                    <p className='eur'>{item.priceEUR}€ <span>({item.priceKN}kn)</span></p>
+                </div>
+                <Card.Text className='description'>{item.description}</Card.Text>
+                
+                
                 {isAuth ? (
-                    <div>
-                    <button type="button" className="btn btn-danger btn-sm" onClick={() => handleDelete(item)} hidden={!isAuth}>
-                    Delete
-                    </button>
-                    <EditItemModal item={item}/>
+                    <div className='itemControls'>
+                        <div className="buttons">
+                            <button type="button" className="deleteItemButton" onClick={() => handleDelete(item)}>
+                            DELETE ITEM
+                            </button>
+                            <EditItemModal item={item}/>
+                        </div>
+                        <div className="createdEdited">
+                            <p>Created: {formattedDateCreated}</p>
+                            <p>Edited: {formattedDateEdited}</p>
+                        </div>
                     </div>
                 ) : ""}
                 

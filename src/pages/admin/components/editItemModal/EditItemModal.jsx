@@ -8,7 +8,7 @@ function EditItemModal({item}) {
         <div>
             <button
             type="button"
-            className="btn btn-secondary btn-sm"
+            className="editItemButton"
             onClick={() => setIsEditing(true)}>
             EDIT
             </button>

@@ -30,7 +30,7 @@ function EditCategoryModal({category}) {
         <div>
             <button
             type="button"
-            className="btn btn-secondary btn-sm"
+            className="editCategoryButton"
             onClick={() => setIsEditing(true)}>
             EDIT
             </button>

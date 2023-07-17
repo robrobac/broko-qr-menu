@@ -1,8 +1,6 @@
 import React from 'react'
 import Logout from '../../components/Logout';
 import MainCategoryTabs from './MainCategoryTabs';
-import "./Admin.scss"
-
 
 function Admin() {
 

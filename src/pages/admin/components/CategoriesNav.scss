@@ -9,10 +9,33 @@
     -ms-overflow-style: none;
     /* Hide Internet Explorer scrollbar */
     background-color: white;
-    border-bottom: 1px solid black;
+    -webkit-box-shadow: 0px 5px 20px 6px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 5px 20px 6px rgba(0, 0, 0, 0.2);
+    z-index: 2;
 }
 
 .categoryNav::-webkit-scrollbar {
     width: 0px;
     /* Hide Chrome, Safari, and Opera scrollbar */
 }
+
+.navButton {
+    font-weight: 500;
+    background-color: white;
+    color: #235239;
+    border: 1px solid #235239;
+    border-radius: 5px;
+    padding: 10px 10px;
+    white-space: nowrap;
+}
+
+.navButton.active {
+    color: white;
+    background-color: #235239;
+}
+
+// background-color: rgba(0, 0, 0, 0);
+// color: white;
+// border: 1px solid white;
+// border-radius: 5px;
+// padding: 0 10px;

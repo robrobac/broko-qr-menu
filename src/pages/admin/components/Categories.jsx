@@ -7,7 +7,7 @@ import Items from './Items';
 import { deleteObject, ref } from 'firebase/storage';
 import EditCategoryModal from './EditCategoryModal';
 import { AuthContext } from '../../../App';
-
+import "./Categories.scss"
 function Categories({isDrink}) {
     const categoriesPath = isDrink ? "menu/drink/categories" : "menu/food/categories"
     const categoriesQuery = query(collection(db, categoriesPath))
@@ -50,14 +50,15 @@ const handleDeleteCategory = async (category) => {
     return (
         <div>
             {categories?.map((category) => (
-                <Element key={category.id} name={category.id}>
+                <Element key={category.id} name={category.id} className='categoryContainer'>
+                    <h2 className="categoryTitle" id={category.id}>{category.category}</h2>
                     {isAuth ? (
-                        <div>
-                            <button onClick={() => handleDeleteCategory(category)}>Delete category</button>
+                        <div className='categoryControls'>
+                            <button className='deleteCategoryButton' onClick={() => handleDeleteCategory(category)}>DELETE CATEGORY</button>
                             <EditCategoryModal category={category} />
                         </div>
                     ) : ""}
-                        <h2 className="text-center" id={category.id}>{category.category}</h2>
+                        
                         <Items category={category} categoriesPath={categoriesPath}/>
                 </Element>
             ))}

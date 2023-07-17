@@ -2,17 +2,18 @@ import React, { useState } from 'react'
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal';
 import NewItemModalForm from './NewItemModalForm';
+import "./NewItemModal.scss"
 
 function NewItemModal({isDrink}) {
     const [showFoodModal, setShowFoodModal] = useState(false);
     const [showDrinkModal, setShowDrinkModal] = useState(false);
 
     return (
-        <div className='sticky-bottom'>
+        <div className='newItemModal'>
             {isDrink ? (
-                <Button variant="primary" onClick={() => setShowDrinkModal(true)}>Add Drink Item</Button>
+                <button className='addNewButton' onClick={() => setShowDrinkModal(true)}>Add Drink Item</button>
             ) : (
-                <Button variant="primary" onClick={() => setShowFoodModal(true)}>Add Food Item</Button>
+                <button className='addNewButton' onClick={() => setShowFoodModal(true)}>Add Food Item</button>
             )}
             {showFoodModal ? (
                     <Modal show={showFoodModal} onHide={() => setShowFoodModal(false)} animation={false}>

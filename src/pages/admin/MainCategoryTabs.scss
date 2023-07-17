@@ -13,12 +13,17 @@
 }
 
 .nav-link.active {
-    color: black !important;
+    color: #235239 !important;
     font-weight: 700;
+    z-index: 1 !important;
 
 }
 
 .nav-link:not(.active) {
-    color: rgba(0, 0, 0, 0.603) !important;
-    background-color: rgba(0, 0, 0, 0.11) !important;
+    color: white !important;
+    background-color: #5b7e6c !important;
+}
+
+.tabContent {
+    background-color: white;
 }

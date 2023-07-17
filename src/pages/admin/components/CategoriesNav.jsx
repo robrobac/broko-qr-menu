@@ -57,11 +57,9 @@ function CategoriesNav({mainCategory}) {
                     smooth={true}
                     offset={-180}
                     duration={200}>
-                        <Button
-                        variant={`outline-primary ${activeCategory === category.id ? "active" : ""}`}
-                        style={{ whiteSpace: 'nowrap', pointerEvents: "none", cursor: "pointer" }}>
+                        <button className={`navButton ${activeCategory === category.id ? "active" : ""}`}>
                             {category.category}
-                        </Button>
+                        </button>
                     </Link>
                 ))}
             </Stack>

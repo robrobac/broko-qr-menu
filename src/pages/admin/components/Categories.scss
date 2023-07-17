@@ -1,0 +1,42 @@
+.categoryContainer {
+    text-align: center;
+    padding: 1rem;
+    border-bottom: 1px solid #5b7e6c;
+    margin-bottom: 3rem;
+
+    &:last-of-type {
+        border-bottom: none;
+    }
+
+
+    .categoryTitle {
+        color: #235239;
+        font-weight: 700;
+        font-size: 2rem;
+    }
+
+    .categoryControls {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 1rem 0;
+
+        .deleteCategoryButton {
+            background-color: #dc3545;
+            line-height: 2;
+            color: white;
+            border: 1px solid white;
+            border-radius: 5px;
+            padding: 0 10px;
+        }
+
+        .editCategoryButton {
+            background-color: #5b7e6c;
+            line-height: 2;
+            color: white;
+            border: 1px solid white;
+            border-radius: 5px;
+            padding: 0 10px;
+        }
+    }
+}
