@@ -1,15 +1,13 @@
 import React from 'react'
 import Logout from '../components/Logout'
 import MainCategoryTabs from './admin/MainCategoryTabs'
+import Header from '../components/Header'
 
 function Home() {
 
     return (
         <div>
-            <header>
-                <h1>Broko Menu</h1>
-                <Logout />
-            </header>
+            <Header />
             <main>
                 <MainCategoryTabs />
             </main>

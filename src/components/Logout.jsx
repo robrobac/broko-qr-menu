@@ -1,10 +1,12 @@
 import { onAuthStateChanged, signOut } from 'firebase/auth'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { auth } from '../firebase/config'
+import { AuthContext } from '../App'
 
 
 function Logout() {
     const [user, setUser] = useState(null)
+    const {isAuth} = useContext(AuthContext)
 
     onAuthStateChanged(auth, (currentUser) => {
         setUser(currentUser)
@@ -16,8 +18,15 @@ function Logout() {
         } catch (error) {
         }
     };
-    return (
-        <button onClick={handleLogout}>Logout {user?.email}</button>
-    )
+
+    if (isAuth) {
+        return (
+            <button className='logoutButton'
+            onClick={handleLogout}>
+                Logout
+            </button>
+        )
+    }
+    
 }
 export default Logout
