@@ -35,10 +35,15 @@ function ItemCard({item, handleDelete}) {
                 <p>Created: {formattedDateCreated}</p>
                 <p>Edited: {formattedDateEdited}</p>
                 <Card.Text>{item.description}</Card.Text>
-                <button type="button" className="btn btn-danger btn-sm" onClick={() => handleDelete(item)} hidden={!isAuth}>
+                {isAuth ? (
+                    <div>
+                    <button type="button" className="btn btn-danger btn-sm" onClick={() => handleDelete(item)} hidden={!isAuth}>
                     Delete
-                </button>
-                <EditItemModal item={item}/>
+                    </button>
+                    <EditItemModal item={item}/>
+                    </div>
+                ) : ""}
+                
             </Card.Body>
         </Card>
     )

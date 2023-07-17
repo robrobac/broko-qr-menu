@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Tab, Tabs } from 'react-bootstrap'
 import NewItemModal from './components/newItemModal/NewItemModal'
 import CategoriesNav from './components/CategoriesNav'
 import Categories from './components/Categories'
+import { AuthContext } from '../../App'
 
 function MainCategoryTabs() {
     const [mainCategory, setMainCategory] = useState("food")
+    const { isAuth } = useContext(AuthContext)
 
     //  On tab change scroll to top and reset the active category navigation
     useEffect(() => {
@@ -24,12 +26,14 @@ function MainCategoryTabs() {
             <Tab eventKey="drink" title="Drink" >
                 <CategoriesNav mainCategory={mainCategory}/>
                 <Categories isDrink={true}/>
-                <NewItemModal isDrink={true}/>
+                {isAuth ? <NewItemModal isDrink={true}/> : ""}
+                
             </Tab>
             <Tab eventKey="food" title="Food" >
                 <CategoriesNav mainCategory={mainCategory}/>
                 <Categories isDrink={false}/>
-                <NewItemModal isDrink={false}/>
+                {isAuth ? <NewItemModal isDrink={false}/> : ""}
+                
             </Tab>
         </Tabs>
     )

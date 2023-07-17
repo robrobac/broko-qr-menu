@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Element } from 'react-scroll';
 import { collection, deleteDoc, doc, getDocs, query } from 'firebase/firestore';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
@@ -6,11 +6,13 @@ import { db, storage } from '../../../firebase/config';
 import Items from './Items';
 import { deleteObject, ref } from 'firebase/storage';
 import EditCategoryModal from './EditCategoryModal';
+import { AuthContext } from '../../../App';
 
 function Categories({isDrink}) {
     const categoriesPath = isDrink ? "menu/drink/categories" : "menu/food/categories"
     const categoriesQuery = query(collection(db, categoriesPath))
     const [categories] = useCollectionData(categoriesQuery)
+    const {isAuth} = useContext(AuthContext)
 
     //  Handles delete of whole category
 const handleDeleteCategory = async (category) => {
@@ -49,9 +51,13 @@ const handleDeleteCategory = async (category) => {
         <div>
             {categories?.map((category) => (
                 <Element key={category.id} name={category.id}>
+                    {isAuth ? (
+                        <div>
+                            <button onClick={() => handleDeleteCategory(category)}>Delete category</button>
+                            <EditCategoryModal category={category} />
+                        </div>
+                    ) : ""}
                         <h2 className="text-center" id={category.id}>{category.category}</h2>
-                        <button onClick={() => handleDeleteCategory(category)}>Delete category</button>
-                        <EditCategoryModal category={category} />
                         <Items category={category} categoriesPath={categoriesPath}/>
                 </Element>
             ))}
