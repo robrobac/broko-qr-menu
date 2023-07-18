@@ -2,6 +2,7 @@ import { doc, updateDoc } from 'firebase/firestore';
 import React, { useState } from 'react'
 import { Button, Form, Modal } from 'react-bootstrap'
 import { db } from '../../../firebase/config';
+import { EditButton } from '../../../components/StyledButtons';
 
 function EditCategoryModal({category}) {
     const [isEditing, setIsEditing] = useState(false)
@@ -28,12 +29,7 @@ function EditCategoryModal({category}) {
     
     return (
         <div>
-            <button
-            type="button"
-            className="editCategoryButton"
-            onClick={() => setIsEditing(true)}>
-            EDIT
-            </button>
+            <EditButton onClick={() => setIsEditing(true)}>Edit Category</EditButton>
             <Modal show={isEditing} onHide={() => setIsEditing(false)} animation={false}>
                 <Modal.Header closeButton>
                     <Modal.Title>Edit Category</Modal.Title>

@@ -4,6 +4,7 @@ import noimage from "../noimage.png"
 import { AuthContext } from '../App'
 import EditItemModal from '../pages/admin/components/editItemModal/EditItemModal';
 import "./ItemCard.scss"
+import { DeleteButton } from './StyledButtons';
 
 function ItemCard({item, handleDelete}) {
     const {isAuth} = useContext(AuthContext)
@@ -40,9 +41,7 @@ function ItemCard({item, handleDelete}) {
                 {isAuth ? (
                     <div className='itemControls'>
                         <div className="buttons">
-                            <button type="button" className="deleteItemButton" onClick={() => handleDelete(item)}>
-                            DELETE ITEM
-                            </button>
+                            <DeleteButton onClick={() => handleDelete(item)}>Delete Item</DeleteButton>
                             <EditItemModal item={item}/>
                         </div>
                         <div className="createdEdited">

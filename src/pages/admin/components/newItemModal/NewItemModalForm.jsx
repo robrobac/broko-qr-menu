@@ -44,7 +44,6 @@ function NewItemModalForm({ isDrink }) {
     const eurToKn = (e) => {
         const tecaj = 7.53450;
         const eur = parseFloat(e.target.value);
-        const formattedEur = eur.toFixed(2)
         const kn = (eur * tecaj).toFixed(2);
 
         setPriceEUR(eur);
@@ -138,6 +137,7 @@ function NewItemModalForm({ isDrink }) {
                     <Form.Group className="mb-3" id="priceForm">
                         <Form.Label htmlFor="inputPrice">Price</Form.Label>
                         <Form.Control
+                        step="any"
                         required
                         type="number"
                         id="inputPrice"

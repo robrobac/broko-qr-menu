@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react'
-import Button from 'react-bootstrap/Button';
 import "./CategoriesNav.scss"
 import Stack from 'react-bootstrap/Stack';
 import { Link } from 'react-scroll';
 import { collection, query } from 'firebase/firestore';
 import { db } from '../../../firebase/config';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
+import { NavigationButton } from '../../../components/StyledButtons';
 
 function CategoriesNav({mainCategory}) {
     const [activeCategory, setActiveCategory] = useState()
@@ -57,9 +57,7 @@ function CategoriesNav({mainCategory}) {
                     smooth={true}
                     offset={-180}
                     duration={200}>
-                        <button className={`navButton ${activeCategory === category.id ? "active" : ""}`}>
-                            {category.category}
-                        </button>
+                        <NavigationButton active={activeCategory === category.id}>{category.category}</NavigationButton>
                     </Link>
                 ))}
             </Stack>

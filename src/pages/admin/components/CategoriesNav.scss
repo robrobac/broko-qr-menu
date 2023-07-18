@@ -18,24 +18,3 @@
     width: 0px;
     /* Hide Chrome, Safari, and Opera scrollbar */
 }
-
-.navButton {
-    font-weight: 500;
-    background-color: white;
-    color: #235239;
-    border: 1px solid #235239;
-    border-radius: 5px;
-    padding: 10px 10px;
-    white-space: nowrap;
-}
-
-.navButton.active {
-    color: white;
-    background-color: #235239;
-}
-
-// background-color: rgba(0, 0, 0, 0);
-// color: white;
-// border: 1px solid white;
-// border-radius: 5px;
-// padding: 0 10px;

@@ -2,6 +2,7 @@ import { onAuthStateChanged, signOut } from 'firebase/auth'
 import React, { useContext, useState } from 'react'
 import { auth } from '../firebase/config'
 import { AuthContext } from '../App'
+import { AuthButton } from './StyledButtons'
 
 
 function Logout() {
@@ -21,10 +22,7 @@ function Logout() {
 
     if (isAuth) {
         return (
-            <button className='logoutButton'
-            onClick={handleLogout}>
-                LOGOUT
-            </button>
+            <AuthButton onClick={handleLogout}>Logout</AuthButton>
         )
     }
     
