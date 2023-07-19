@@ -1,10 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Tab, Tabs } from 'react-bootstrap'
 import NewItemModal from './components/newItemModal/NewItemModal'
 import CategoriesNav from './components/CategoriesNav'
 import Categories from './components/Categories'
 import { AuthContext } from '../../App'
-import "./MainCategoryTabs.scss"
+import { Content, Tab, Tabs, TabsContainer } from '../../components/StyledTabs'
 
 function MainCategoryTabs() {
     const [mainCategory, setMainCategory] = useState("food")
@@ -19,26 +18,30 @@ function MainCategoryTabs() {
     }, [mainCategory])
     
     return (
-        <Tabs
-        onSelect={(k) => setMainCategory(k)}
-        activeKey={mainCategory}
-        transition={false}
-        className="sticky-top tabs mt-2 pb-0"
-        style={{background: "#5b7e6c"}}
-        justify>
-            <Tab className='tabContent' eventKey="drink" title="Drink">
+        <TabsContainer>
+            <Tabs>
+                <Tab
+                onClick={() => setMainCategory("drink")}
+                active={mainCategory === "drink"}>
+                    DRINK
+                </Tab>
+                <Tab
+                onClick={() => setMainCategory("food")}
+                active={mainCategory === "food"}>
+                    FOOD
+                </Tab>
+            </Tabs>
+            <Content active={mainCategory === "drink"}>
                 <CategoriesNav mainCategory={mainCategory}/>
                 <Categories isDrink={true}/>
                 {isAuth ? <NewItemModal isDrink={true}/> : ""}
-                
-            </Tab>
-            <Tab className='tabContent' eventKey="food" title="Food" >
+            </Content>
+            <Content active={mainCategory === "food"}>
                 <CategoriesNav mainCategory={mainCategory}/>
                 <Categories isDrink={false}/>
                 {isAuth ? <NewItemModal isDrink={false}/> : ""}
-                
-            </Tab>
-        </Tabs>
+            </Content>
+        </TabsContainer>
     )
 }
 
