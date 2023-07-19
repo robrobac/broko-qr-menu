@@ -15,11 +15,11 @@ const Tabs = styled.div`
 const Tab = styled.button`
     flex: 1;
     height: 64px;
-    background-color: ${props => (props.active ? "white" : "#5b7e6c")};
+    background-color: ${props => (props.$isActive ? "white" : "#5b7e6c")};
     border-radius: 5px 5px 0 0;
-    color: ${props => (props.active ? "#235239" : "white")};
-    font-weight: ${props => (props.active ? "700" : "0")};
-    font-size: ${props => (props.active ? "1.2rem" : "1rem")};
+    color: ${props => (props.$isActive ? "#235239" : "white")};
+    font-weight: ${props => (props.$isActive ? "700" : "0")};
+    font-size: ${props => (props.$isActive ? "1.2rem" : "1rem")};
     transition: font-weight .2s, font-size .2s;
     
 `
@@ -27,7 +27,7 @@ const Tab = styled.button`
 const Content = styled.div`
     background-color: white;
 
-    ${props => (props.active ? "" : "display:none")}
+    ${props => (props.$isActive ? "" : "display:none")}
 `
 // background-color: ${props => (props.active ? "white" : "#5b7e6c")};
 // ${props => (props.active ? "" : "display:none")}

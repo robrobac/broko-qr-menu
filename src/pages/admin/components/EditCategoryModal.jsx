@@ -1,8 +1,9 @@
 import { doc, updateDoc } from 'firebase/firestore';
 import React, { useState } from 'react'
-import { Button, Form, Modal } from 'react-bootstrap'
+import { Modal } from 'react-bootstrap'
 import { db } from '../../../firebase/config';
-import { EditButton } from '../../../components/StyledButtons';
+import { EditButton, SubmitButton } from '../../../components/StyledButtons';
+import { Divider, Form, FormInput, FormLabel, FormSection } from '../../../components/StyledForm';
 
 function EditCategoryModal({category}) {
     const [isEditing, setIsEditing] = useState(false)
@@ -35,20 +36,21 @@ function EditCategoryModal({category}) {
                     <Modal.Title>Edit Category</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form id="editCategoryForm" onSubmit={handleCategoryChange}>
-                        <Form.Group className="mb-3" id="categoryForm">
-                            <Form.Label htmlFor="inputCategory">Title</Form.Label>
-                            <Form.Control
+                    <Form onSubmit={handleCategoryChange}>
+                        <FormSection>
+                            <FormLabel htmlFor="inputCategory">Title</FormLabel>
+                            <FormInput
                             autoFocus
                             required
                             id='inputCategory'
                             value={categoryValue}
                             onChange={(e) => setCategoryValue(e.target.value)}
                             />
-                        </Form.Group>
-                        <Button variant="primary" type="submit">
+                        </FormSection>
+                        <Divider></Divider>
+                        <SubmitButton type="submit">
                             Save Changes
-                        </Button>
+                        </SubmitButton>
                     </Form>
                 </Modal.Body>
             </Modal>

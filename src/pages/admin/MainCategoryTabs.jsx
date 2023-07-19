@@ -22,21 +22,21 @@ function MainCategoryTabs() {
             <Tabs>
                 <Tab
                 onClick={() => setMainCategory("drink")}
-                active={mainCategory === "drink"}>
+                $isActive={mainCategory === "drink" ? "true" : undefined}>
                     DRINK
                 </Tab>
                 <Tab
                 onClick={() => setMainCategory("food")}
-                active={mainCategory === "food"}>
+                $isActive={mainCategory === "food" ? "true" : undefined}>
                     FOOD
                 </Tab>
             </Tabs>
-            <Content active={mainCategory === "drink"}>
+            <Content $isActive={mainCategory === "drink" ? "true" : undefined}>
                 <CategoriesNav mainCategory={mainCategory}/>
                 <Categories isDrink={true}/>
                 {isAuth ? <NewItemModal isDrink={true}/> : ""}
             </Content>
-            <Content active={mainCategory === "food"}>
+            <Content $isActive={mainCategory === "food" ? "true" : undefined}>
                 <CategoriesNav mainCategory={mainCategory}/>
                 <Categories isDrink={false}/>
                 {isAuth ? <NewItemModal isDrink={false}/> : ""}

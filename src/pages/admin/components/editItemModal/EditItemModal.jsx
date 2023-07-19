@@ -10,7 +10,7 @@ function EditItemModal({item}) {
             <EditButton onClick={() => setIsEditing(true)}>Edit Item</EditButton>
             <Modal show={isEditing} onHide={() => setIsEditing(false)} animation={false}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Add New Drink</Modal.Title>
+                    <Modal.Title>Edit {item.mainCategory}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <EditItemModalForm item={item} setIsEditing={setIsEditing}/>

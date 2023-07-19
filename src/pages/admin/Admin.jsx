@@ -11,7 +11,7 @@ function Admin() {
                 <Logout />
             </header>
             <main>
-                <MainCategoryTabs />
+                {/* <MainCategoryTabs /> */}
             </main>
         </div>
     )

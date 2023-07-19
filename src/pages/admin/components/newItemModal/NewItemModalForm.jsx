@@ -1,6 +1,5 @@
 import React, { useRef, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { db, storage } from '../../../../firebase/config';
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
@@ -9,6 +8,8 @@ import { collection, doc, query, setDoc } from 'firebase/firestore';
 import Compressor from 'compressorjs';
 import NewCategoryModalForm from './NewCategoryModalForm';
 import noimage from "../../../../noimage.png"
+import { Divider, Form, FormInput, FormLabel, FormSection, FormSelect, FormTextarea, FormUpload, PriceConversion } from '../../../../components/StyledForm';
+import { AddCategoryButton, AddProductButton, SubmitButton } from '../../../../components/StyledButtons';
 
 function NewItemModalForm({ isDrink }) {
     const [title, setTitle] = useState("");
@@ -43,7 +44,7 @@ function NewItemModalForm({ isDrink }) {
     //  Eur to Kn converter
     const eurToKn = (e) => {
         const tecaj = 7.53450;
-        const eur = parseFloat(e.target.value);
+        const eur = parseFloat(e);
         const kn = (eur * tecaj).toFixed(2);
 
         setPriceEUR(eur);
@@ -116,81 +117,92 @@ function NewItemModalForm({ isDrink }) {
     const handleAddingCategory = () => {
         setAddingCategory(!addingCategory);
     };
-
+    
     return (
         <div>
             {!addingCategory ? 
                 <Form id="newItemForm" onSubmit={handleFileSubmit}>
-                    <Form.Group className="mb-3" id="titleForm">
-                        <Form.Label htmlFor="inputTitle">{isDrink ? "Drink" : "Food"} Title</Form.Label>
-                        <Form.Control
+                    <FormSection>
+                        <FormLabel htmlFor="inputTitle">
+                            {isDrink ? "Drink" : "Food"} Title
+                        </FormLabel>
+                        <FormInput
                         required
-                        autoFocus
                         type="text"
                         id="inputTitle"
                         placeholder="Title"
                         value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                        />
-                    </Form.Group>
-
-                    <Form.Group className="mb-3" id="priceForm">
-                        <Form.Label htmlFor="inputPrice">Price</Form.Label>
-                        <Form.Control
-                        step="any"
+                        onChange={(e) => setTitle(e.target.value)}/>
+                    </FormSection>
+                    <Divider></Divider>
+                    <FormSection>
+                        <FormLabel htmlFor="inputPrice">
+                            {isDrink ? "Drink" : "Food"} Price
+                        </FormLabel>
+                        <FormInput
                         required
                         type="number"
                         id="inputPrice"
-                        placeholder="€"
+                        placeholder="Price"
                         value={priceEUR}
-                        onChange={(e) => eurToKn(e)}
-                        />
-                        <p className='small text-secondary'>{priceEUR}€ * 7.53450 = <span style={{ fontWeight: 'bold' }}>{priceKN}kn</span></p>
-                    </Form.Group>
-
-                    <Form.Group className="mb-3" id="categoryForm">
-                        <Form.Label htmlFor="inputCategory">{isDrink ? "Drink" : "Food"} Category</Form.Label>
-                        <Button variant="link" size="sm" onClick={handleAddingCategory}>
-                            Add New {isDrink ? "Drink" : "Food"} Category
-                        </Button>
-                        <Form.Select
+                        onChange={(e) => eurToKn(e.target.value)}/>
+                        <PriceConversion>{priceEUR} € x 7.53450 = <span style={{ fontWeight: 'bold' }}>{priceKN} kn</span></PriceConversion>
+                    </FormSection>
+                    <Divider></Divider>
+                    <FormSection>
+                        <FormLabel htmlFor="selectCategory">
+                            {isDrink ? "Drink" : "Food"} Category
+                            <AddCategoryButton type='button' onClick={handleAddingCategory}>
+                                Add New {isDrink ? "Drink" : "Food"} Category
+                            </AddCategoryButton>    
+                        </FormLabel>
+                        <FormSelect
                         required
-                        id='inputCategory'
+                        id='selectCategory'
                         value={category}
                         onChange={(e) => setCategory(e.target.value)}
                         >
                             <option key="0"></option>
-                            {categories?.map((category) => (
-                                <option value={category.id} key={category.id}>{category.category}</option>
+                            {categories?.map((option) => (
+                                <option
+                                active={category === option.category}
+                                value={option.id}
+                                name={option.id}
+                                key={option.id}>
+                                    {option.category}
+                                </option>
                             ))}
-                        </Form.Select>
-                    </Form.Group>
-
-                    <Form.Group className="mb-3" id="descriptionForm">
-                        <Form.Label htmlFor="inputDescription">{isDrink ? "Drink" : "Food"} Description</Form.Label>
-                        <Form.Control
-                        as="textarea"
+                        </FormSelect>
+                    </FormSection>
+                    <Divider></Divider>
+                    <FormSection>
+                        <FormLabel htmlFor="inputDescription">
+                            {isDrink ? "Drink" : "Food"} Description
+                        </FormLabel>
+                        <FormTextarea
                         id="inputDescription"
+                        form='newItemForm'
                         placeholder="Description"
                         rows={3}
                         value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                        />
-                    </Form.Group>
-
-                    <Form.Group className="mb-3" id="fileForm">
-                        <Form.Label>Choose an image</Form.Label>
-                        <Form.Control
-                        accept='image/*'
+                        onChange={(e) => setDescription(e.target.value)}/>
+                    </FormSection>
+                    <Divider></Divider>
+                    <FormSection>
+                        <FormLabel htmlFor="inputFile">
+                            Upload Image
+                        </FormLabel>
+                        <FormUpload
                         type="file"
+                        accept='image/*'
+                        id="inputFile"
                         ref={fileInputRef}
-                        onChange={handleCompressedImage}
-                        />
-                    </Form.Group>
-
-                    <Button variant="primary" type="submit">
+                        onChange={handleCompressedImage}/>
+                    </FormSection>
+                    <Divider></Divider>
+                    <SubmitButton type="submit">
                         Submit New {isDrink ? "Drink" : "Food"}
-                    </Button>
+                    </SubmitButton>
                 </Form>
             :
             isDrink ? (

@@ -16,7 +16,7 @@ function NewItemModal({isDrink}) {
                 <AddProductButton onClick={() => setShowFoodModal(true)}>Add New Food</AddProductButton>
             )}
             {showFoodModal ? (
-                    <Modal show={showFoodModal} onHide={() => setShowFoodModal(false)} animation={false}>
+                    <Modal show={showFoodModal} onHide={() => setShowFoodModal(false)} animation={true}>
                         <Modal.Header closeButton>
                             <Modal.Title>Add New Food</Modal.Title>
                         </Modal.Header>

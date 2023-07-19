@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { db } from '../../../../firebase/config';
 import { doc, setDoc } from 'firebase/firestore';
+import { Divider, Form, FormInput, FormLabel, FormSection } from '../../../../components/StyledForm';
+import { EditButton, SubmitButton } from '../../../../components/StyledButtons';
 
 function NewCategoryModalForm({ handleAddingCategory, isDrink }) {
     const [category, setCategory] = useState("");
@@ -42,23 +43,24 @@ function NewCategoryModalForm({ handleAddingCategory, isDrink }) {
     };
 
   return (
-    <Form id="newItemForm" onSubmit={handleCategorySubmit}>
-        <Form.Group className="mb-3" id="categoryForm">
-            <Form.Label htmlFor="inputCategory">New {isDrink ? "Drink" : "Food"} Category</Form.Label>
-            <Form.Control
+    <Form onSubmit={handleCategorySubmit}>
+        <FormSection>
+            <FormLabel htmlFor="inputCategory">New {isDrink ? "Drink" : "Food"} Category</FormLabel>
+            <FormInput
             autoFocus
+            required
             id='inputCategory'
             value={category}
             onChange={(e) => setCategory(e.target.value)}
             />
-        </Form.Group>
-
-        <Button variant="primary" type="submit">
+        </FormSection>
+        <Divider></Divider>
+        <SubmitButton type="submit">
             Submit New {isDrink ? "Drink" : "Food"} Category
-        </Button>
-        <Button variant="secondary" onClick={handleAddingCategory}>
+        </SubmitButton>
+        <EditButton onClick={handleAddingCategory}>
             Back
-        </Button>
+        </EditButton>
     </Form>
   );
 }

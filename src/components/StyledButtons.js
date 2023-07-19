@@ -24,8 +24,8 @@ const AuthButton = styled(Button)`
 `
 
 const NavigationButton = styled(Button)`
-    background-color: ${(props) => (props.active) ? "#235239" : "white"};
-    color: ${(props) => (props.active) ? "white" : "#235239"};
+    background-color: ${(props) => (props.$isActive) ? "#235239" : "white"};
+    color: ${(props) => (props.$isActive) ? "white" : "#235239"};
     border: 1px solid #235239;
     padding: 10px 10px;
     font-weight: 500;
@@ -44,5 +44,21 @@ const AddProductButton = styled(Button)`
     -webkit-box-shadow: 0px 5px 20px 6px rgba(0, 0, 0, 0.2);
     box-shadow: 0px 5px 20px 6px rgba(0, 0, 0, 0.2);
 `
+const SubmitButton = styled(AddProductButton)`
+    font-weight: 500;
+    position: unset;
+    left: unset;
+    bottom: unset;
 
-export { Button, DeleteButton, EditButton, AuthButton, NavigationButton, AddProductButton }
+`
+
+const AddCategoryButton = styled.button`
+    font-size: .8rem;
+    text-decoration: underline;
+    color: #235239;
+    background-color: unset;
+    padding: 0 5px;
+
+`
+
+export { Button, DeleteButton, EditButton, AuthButton, NavigationButton, AddProductButton, AddCategoryButton, SubmitButton }

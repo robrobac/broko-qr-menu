@@ -5,7 +5,8 @@ import { db, storage } from '../../../../firebase/config';
 import Compressor from 'compressorjs';
 import { deleteObject, getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { EditContext } from '../Items';
-import { Button, Form } from 'react-bootstrap';
+import { Divider, Form, FormInput, FormLabel, FormSection, FormSelect, FormTextarea, FormUpload, PriceConversion } from '../../../../components/StyledForm';
+import { SubmitButton } from '../../../../components/StyledButtons';
 
 function EditItemModalForm({item, setIsEditing}) {
     const {handleEdit} = useContext(EditContext)
@@ -39,7 +40,7 @@ function EditItemModalForm({item, setIsEditing}) {
     //  Eur to Kn converter
     const eurToKn = (e) => {
         const tecaj = 7.53450;
-        const eur = parseFloat(e.target.value);
+        const eur = parseFloat(e);
         const kn = (eur * tecaj).toFixed(2);
 
         setPriceEUR(eur);
@@ -98,73 +99,87 @@ function EditItemModalForm({item, setIsEditing}) {
     return (
         <div>
             <Form id="newItemForm" onSubmit={handleEditedItem}>
-                <Form.Group className="mb-3" id="titleForm">
-                    <Form.Label htmlFor="inputTitle">Title</Form.Label>
-                    <Form.Control
-                    autoFocus
+                <FormSection>
+                    <FormLabel htmlFor="inputTitle">
+                        Title
+                    </FormLabel>
+                    <FormInput
+                    required
                     type="text"
                     id="inputTitle"
                     placeholder="Title"
                     value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    />
-                </Form.Group>
-
-                <Form.Group className="mb-3" id="priceForm">
-                    <Form.Label htmlFor="inputPrice">Price</Form.Label>
-                    <Form.Control
-                    step="any"
+                    onChange={(e) => setTitle(e.target.value)}/>
+                </FormSection>
+                <Divider></Divider>
+                <FormSection>
+                    <FormLabel htmlFor="inputPrice">
+                        Price
+                    </FormLabel>
+                    <FormInput
+                    required
                     type="number"
                     id="inputPrice"
-                    placeholder="€"
+                    placeholder="Price"
                     value={priceEUR}
-                    onChange={(e) => eurToKn(e)}
-                    />
-                    <p className='small text-secondary'>{priceEUR}€ * 7.53450 = <span style={{ fontWeight: 'bold' }}>{priceKN}kn</span></p>
-                </Form.Group>
-
-                <Form.Group className="mb-3" id="categoryForm">
-                    <Form.Label htmlFor="inputCategory">Category</Form.Label>
-                    <Form.Select
-                    disabled
-                    id='inputCategory'
+                    onChange={(e) => eurToKn(e.target.value)}/>
+                    <PriceConversion>{priceEUR} € x 7.53450 = <span style={{ fontWeight: 'bold' }}>{priceKN} kn</span></PriceConversion>
+                </FormSection>
+                <Divider></Divider>
+                <FormSection>
+                    <FormLabel htmlFor="selectCategory">
+                        Category  
+                    </FormLabel>
+                    <FormSelect
+                    required
+                    id='selectCategory'
                     value={category}
+                    disabled={true}
                     onChange={(e) => setCategory(e.target.value)}
                     >
                         <option key="0"></option>
-                        {categories?.map((category) => (
-                            <option value={category.id} key={category.id}>{category.category}</option>
+                        {categories?.map((option) => (
+                            <option
+                            active={category === option.category}
+                            value={option.id}
+                            name={option.id}
+                            key={option.id}>
+                                {option.category}
+                            </option>
                         ))}
-                    </Form.Select>
-                </Form.Group>
-
-                <Form.Group className="mb-3" id="descriptionForm">
-                    <Form.Label htmlFor="inputDescription">Description</Form.Label>
-                    <Form.Control
-                    as="textarea"
+                    </FormSelect>
+                </FormSection>
+                <Divider></Divider>
+                <FormSection>
+                    <FormLabel htmlFor="inputDescription">
+                        Description
+                    </FormLabel>
+                    <FormTextarea
                     id="inputDescription"
+                    form='newItemForm'
                     placeholder="Description"
                     rows={3}
                     value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    />
-                </Form.Group>
-
+                    onChange={(e) => setDescription(e.target.value)}/>
+                </FormSection>
+                <Divider></Divider>
                 <img src={item?.fileUrl} className="img-thumbnail mx-auto d-block" alt="..."></img>
-
-                <Form.Group className="mb-3" id="fileForm">
-                    <Form.Label>Choose new image</Form.Label>
-                    <Form.Control
-                    accept='image/*'
+                <Divider></Divider>
+                <FormSection>
+                    <FormLabel htmlFor="inputFile">
+                        Upload New Image
+                    </FormLabel>
+                    <FormUpload
                     type="file"
+                    accept='image/*'
+                    id="inputFile"
                     ref={fileInputRef}
-                    onChange={handleCompressedImage}
-                    />
-                </Form.Group>
-
-                <Button variant="primary" type="submit">
+                    onChange={handleCompressedImage}/>
+                </FormSection>
+                <Divider></Divider>
+                <SubmitButton type="submit">
                     Save Changes
-                </Button>
+                </SubmitButton>
             </Form>
     	</div>
     )

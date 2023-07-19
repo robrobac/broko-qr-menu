@@ -57,7 +57,7 @@ function CategoriesNav({mainCategory}) {
                     smooth={true}
                     offset={-180}
                     duration={200}>
-                        <NavigationButton active={activeCategory === category.id}>{category.category}</NavigationButton>
+                        <NavigationButton $isActive={activeCategory === category.id ? "true" : undefined}>{category.category}</NavigationButton>
                     </Link>
                 ))}
             </Stack>
