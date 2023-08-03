@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { db } from '../../firebase/config';
 import { doc, setDoc, updateDoc } from 'firebase/firestore';
 import { Divider, Form, FormInput, FormLabel, FormSection } from '../StyledForm';

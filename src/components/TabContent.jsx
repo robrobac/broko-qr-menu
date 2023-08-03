@@ -9,7 +9,7 @@ import { deleteObject, ref } from 'firebase/storage'
 import AdminItems from './AdminItems'
 import ProductCard from './ProductCard'
 
-function TabContent({selectedTab, homeMenuData, isAdmin}) {
+function TabContent({selectedTab, homeMenuData, isAdmin, isDrink}) {
     const [categories, setCategories] = useState([])
     console.log(categories)
 
@@ -17,9 +17,12 @@ function TabContent({selectedTab, homeMenuData, isAdmin}) {
         if (homeMenuData && selectedTab) {
             setCategories(homeMenuData[selectedTab])
         }
+    }, [selectedTab, homeMenuData])
 
+    useEffect(() => {
         if (!homeMenuData) {
-            const q = query(collection(db, `menu/${selectedTab}/categories`));
+            const categoriesPath = isDrink ? "menu/drink/categories" : "menu/food/categories"
+            const q = query(collection(db, categoriesPath));
             const unsubscribe = onSnapshot(q, (querySnapshot) => {
                 const snapshotData = [];
                 querySnapshot.forEach((doc) => {
@@ -31,7 +34,7 @@ function TabContent({selectedTab, homeMenuData, isAdmin}) {
                 unsubscribe();
             }
         }
-    }, [selectedTab, homeMenuData])
+    }, [])
 
 
     //  Handles delete of whole category

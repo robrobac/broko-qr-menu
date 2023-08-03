@@ -22,7 +22,7 @@ function AdminItems({category}) {
             return () => {
                 unsubscribe();
             }
-    }, [])
+    }, [category.categoryPath])
 
 
     //  Handles delete for item passed as an argument from ItemCard component

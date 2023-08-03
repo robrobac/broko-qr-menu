@@ -27,9 +27,14 @@ function CategoryTabs({homeMenuData, isAdmin}) {
                     FOOD
                 </Tab>
             </Tabs>
-            <Content>
+            <Content $isActive={selectedTab === "drink" ? "true" : undefined}>
                 <TabNavigation selectedTab={selectedTab} homeMenuData={homeMenuData} />
-                <TabContent selectedTab={selectedTab} homeMenuData={homeMenuData} isAdmin={isAdmin}/>
+                <TabContent selectedTab={selectedTab} homeMenuData={homeMenuData} isAdmin={isAdmin} isDrink={true}/>
+                <NewItemModal isDrink={true}/>
+            </Content>
+            <Content $isActive={selectedTab === "food" ? "true" : undefined}>
+                <TabNavigation selectedTab={selectedTab} homeMenuData={homeMenuData} />
+                <TabContent selectedTab={selectedTab} homeMenuData={homeMenuData} isAdmin={isAdmin} isDrink={false}/>
                 <NewItemModal isDrink={false}/>
             </Content>
         </TabsContainer>
