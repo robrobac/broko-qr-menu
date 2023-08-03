@@ -1,15 +1,14 @@
 import React, { useRef, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Button from 'react-bootstrap/Button';
-import { db, storage } from '../../../../firebase/config';
+import { db, storage } from '../../firebase/config';
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useCollectionData } from "react-firebase-hooks/firestore";
-import { collection, doc, query, setDoc } from 'firebase/firestore';
+import { collection, doc, query, setDoc, updateDoc } from 'firebase/firestore';
 import Compressor from 'compressorjs';
 import NewCategoryModalForm from './NewCategoryModalForm';
-import noimage from "../../../../noimage.png"
-import { Divider, Form, FormInput, FormLabel, FormSection, FormSelect, FormTextarea, FormUpload, PriceConversion } from '../../../../components/StyledForm';
-import { AddCategoryButton, AddProductButton, SubmitButton } from '../../../../components/StyledButtons';
+import noimage from "../../noimage.png"
+import { Divider, Form, FormInput, FormLabel, FormSection, FormSelect, FormTextarea, FormUpload, PriceConversion } from '../StyledForm';
+import { AddCategoryButton, AddProductButton, SubmitButton } from '../StyledButtons';
 
 function NewItemModalForm({ isDrink }) {
     const [title, setTitle] = useState("");
@@ -108,6 +107,10 @@ function NewItemModalForm({ isDrink }) {
             setCompressedFile(null)
             fileInputRef.current.value = null;
             // handleClose();
+
+            //  Update lastedited timestamp to handle fetching from firestore or local storage.
+            await updateDoc(doc(db, "/menu/additional"), {lastedited: Date.now()})
+
         } catch (error) {
             console.error("error creating a new item", error);
         }

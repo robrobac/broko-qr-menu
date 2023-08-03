@@ -1,26 +1,43 @@
 import React, { useEffect, useRef, useState } from 'react'
-import "./CategoriesNav.scss"
-import Stack from 'react-bootstrap/Stack';
+import "./TabNavigation.scss"
+import { Nav, TabNav } from './StyledNavigation';
+import { NavigationButton } from './StyledButtons';
 import { Link } from 'react-scroll';
-import { collection, query } from 'firebase/firestore';
-import { db } from '../../../firebase/config';
-import { useCollectionData } from 'react-firebase-hooks/firestore';
-import { NavigationButton } from '../../../components/StyledButtons';
+import { collection, onSnapshot, query } from 'firebase/firestore';
+import { db } from '../firebase/config';
 
-function CategoriesNav({mainCategory}) {
-    const [activeCategory, setActiveCategory] = useState()
-    
-    const categoriesPath = `menu/${mainCategory}/categories`;
-    const categoriesQuery = query(collection(db, categoriesPath));
-    const [categories] = useCollectionData(categoriesQuery);
+function TabNavigation({selectedTab, homeMenuData}) {
+    const [categories, setCategories] = useState([])
+    const [activeCategory, setActiveCategory] = useState();
     const scrollContainerRef = useRef(null);
+
+    useEffect(() => {
+        if (homeMenuData && selectedTab) {
+            setCategories(homeMenuData[selectedTab])
+        }
+
+        if (!homeMenuData) {
+            const q = query(collection(db, `menu/${selectedTab}/categories`));
+            const unsubscribe = onSnapshot(q, (querySnapshot) => {
+                const snapshotData = [];
+                querySnapshot.forEach((doc) => {
+                    snapshotData.push(doc.data());
+                });
+                setCategories(snapshotData)
+            });
+            return () => {
+                unsubscribe();
+            }
+        }
+        
+    }, [selectedTab, homeMenuData])
 
     //  set initial active category
     useEffect(() => {
         if (categories?.length > 0) {
             setActiveCategory(categories[0].id)
         }
-    }, [categories, mainCategory])
+    }, [categories, selectedTab])
 
     //  Set new active category
     const handleActive = (e) => {
@@ -45,9 +62,9 @@ function CategoriesNav({mainCategory}) {
     }, [activeCategory, categories]);
 
     return (
-        <ul className='categoryNav sticky-top pb-3 pt-3' style={{ top: "64px" }} ref={scrollContainerRef}>
-            <Stack gap={3} direction='horizontal'>
-                {categories?.map((category) => (
+        <TabNav ref={scrollContainerRef}>
+            {categories?.map((category) => (
+                <Nav>
                     <Link
                     activeClass='active'
                     onSetActive={() => handleActive(category.id)}
@@ -59,12 +76,12 @@ function CategoriesNav({mainCategory}) {
                     duration={200}>
                         <NavigationButton $isActive={activeCategory === category.id ? "true" : undefined}>{category.category}</NavigationButton>
                     </Link>
-                ))}
-            </Stack>
-        </ul>
+                </Nav>
+                ))}     
+        </TabNav>
     ) 
 
     
 }
 
-export default CategoriesNav
+export default TabNavigation

@@ -1,15 +1,15 @@
 import { collection, query } from 'firebase/firestore';
 import React, { useContext, useRef, useState } from 'react'
 import { useCollectionData } from 'react-firebase-hooks/firestore';
-import { db, storage } from '../../../../firebase/config';
+import { db, storage } from '../../firebase/config';
 import Compressor from 'compressorjs';
 import { deleteObject, getDownloadURL, ref, uploadBytes } from 'firebase/storage';
-import { EditContext } from '../Items';
-import { Divider, Form, FormInput, FormLabel, FormSection, FormSelect, FormTextarea, FormUpload, PriceConversion } from '../../../../components/StyledForm';
-import { SubmitButton } from '../../../../components/StyledButtons';
+import { Divider, Form, FormInput, FormLabel, FormSection, FormSelect, FormTextarea, FormUpload, PriceConversion } from '../StyledForm';
+import { SubmitButton } from '../StyledButtons';
+import { EditContext2 } from '../AdminItems';
 
 function EditItemModalForm({item, setIsEditing}) {
-    const {handleEdit} = useContext(EditContext)
+    const {handleEdit} = useContext(EditContext2)
 
     const [title, setTitle] = useState(item.title);
     const [priceEUR, setPriceEUR] = useState(item.priceEUR);

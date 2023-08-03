@@ -1,11 +1,11 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './firebase/config';
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Admin from "./pages/admin/Admin";
 import { createContext, useState } from "react";
 import "./App.scss"
+import Home from "./pages/Home";
+import Admin from "./pages/Admin";
+import Login from "./pages/Login";
 
 
 export const AuthContext = createContext();

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Modal from 'react-bootstrap/Modal';
 import NewItemModalForm from './NewItemModalForm';
 import "./NewItemModal.scss"
-import { AddProductButton } from '../../../../components/StyledButtons';
+import { AddProductButton } from '../StyledButtons';
 
 function NewItemModal({isDrink}) {
     const [showFoodModal, setShowFoodModal] = useState(false);

@@ -1,9 +1,9 @@
 import { doc, updateDoc } from 'firebase/firestore';
 import React, { useState } from 'react'
 import { Modal } from 'react-bootstrap'
-import { db } from '../../../firebase/config';
-import { EditButton, SubmitButton } from '../../../components/StyledButtons';
-import { Divider, Form, FormInput, FormLabel, FormSection } from '../../../components/StyledForm';
+import { db } from '../firebase/config';
+import { EditButton, SubmitButton } from './StyledButtons';
+import { Divider, Form, FormInput, FormLabel, FormSection } from './StyledForm';
 
 function EditCategoryModal({category}) {
     const [isEditing, setIsEditing] = useState(false)
@@ -24,6 +24,10 @@ function EditCategoryModal({category}) {
         } catch (error) {
             console.error("error creating a new item", error);
         }
+        
+        //  Update lastedited timestamp to handle fetching from firestore or local storage.
+        await updateDoc(doc(db, "/menu/additional"), {lastedited: Date.now()})
+        
         //  and close the form
         setIsEditing(false)
     }

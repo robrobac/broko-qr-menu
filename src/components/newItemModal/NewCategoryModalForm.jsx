@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Button from 'react-bootstrap/Button';
-import { db } from '../../../../firebase/config';
-import { doc, setDoc } from 'firebase/firestore';
-import { Divider, Form, FormInput, FormLabel, FormSection } from '../../../../components/StyledForm';
-import { EditButton, SubmitButton } from '../../../../components/StyledButtons';
+import { db } from '../../firebase/config';
+import { doc, setDoc, updateDoc } from 'firebase/firestore';
+import { Divider, Form, FormInput, FormLabel, FormSection } from '../StyledForm';
+import { EditButton, SubmitButton } from '../StyledButtons';
 
 function NewCategoryModalForm({ handleAddingCategory, isDrink }) {
     const [category, setCategory] = useState("");
@@ -37,6 +36,10 @@ function NewCategoryModalForm({ handleAddingCategory, isDrink }) {
             //  Reset form states
             setCategory("");
             handleAddingCategory();
+
+            //  Update lastedited timestamp to handle fetching from firestore or local storage.
+            await updateDoc(doc(db, "/menu/additional"), {lastedited: Date.now()})
+
         } catch (error) {
             console.error("error creating a new item", error);
         }

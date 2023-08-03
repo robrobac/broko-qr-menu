@@ -1,22 +1,38 @@
-import React, { useContext } from 'react'
-import { Element } from 'react-scroll';
-import { collection, deleteDoc, doc, getDocs, query } from 'firebase/firestore';
-import { useCollectionData } from 'react-firebase-hooks/firestore';
-import { db, storage } from '../../../firebase/config';
-import Items from './Items';
-import { deleteObject, ref } from 'firebase/storage';
-import EditCategoryModal from './EditCategoryModal';
-import { AuthContext } from '../../../App';
-import "./Categories.scss"
-import { DeleteButton } from '../../../components/StyledButtons';
+import React, { useEffect, useState } from 'react'
+import "./TabContent.scss"
+import { Element } from 'react-scroll'
+import { collection, deleteDoc, doc, getDocs, onSnapshot, query, updateDoc } from 'firebase/firestore'
+import { db, storage } from '../firebase/config'
+import { DeleteButton } from './StyledButtons'
+import EditCategoryModal from './EditCategoryModal'
+import { deleteObject, ref } from 'firebase/storage'
+import AdminItems from './AdminItems'
+import ProductCard from './ProductCard'
 
+function TabContent({selectedTab, homeMenuData, isAdmin}) {
+    const [categories, setCategories] = useState([])
+    console.log(categories)
 
+    useEffect(() => {
+        if (homeMenuData && selectedTab) {
+            setCategories(homeMenuData[selectedTab])
+        }
 
-function Categories({isDrink}) {
-    const categoriesPath = isDrink ? "menu/drink/categories" : "menu/food/categories"
-    const categoriesQuery = query(collection(db, categoriesPath))
-    const [categories] = useCollectionData(categoriesQuery)
-    const {isAuth} = useContext(AuthContext)
+        if (!homeMenuData) {
+            const q = query(collection(db, `menu/${selectedTab}/categories`));
+            const unsubscribe = onSnapshot(q, (querySnapshot) => {
+                const snapshotData = [];
+                querySnapshot.forEach((doc) => {
+                    snapshotData.push(doc.data());
+                });
+                setCategories(snapshotData)
+            });
+            return () => {
+                unsubscribe();
+            }
+        }
+    }, [selectedTab, homeMenuData])
+
 
     //  Handles delete of whole category
     const handleDeleteCategory = async (category) => {
@@ -47,26 +63,39 @@ function Categories({isDrink}) {
             }
             //  Delete the category item from the collection
             await deleteDoc(doc(db, category.categoryPath));
+
+            //  Update lastedited timestamp to handle fetching from firestore or local storage.
+            await updateDoc(doc(db, "/menu/additional"), {lastedited: Date.now()})
         }
     }
+
 
     return (
         <div>
             {categories?.map((category) => (
                 <Element key={category.id} name={category.id} className='categoryContainer'>
                     <h2 className="categoryTitle" id={category.id}>{category.category}</h2>
-                    {isAuth ? (
+                    {isAdmin ? (
+                        <>
                         <div className='categoryControls'>
                             <DeleteButton onClick={() => handleDeleteCategory(category)}>Delete Category</DeleteButton>
                             <EditCategoryModal category={category} />
                         </div>
-                    ) : ""}
-                        
-                        <Items category={category} categoriesPath={categoriesPath}/>
+                        <AdminItems category={category}/>
+                        </>
+                    ) : 
+                        <div>
+                            {category.items?.map((item) => (
+                                <>
+                                <ProductCard item={item} key={item.id}/>
+                                </>
+                            ))}
+                        </div>
+                    }
                 </Element>
             ))}
         </div>
     )
 }
 
-export default Categories
+export default TabContent
