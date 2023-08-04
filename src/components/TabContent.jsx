@@ -34,6 +34,7 @@ function TabContent({selectedTab, homeMenuData, isAdmin, isDrink}) {
                 unsubscribe();
             }
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
 

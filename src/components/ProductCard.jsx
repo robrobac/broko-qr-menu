@@ -39,13 +39,13 @@ function ProductCard({item, handleDelete, isAdmin}) {
                 <CardDesc>{item.description}</CardDesc>
                 {isAdmin ? (
                     <CardAdmin>
-                    <AdminTimestamp>Created: {formattedDateCreated}</AdminTimestamp>
-                    <AdminTimestamp>Edited: {formattedDateEdited}</AdminTimestamp>
-                    <AdminButtons>
-                        <DeleteButton onClick={() => handleDelete(item)}>D</DeleteButton>
-                        <EditItemModal item={item}/>
-                    </AdminButtons>
-                </CardAdmin>
+                        <AdminTimestamp>Created: {formattedDateCreated}</AdminTimestamp>
+                        <AdminTimestamp>Edited: {formattedDateEdited}</AdminTimestamp>
+                        <AdminButtons>
+                            <DeleteButton onClick={() => handleDelete(item)}>D</DeleteButton>
+                            <EditItemModal item={item}/>
+                        </AdminButtons>
+                    </CardAdmin>
                 ) : ""}
             </CardBody>
         </Card>

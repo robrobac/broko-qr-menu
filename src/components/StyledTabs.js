@@ -24,12 +24,15 @@ const Tab = styled.button`
     
 `
 
-const Content = styled.div`
+const ContentAdmin = styled.div`
     background-color: white;
 
     ${props => (props.$isActive ? "" : "display:none")}
 `
+const ContentHome = styled.div`
+    background-color: white;
+`
 // background-color: ${props => (props.active ? "white" : "#5b7e6c")};
 // ${props => (props.active ? "" : "display:none")}
 
-export { TabsContainer, Tabs, Tab, Content }
+export { TabsContainer, Tabs, Tab, ContentAdmin, ContentHome }

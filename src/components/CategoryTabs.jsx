@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { scrollToTop } from '../helpers/scrollToTop'
-import { Content, Tab, Tabs, TabsContainer } from './StyledTabs'
+import { ContentAdmin, ContentHome, Tab, Tabs, TabsContainer } from './StyledTabs'
 import TabNavigation from './TabNavigation'
 import TabContent from './TabContent'
 import NewItemModal from './newItemModal/NewItemModal'
@@ -27,18 +27,30 @@ function CategoryTabs({homeMenuData, isAdmin}) {
                     FOOD
                 </Tab>
             </Tabs>
-            <Content $isActive={selectedTab === "drink" ? "true" : undefined}>
-                <TabNavigation selectedTab={selectedTab} homeMenuData={homeMenuData} />
-                <TabContent selectedTab={selectedTab} homeMenuData={homeMenuData} isAdmin={isAdmin} isDrink={true}/>
-                <NewItemModal isDrink={true}/>
-            </Content>
-            <Content $isActive={selectedTab === "food" ? "true" : undefined}>
-                <TabNavigation selectedTab={selectedTab} homeMenuData={homeMenuData} />
-                <TabContent selectedTab={selectedTab} homeMenuData={homeMenuData} isAdmin={isAdmin} isDrink={false}/>
-                <NewItemModal isDrink={false}/>
-            </Content>
+            {isAdmin ? (
+                <>
+                <ContentAdmin $isActive={selectedTab === "drink" ? "true" : undefined}>
+                    <TabNavigation selectedTab={selectedTab} homeMenuData={homeMenuData} />
+                    <TabContent selectedTab={selectedTab} homeMenuData={homeMenuData} isAdmin={isAdmin} isDrink={true}/>
+                    <NewItemModal isDrink={true}/>
+                </ContentAdmin>
+                    <ContentAdmin $isActive={selectedTab === "food" ? "true" : undefined}>
+                    <TabNavigation selectedTab={selectedTab} homeMenuData={homeMenuData} />
+                    <TabContent selectedTab={selectedTab} homeMenuData={homeMenuData} isAdmin={isAdmin} isDrink={false}/>
+                    <NewItemModal isDrink={false}/>
+                </ContentAdmin>
+                </>
+            ) : (
+                <ContentHome $isActive={selectedTab === "drink" ? "true" : undefined}>
+                    <TabNavigation selectedTab={selectedTab} homeMenuData={homeMenuData} />
+                    <TabContent selectedTab={selectedTab} homeMenuData={homeMenuData}/>
+                </ContentHome>
+            )}  
+            
         </TabsContainer>
     )
 }
 
 export default CategoryTabs
+
+
