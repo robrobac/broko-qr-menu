@@ -6,7 +6,7 @@ export const Card = styled.div`
     box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.44);
     border-radius: 10px;
     color: #235239;
-    margin: 0 auto;
+    margin: 3rem auto;
     z-index: 1;
 `
 export const CardImage = styled.img`
@@ -49,6 +49,7 @@ export const PriceKN = styled.span`
 `
 export const CardDesc = styled.p`
     text-align: left;
+    line-height: 1.5rem;
     margin-bottom: 0;
 `
 export const CardAdmin = styled.div`
@@ -67,6 +68,7 @@ export const AdminTimestamp = styled.p`
 
 `
 export const AdminButtons = styled.div`
-display: flex;
+    display: flex;
+    gap: 1rem;
 
 `

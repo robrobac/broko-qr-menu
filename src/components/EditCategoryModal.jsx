@@ -1,9 +1,11 @@
 import { doc, updateDoc } from 'firebase/firestore';
 import React, { useState } from 'react'
-import { Modal } from 'react-bootstrap'
+import { HeaderClose, HeaderTitle, Modal, ModalBody, ModalContent, ModalHeader } from './StyledModal';
 import { db } from '../firebase/config';
 import { EditButton, SubmitButton } from './StyledButtons';
 import { Divider, Form, FormInput, FormLabel, FormSection } from './StyledForm';
+import { ReactComponent as EditIcon } from "../Icons/editicon.svg";
+import { ReactComponent as XIcon } from "../Icons/xicon.svg";
 
 function EditCategoryModal({category}) {
     const [isEditing, setIsEditing] = useState(false)
@@ -34,13 +36,20 @@ function EditCategoryModal({category}) {
     
     return (
         <div>
-            <EditButton onClick={() => setIsEditing(true)}>Edit Category</EditButton>
-            <Modal show={isEditing} onHide={() => setIsEditing(false)} animation={false}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Edit Category</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <Form onSubmit={handleCategoryChange}>
+            <EditButton onClick={() => setIsEditing(true)}>
+                <EditIcon height="100%"/>
+            </EditButton>
+
+            <Modal $showModal={isEditing ? 1 : 0} onClick={() => setIsEditing(false)}>
+            <ModalContent onClick={(e) => e.stopPropagation()}>
+                <ModalHeader>
+                    <HeaderTitle>Edit Category</HeaderTitle>
+                    <HeaderClose onClick={() => setIsEditing(false)}>
+                        <XIcon height="100%"/>
+                    </HeaderClose>
+                </ModalHeader>
+                <ModalBody>
+                <Form onSubmit={handleCategoryChange}>
                         <FormSection>
                             <FormLabel htmlFor="inputCategory">Title</FormLabel>
                             <FormInput
@@ -56,7 +65,8 @@ function EditCategoryModal({category}) {
                             Save Changes
                         </SubmitButton>
                     </Form>
-                </Modal.Body>
+                </ModalBody>
+            </ModalContent>
             </Modal>
         </div>
     )

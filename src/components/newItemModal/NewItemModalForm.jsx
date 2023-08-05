@@ -167,7 +167,7 @@ function NewItemModalForm({ isDrink }) {
                             <option key="0"></option>
                             {categories?.map((option) => (
                                 <option
-                                active={category === option.category}
+                                active={category === option.category ? 1 : 0}
                                 value={option.id}
                                 name={option.id}
                                 key={option.id}>

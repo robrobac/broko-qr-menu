@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { db } from '../../firebase/config';
 import { doc, setDoc, updateDoc } from 'firebase/firestore';
 import { Divider, Form, FormInput, FormLabel, FormSection } from '../StyledForm';
-import { EditButton, SubmitButton } from '../StyledButtons';
+import { BackButton, EditButton, SubmitButton } from '../StyledButtons';
 
 function NewCategoryModalForm({ handleAddingCategory, isDrink }) {
     const [category, setCategory] = useState("");
@@ -60,9 +60,9 @@ function NewCategoryModalForm({ handleAddingCategory, isDrink }) {
         <SubmitButton type="submit">
             Submit New {isDrink ? "Drink" : "Food"} Category
         </SubmitButton>
-        <EditButton onClick={handleAddingCategory}>
+        <BackButton onClick={handleAddingCategory}>
             Back
-        </EditButton>
+        </BackButton>
     </Form>
   );
 }

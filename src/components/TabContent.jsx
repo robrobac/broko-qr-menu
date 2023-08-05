@@ -8,6 +8,7 @@ import EditCategoryModal from './EditCategoryModal'
 import { deleteObject, ref } from 'firebase/storage'
 import AdminItems from './AdminItems'
 import ProductCard from './ProductCard'
+import { ReactComponent as TrashIcon } from "../Icons/trashicon.svg";
 
 function TabContent({selectedTab, homeMenuData, isAdmin, isDrink}) {
     const [categories, setCategories] = useState([])
@@ -82,7 +83,9 @@ function TabContent({selectedTab, homeMenuData, isAdmin, isDrink}) {
                     {isAdmin ? (
                         <>
                         <div className='categoryControls'>
-                            <DeleteButton onClick={() => handleDeleteCategory(category)}>Delete Category</DeleteButton>
+                            <DeleteButton onClick={() => handleDeleteCategory(category)}>
+                                <TrashIcon height="100%"/>
+                            </DeleteButton>
                             <EditCategoryModal category={category} />
                         </div>
                         <AdminItems category={category}/>

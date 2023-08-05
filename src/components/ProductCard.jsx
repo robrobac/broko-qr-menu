@@ -3,6 +3,7 @@ import { AdminButtons, AdminTimestamp, Card, CardAdmin, CardBody, CardDesc, Card
 import { DeleteButton } from './StyledButtons'
 import noimage from "../noimage.png"
 import EditItemModal from './editItemModal/EditItemModal'
+import { ReactComponent as TrashIcon } from "../Icons/trashicon.svg";
 
 function ProductCard({item, handleDelete, isAdmin}) {
 
@@ -42,7 +43,9 @@ function ProductCard({item, handleDelete, isAdmin}) {
                         <AdminTimestamp>Created: {formattedDateCreated}</AdminTimestamp>
                         <AdminTimestamp>Edited: {formattedDateEdited}</AdminTimestamp>
                         <AdminButtons>
-                            <DeleteButton onClick={() => handleDelete(item)}>D</DeleteButton>
+                            <DeleteButton onClick={() => handleDelete(item)}>
+                                <TrashIcon height="100%"/>
+                            </DeleteButton>
                             <EditItemModal item={item}/>
                         </AdminButtons>
                     </CardAdmin>

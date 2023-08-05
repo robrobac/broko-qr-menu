@@ -1,22 +1,35 @@
 import React, { useState } from 'react'
-import { Modal } from 'react-bootstrap'
 import EditItemModalForm from './EditItemModalForm'
 import { EditButton } from '../StyledButtons'
+import { HeaderClose, HeaderTitle, Modal, ModalBody, ModalContent, ModalHeader } from '../StyledModal';
+import { ReactComponent as EditIcon } from "../../Icons/editicon.svg";
+import { ReactComponent as XIcon } from "../../Icons/xicon.svg";
+
 
 function EditItemModal({item}) {
     const [isEditing, setIsEditing] = useState(false)
     return (
-        <div>
-            <EditButton onClick={() => setIsEditing(true)}>E</EditButton>
-            <Modal show={isEditing} onHide={() => setIsEditing(false)} animation={false}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Edit {item.mainCategory}</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
+        <>
+        <EditButton onClick={() => setIsEditing(true)}>
+            <EditIcon height="100%"/>
+        </EditButton>
+
+            <Modal $showModal={isEditing ? 1 : 0} onClick={() => setIsEditing(false)}>
+            <ModalContent onClick={(e) => e.stopPropagation()}>
+                <ModalHeader>
+                    <HeaderTitle>Edit {item.mainCategory}</HeaderTitle>
+                    <HeaderClose onClick={() => setIsEditing(false)}>
+                        <XIcon height="100%"/>
+                    </HeaderClose>
+                </ModalHeader>
+                <ModalBody>
                     <EditItemModalForm item={item} setIsEditing={setIsEditing}/>
-                </Modal.Body>
-            </Modal>
-        </div>
+                </ModalBody>
+            </ModalContent>
+        </Modal>
+
+        
+        </>
     )
 }
 

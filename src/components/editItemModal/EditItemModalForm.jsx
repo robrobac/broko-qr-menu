@@ -12,7 +12,7 @@ function EditItemModalForm({item, setIsEditing}) {
     const {handleEdit} = useContext(EditContext2)
 
     const [title, setTitle] = useState(item.title);
-    const [priceEUR, setPriceEUR] = useState(item.priceEUR);
+    const [priceEUR, setPriceEUR] = useState(parseFloat(item.priceEUR));
     const [priceKN, setPriceKN] = useState(item.priceKN);
     const [category, setCategory] = useState(item.category);
     const [description, setDescription] = useState(item.description);
@@ -118,6 +118,7 @@ function EditItemModalForm({item, setIsEditing}) {
                     </FormLabel>
                     <FormInput
                     required
+                    step="any"
                     type="number"
                     id="inputPrice"
                     placeholder="Price"
@@ -140,7 +141,7 @@ function EditItemModalForm({item, setIsEditing}) {
                         <option key="0"></option>
                         {categories?.map((option) => (
                             <option
-                            active={category === option.category}
+                            active={category === option.category ? 1 : 0}
                             value={option.id}
                             name={option.id}
                             key={option.id}>

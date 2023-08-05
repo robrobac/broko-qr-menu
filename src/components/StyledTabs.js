@@ -32,7 +32,13 @@ const ContentAdmin = styled.div`
 const ContentHome = styled.div`
     background-color: white;
 `
+
+const Icon = styled.div`
+    fill: ${props => (props.$isActive ? "#235239" : "white")};
+    height: ${props => (props.$isActive ? "2rem" : "1rem")};
+    transition: height .2s;
+`
 // background-color: ${props => (props.active ? "white" : "#5b7e6c")};
 // ${props => (props.active ? "" : "display:none")}
 
-export { TabsContainer, Tabs, Tab, ContentAdmin, ContentHome }
+export { TabsContainer, Tabs, Tab, ContentAdmin, ContentHome, Icon }

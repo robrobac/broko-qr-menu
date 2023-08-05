@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { scrollToTop } from '../helpers/scrollToTop'
-import { ContentAdmin, ContentHome, Tab, Tabs, TabsContainer } from './StyledTabs'
+import { ContentAdmin, ContentHome, Icon, Tab, Tabs, TabsContainer } from './StyledTabs'
 import TabNavigation from './TabNavigation'
 import TabContent from './TabContent'
 import NewItemModal from './newItemModal/NewItemModal'
+import { ReactComponent as DrinkIcon } from "../Icons/drinkicon.svg";
+import { ReactComponent as FoodIcon } from "../Icons/foodicon.svg";
 
 function CategoryTabs({homeMenuData, isAdmin}) {
     const [selectedTab, setSelectedTab] = useState("food")
@@ -19,12 +21,16 @@ function CategoryTabs({homeMenuData, isAdmin}) {
                 <Tab
                 onClick={() => setSelectedTab("drink")}
                 $isActive={selectedTab === "drink" ? "true" : undefined}>
-                    DRINK
+                    <Icon $isActive={selectedTab === "drink" ? "true" : undefined}>
+                        <DrinkIcon height="100%"/>
+                    </Icon>
                 </Tab>
                 <Tab
                 onClick={() => setSelectedTab("food")}
                 $isActive={selectedTab === "food" ? "true" : undefined}>
-                    FOOD
+                    <Icon $isActive={selectedTab === "food" ? "true" : undefined}>
+                        <FoodIcon height="100%"/>
+                    </Icon>
                 </Tab>
             </Tabs>
             {isAdmin ? (

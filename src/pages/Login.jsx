@@ -1,14 +1,21 @@
 import React, { useState } from 'react'
-
-// import 'bootstrap/dist/css/bootstrap.min.css';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase/config';
+import { Divider, Form, FormInput, FormLabel, FormSection } from '../components/StyledForm';
+import { BackButton, SubmitButton } from '../components/StyledButtons';
+import { Modal, ModalBody, ModalContent } from '../components/StyledModal';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+
+    const navigate = useNavigate();
+
+    const handleGoBack = () => {
+        // Use the navigate function to navigate to the "Home" route
+        navigate('/');
+    };
 
     const handleLogin = async (email, password) => {
         try {
@@ -30,30 +37,44 @@ function Login() {
     }
 
     return (
-        <Form id="loginForm" onSubmit={handleFormSubmit}>
-            <Form.Group className="mb-3" id="emailForm">
-                <Form.Label htmlFor="inputEmail">Email address</Form.Label>
-                <Form.Control
-                type="email"
-                id="inputEmail"
-                placeholder="name@example.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                />
-            </Form.Group>
-            <Form.Group className="mb-3" id="passwordForm">
-                <Form.Label htmlFor="inputPassword">Password</Form.Label>
-                <Form.Control
-                type="password"
-                id="inputPassword"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                />
-            </Form.Group>
-            <Button variant="primary" type="submit">
-                Submit
-            </Button>
-        </Form>
+        <Modal $showModal={1}>
+            <ModalContent>
+                <ModalBody>
+                    <Form id="loginForm" onSubmit={handleFormSubmit}>
+                        <FormSection>
+                            <FormLabel htmlFor="inputEmail">
+                                Email address
+                            </FormLabel>
+                            <FormInput
+                            required
+                            type="email"
+                            id="inputEmail"
+                            placeholder="name@example.com"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}/>
+                        </FormSection>
+                        <Divider></Divider>
+                        <FormSection>
+                            <FormLabel htmlFor="inputPassword">
+                                Password
+                            </FormLabel>
+                            <FormInput
+                            required
+                            type="password"
+                            id="inputPassword"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}/>
+                        </FormSection>
+                        <SubmitButton type="submit">
+                            Sign In
+                        </SubmitButton>
+                    </Form>
+                    <BackButton style={{marginTop: "1rem", width: "100%"}} onClick={handleGoBack}>
+                    Go Back To Home
+                    </BackButton>
+                </ModalBody>
+            </ModalContent>
+        </Modal>
     )
 }
 
