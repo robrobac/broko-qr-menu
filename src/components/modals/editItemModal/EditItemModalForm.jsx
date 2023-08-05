@@ -1,12 +1,12 @@
 import { collection, query } from 'firebase/firestore';
 import React, { useContext, useRef, useState } from 'react'
 import { useCollectionData } from 'react-firebase-hooks/firestore';
-import { db, storage } from '../../firebase/config';
+import { db, storage } from '../../../firebase/config';
 import Compressor from 'compressorjs';
 import { deleteObject, getDownloadURL, ref, uploadBytes } from 'firebase/storage';
-import { Divider, Form, FormInput, FormLabel, FormSection, FormSelect, FormTextarea, FormUpload, PriceConversion } from '../StyledForm';
-import { SubmitButton } from '../StyledButtons';
-import { EditContext2 } from '../AdminItems';
+import { Divider, Form, FormInput, FormLabel, FormSection, FormSelect, FormTextarea, FormUpload, PriceConversion } from '../../styledComponents/StyledForm';
+import { SubmitButton } from '../../styledComponents/StyledButtons';
+import { EditContext2 } from '../../AdminItems';
 
 function EditItemModalForm({item, setIsEditing}) {
     const {handleEdit} = useContext(EditContext2)

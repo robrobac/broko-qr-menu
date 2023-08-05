@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { db } from '../../firebase/config';
+import { db } from '../../../firebase/config';
 import { doc, setDoc, updateDoc } from 'firebase/firestore';
-import { Divider, Form, FormInput, FormLabel, FormSection } from '../StyledForm';
-import { BackButton, EditButton, SubmitButton } from '../StyledButtons';
+import { Divider, Form, FormInput, FormLabel, FormSection } from '../../styledComponents/StyledForm';
+import { BackButton, SubmitButton } from '../../styledComponents/StyledButtons';
 
 function NewCategoryModalForm({ handleAddingCategory, isDrink }) {
     const [category, setCategory] = useState("");

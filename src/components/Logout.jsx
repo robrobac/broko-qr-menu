@@ -1,13 +1,12 @@
-import { onAuthStateChanged, signOut } from 'firebase/auth'
-import React, { useContext, useState } from 'react'
+import { signOut } from 'firebase/auth'
+import React, { useContext } from 'react'
 import { auth } from '../firebase/config'
 import { AuthContext } from '../App'
-import { AuthButton } from './StyledButtons'
+import { AuthButton } from './styledComponents/StyledButtons'
 import { useNavigate } from 'react-router-dom'
 
 
 function Logout() {
-    const [user, setUser] = useState(null)
     const {isAuth} = useContext(AuthContext)
 
     const navigate = useNavigate();
@@ -16,10 +15,6 @@ function Logout() {
         // Use the navigate function to navigate to the "Home" route
         navigate('/login');
     };
-
-    onAuthStateChanged(auth, (currentUser) => {
-        setUser(currentUser)
-    })
 
     const handleLogout = async () => {
         try {

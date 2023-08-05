@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { scrollToTop } from '../helpers/scrollToTop'
-import { ContentAdmin, ContentHome, Icon, Tab, Tabs, TabsContainer } from './StyledTabs'
+import { ContentAdmin, ContentHome, Icon, Tab, Tabs, TabsContainer } from './styledComponents/StyledTabs'
 import TabNavigation from './TabNavigation'
 import TabContent from './TabContent'
-import NewItemModal from './newItemModal/NewItemModal'
-import { ReactComponent as DrinkIcon } from "../Icons/drinkicon.svg";
-import { ReactComponent as FoodIcon } from "../Icons/foodicon.svg";
+import NewItemModal from './modals/newItemModal/NewItemModal'
+import { ReactComponent as DrinkIcon } from "../icons/drinkicon.svg";
+import { ReactComponent as FoodIcon } from "../icons/foodicon.svg";
 
 function CategoryTabs({homeMenuData, isAdmin}) {
     const [selectedTab, setSelectedTab] = useState("food")

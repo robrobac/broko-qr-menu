@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import "./TabNavigation.scss"
-import { Nav, TabNav } from './StyledNavigation';
-import { NavigationButton } from './StyledButtons';
+import { Nav, TabNav } from './styledComponents/StyledNavigation';
+import { NavigationButton } from './styledComponents/StyledButtons';
 import { Link } from 'react-scroll';
 import { collection, onSnapshot, query } from 'firebase/firestore';
 import { db } from '../firebase/config';

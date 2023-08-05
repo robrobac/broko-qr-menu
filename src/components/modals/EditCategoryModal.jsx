@@ -1,11 +1,11 @@
 import { doc, updateDoc } from 'firebase/firestore';
 import React, { useState } from 'react'
-import { HeaderClose, HeaderTitle, Modal, ModalBody, ModalContent, ModalHeader } from './StyledModal';
-import { db } from '../firebase/config';
-import { EditButton, SubmitButton } from './StyledButtons';
-import { Divider, Form, FormInput, FormLabel, FormSection } from './StyledForm';
-import { ReactComponent as EditIcon } from "../Icons/editicon.svg";
-import { ReactComponent as XIcon } from "../Icons/xicon.svg";
+import { HeaderClose, HeaderTitle, Modal, ModalBody, ModalContent, ModalHeader } from '../styledComponents/StyledModal';
+import { db } from '../../firebase/config';
+import { EditButton, SubmitButton } from '../styledComponents/StyledButtons';
+import { Divider, Form, FormInput, FormLabel, FormSection } from '../styledComponents/StyledForm';
+import { ReactComponent as EditIcon } from "../../icons/editicon.svg";
+import { ReactComponent as XIcon } from "../../icons/xicon.svg";
 
 function EditCategoryModal({category}) {
     const [isEditing, setIsEditing] = useState(false)

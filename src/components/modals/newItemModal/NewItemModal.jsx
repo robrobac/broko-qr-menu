@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import NewItemModalForm from './NewItemModalForm';
-import { AddProductButton } from '../StyledButtons';
-import { HeaderClose, HeaderTitle, Modal, ModalBody, ModalContent, ModalHeader } from '../StyledModal';
-import { ReactComponent as XIcon } from "../../Icons/xicon.svg";
+import { AddProductButton } from '../../styledComponents/StyledButtons';
+import { HeaderClose, HeaderTitle, Modal, ModalBody, ModalContent, ModalHeader } from '../../styledComponents/StyledModal';
+import { ReactComponent as XIcon } from "../../../icons/xicon.svg";
 
 function NewItemModal({isDrink}) {
     const [showFoodModal, setShowFoodModal] = useState(false);

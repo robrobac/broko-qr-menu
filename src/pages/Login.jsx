@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase/config';
-import { Divider, Form, FormInput, FormLabel, FormSection } from '../components/StyledForm';
-import { BackButton, SubmitButton } from '../components/StyledButtons';
-import { Modal, ModalBody, ModalContent } from '../components/StyledModal';
+import { Divider, Form, FormInput, FormLabel, FormSection } from '../components/styledComponents/StyledForm';
+import { BackButton, SubmitButton } from '../components/styledComponents/StyledButtons';
+import { Modal, ModalBody, ModalContent } from '../components/styledComponents/StyledModal';
 import { useNavigate } from 'react-router-dom';
 
 function Login() {

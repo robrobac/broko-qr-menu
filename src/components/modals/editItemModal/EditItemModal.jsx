@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import EditItemModalForm from './EditItemModalForm'
-import { EditButton } from '../StyledButtons'
-import { HeaderClose, HeaderTitle, Modal, ModalBody, ModalContent, ModalHeader } from '../StyledModal';
-import { ReactComponent as EditIcon } from "../../Icons/editicon.svg";
-import { ReactComponent as XIcon } from "../../Icons/xicon.svg";
+import { EditButton } from '../../styledComponents/StyledButtons';
+import { HeaderClose, HeaderTitle, Modal, ModalBody, ModalContent, ModalHeader } from '../../styledComponents/StyledModal';
+import { ReactComponent as EditIcon } from "../../../icons/editicon.svg";
+import { ReactComponent as XIcon } from "../../../icons/xicon.svg";
 
 
 function EditItemModal({item}) {

@@ -3,12 +3,12 @@ import "./TabContent.scss"
 import { Element } from 'react-scroll'
 import { collection, deleteDoc, doc, getDocs, onSnapshot, query, updateDoc } from 'firebase/firestore'
 import { db, storage } from '../firebase/config'
-import { DeleteButton } from './StyledButtons'
-import EditCategoryModal from './EditCategoryModal'
+import { DeleteButton } from './styledComponents/StyledButtons'
+import EditCategoryModal from './modals/EditCategoryModal'
 import { deleteObject, ref } from 'firebase/storage'
 import AdminItems from './AdminItems'
 import ProductCard from './ProductCard'
-import { ReactComponent as TrashIcon } from "../Icons/trashicon.svg";
+import { ReactComponent as TrashIcon } from "../icons/trashicon.svg";
 
 function TabContent({selectedTab, homeMenuData, isAdmin, isDrink}) {
     const [categories, setCategories] = useState([])

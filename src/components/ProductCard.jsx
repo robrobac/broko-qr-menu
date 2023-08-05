@@ -1,9 +1,9 @@
 import React from 'react'
-import { AdminButtons, AdminTimestamp, Card, CardAdmin, CardBody, CardDesc, CardImage, CardPrice, CardTitle, PriceEUR, PriceKN } from './StyledCard'
-import { DeleteButton } from './StyledButtons'
+import { AdminButtons, AdminTimestamp, Card, CardAdmin, CardBody, CardDesc, CardImage, CardPrice, CardTitle, PriceEUR, PriceKN } from './styledComponents/StyledCard'
+import { DeleteButton } from './styledComponents/StyledButtons'
 import noimage from "../noimage.png"
-import EditItemModal from './editItemModal/EditItemModal'
-import { ReactComponent as TrashIcon } from "../Icons/trashicon.svg";
+import EditItemModal from './modals/editItemModal/EditItemModal'
+import { ReactComponent as TrashIcon } from "../icons/trashicon.svg";
 
 function ProductCard({item, handleDelete, isAdmin}) {
 

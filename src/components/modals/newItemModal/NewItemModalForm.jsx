@@ -1,13 +1,13 @@
 import React, { useRef, useState } from 'react';
-import { db, storage } from '../../firebase/config';
+import { db, storage } from '../../../firebase/config';
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { collection, doc, query, setDoc, updateDoc } from 'firebase/firestore';
 import Compressor from 'compressorjs';
 import NewCategoryModalForm from './NewCategoryModalForm';
-import noimage from "../../noimage.png"
-import { Divider, Form, FormInput, FormLabel, FormSection, FormSelect, FormTextarea, FormUpload, PriceConversion } from '../StyledForm';
-import { AddCategoryButton, SubmitButton } from '../StyledButtons';
+import noimage from "../../../noimage.png"
+import { Divider, Form, FormInput, FormLabel, FormSection, FormSelect, FormTextarea, FormUpload, PriceConversion } from '../../styledComponents/StyledForm';
+import { AddCategoryButton, SubmitButton } from '../../styledComponents/StyledButtons';
 
 function NewItemModalForm({ isDrink }) {
     const [title, setTitle] = useState("");
