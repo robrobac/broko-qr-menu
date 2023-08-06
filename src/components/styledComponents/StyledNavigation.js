@@ -19,7 +19,10 @@ export const TabNav = styled.ul`
     z-index: 2;
 `
 
-export const Nav = styled.nav`
+export const Nav = styled.li`
+    list-style: none;
+`
 
-    
+export const Search = styled.div`
+    position: sticky;
 `

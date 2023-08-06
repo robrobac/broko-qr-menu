@@ -37,7 +37,7 @@ const NavigationButton = styled(Button)`
     background-color: ${(props) => (props.$isActive) ? "#235239" : "white"};
     color: ${(props) => (props.$isActive) ? "white" : "#235239"};
     border: 1px solid #235239;
-    padding: 10px 10px;
+    height: 38px;
     font-weight: 700;
     white-space: nowrap;
 `

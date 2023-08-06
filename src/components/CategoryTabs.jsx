@@ -6,6 +6,8 @@ import TabContent from './TabContent'
 import NewItemModal from './modals/newItemModal/NewItemModal'
 import { ReactComponent as DrinkIcon } from "../icons/drinkicon.svg";
 import { ReactComponent as FoodIcon } from "../icons/foodicon.svg";
+import { ReactComponent as SearchIcon } from "../icons/searchicon.svg";
+import SearchBar from './SearchBar'
 
 function CategoryTabs({homeMenuData, isAdmin}) {
     const [selectedTab, setSelectedTab] = useState("food")
@@ -32,6 +34,13 @@ function CategoryTabs({homeMenuData, isAdmin}) {
                         <FoodIcon height="100%"/>
                     </Icon>
                 </Tab>
+                <Tab style={{flex: "1"}}
+                onClick={() => setSelectedTab("search")}
+                $isActive={selectedTab === "search" ? "true" : undefined}>
+                    <Icon $isActive={selectedTab === "search" ? "true" : undefined}>
+                        <SearchIcon height="100%"/>
+                    </Icon>
+                </Tab>
             </Tabs>
             {isAdmin ? (
                 <>
@@ -40,17 +49,25 @@ function CategoryTabs({homeMenuData, isAdmin}) {
                     <TabContent selectedTab={selectedTab} homeMenuData={homeMenuData} isAdmin={isAdmin} isDrink={true}/>
                     <NewItemModal isDrink={true}/>
                 </ContentAdmin>
-                    <ContentAdmin $isActive={selectedTab === "food" ? "true" : undefined}>
+                <ContentAdmin $isActive={selectedTab === "food" ? "true" : undefined}>
                     <TabNavigation selectedTab={selectedTab} homeMenuData={homeMenuData} />
                     <TabContent selectedTab={selectedTab} homeMenuData={homeMenuData} isAdmin={isAdmin} isDrink={false}/>
                     <NewItemModal isDrink={false}/>
                 </ContentAdmin>
                 </>
             ) : (
-                <ContentHome $isActive={selectedTab === "drink" ? "true" : undefined}>
-                    <TabNavigation selectedTab={selectedTab} homeMenuData={homeMenuData} />
-                    <TabContent selectedTab={selectedTab} homeMenuData={homeMenuData}/>
-                </ContentHome>
+                <>
+                {selectedTab !== "search" ? (
+                    <ContentHome $isActive={selectedTab === "drink" ? "true" : undefined}>
+                        <TabNavigation selectedTab={selectedTab} homeMenuData={homeMenuData}/>
+                        <TabContent selectedTab={selectedTab} homeMenuData={homeMenuData} />
+                     </ContentHome>
+                ) : (
+                    <ContentHome $isActive={selectedTab === "search" ? "true" : undefined}>
+                        <SearchBar homeMenuData={homeMenuData}/>
+                    </ContentHome>
+                ) }
+                </>
             )}  
             
         </TabsContainer>

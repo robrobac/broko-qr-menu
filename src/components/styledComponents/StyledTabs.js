@@ -13,7 +13,7 @@ const Tabs = styled.div`
 
 `
 const Tab = styled.button`
-    flex: 1;
+    flex: 3;
     height: 64px;
     background-color: ${props => (props.$isActive ? "white" : "#5b7e6c")};
     border-radius: 5px 5px 0 0;

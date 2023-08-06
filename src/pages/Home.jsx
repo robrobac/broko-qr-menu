@@ -7,7 +7,7 @@ import CategoryTabs from '../components/CategoryTabs'
 
 function Home() {
     const [homeMenuData, setHomeMenuData] = useState()
-    console.log(homeMenuData)
+    console.log("homeMenuData from Home", homeMenuData)
 
     //  Fetching data from Firestore or LocalStorage, depending on the last edited timestamp. Fetched data is stored in homeMenuData state.
     useEffect(() => {

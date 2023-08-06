@@ -6,7 +6,7 @@ function Admin() {
  
     return (
         <div>
-            <Header />
+            <Header/>
             <main>
                 <CategoryTabs isAdmin={true}/>
             </main>
