@@ -32,7 +32,9 @@ function ProductCard({item, handleDelete, isAdmin}) {
                 <CardTitle>{item.title}</CardTitle>
                 <CardPrice>
                     <PriceEUR>
-                        {item.priceEUR}€
+                        {typeof item.priceEUR === 'number'
+                            ? item.priceEUR.toFixed(2) + '€'
+                            : item.priceEUR}
                         <PriceKN>({item.priceKN}kn)</PriceKN>
                     </PriceEUR>
                     

@@ -42,7 +42,7 @@ function NewItemModalForm({ isDrink }) {
     //  Eur to Kn converter
     const eurToKn = (e) => {
         const tecaj = 7.53450;
-        const eur = parseFloat(e);
+        const eur = e;
         const kn = (eur * tecaj).toFixed(2);
 
         setPriceEUR(eur);
@@ -84,7 +84,7 @@ function NewItemModalForm({ isDrink }) {
             //  Store the item in the firestore
             await setDoc(doc(db, path, newId), {
                 title: title,
-                priceEUR: priceEUR.toFixed(2),
+                priceEUR: parseFloat(priceEUR),
                 priceKN: priceKN,
                 mainCategory: isDrink ? "drink" : "food",
                 category: category,

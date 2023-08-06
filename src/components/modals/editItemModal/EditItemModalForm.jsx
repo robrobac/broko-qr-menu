@@ -40,7 +40,7 @@ function EditItemModalForm({item, setIsEditing}) {
     //  Eur to Kn converter
     const eurToKn = (e) => {
         const tecaj = 7.53450;
-        const eur = parseFloat(e);
+        const eur = e;
         const kn = (eur * tecaj).toFixed(2);
 
         setPriceEUR(eur);
@@ -84,7 +84,7 @@ function EditItemModalForm({item, setIsEditing}) {
         //  Prepare editedItem and path and send it as an argument to Items component to handle editing.
         const editedItem = {
             title: title,
-            priceEUR: priceEUR.toFixed(2),
+            priceEUR: parseFloat(priceEUR),
             priceKN: priceKN,
             // category: category, Got to find out how to change categories of already created item, how to move the document from one collection to another
             description: description,
