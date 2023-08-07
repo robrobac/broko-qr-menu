@@ -11,11 +11,13 @@ function TabNavigation({selectedTab, homeMenuData}) {
     const [activeCategory, setActiveCategory] = useState();
     const scrollContainerRef = useRef(null);
 
+    //  If homeMenuData is passed from CategoryTabs.jsx, set categories that will show in the navigation
     useEffect(() => {
         if (homeMenuData && selectedTab) {
             setCategories(homeMenuData[selectedTab])
         }
 
+        //  if no homeMenuData is passed from CategoryTabs.jsx, get data from Firebase onSnapshot
         if (!homeMenuData) {
             const q = query(collection(db, `menu/${selectedTab}/categories`));
             const unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -29,7 +31,6 @@ function TabNavigation({selectedTab, homeMenuData}) {
                 unsubscribe();
             }
         }
-        
     }, [selectedTab, homeMenuData])
 
     //  set initial active category

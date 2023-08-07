@@ -8,6 +8,7 @@ function NewItemModal({isDrink}) {
     const [showFoodModal, setShowFoodModal] = useState(false);
     const [showDrinkModal, setShowDrinkModal] = useState(false);
 
+    //  Close modal once clicked or tapped outside the modal.
     const outsideClick = (e) => {
         if (e === "food") {
             setShowFoodModal(false)

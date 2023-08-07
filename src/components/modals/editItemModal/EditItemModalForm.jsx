@@ -6,26 +6,25 @@ import Compressor from 'compressorjs';
 import { deleteObject, getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { Divider, Form, FormInput, FormLabel, FormSection, FormSelect, FormTextarea, FormUpload, PriceConversion } from '../../styledComponents/StyledForm';
 import { SubmitButton } from '../../styledComponents/StyledButtons';
-import { EditContext2 } from '../../AdminItems';
+import { EditContext } from '../../AdminItems';
 
 function EditItemModalForm({item, setIsEditing}) {
-    const {handleEdit} = useContext(EditContext2)
+    const {handleEdit} = useContext(EditContext)    //  Edit item function passed from AdminItems.jsx via context.
+    const [title, setTitle] = useState(item.title); //  Current Item Title
+    const [priceEUR, setPriceEUR] = useState(parseFloat(item.priceEUR));    //  Current Item Price in EUR
+    const [priceKN, setPriceKN] = useState(item.priceKN);   //  Current Item Price in KN
+    const [category, setCategory] = useState(item.category);    //  Current Item Category, not changeable yet
+    const [description, setDescription] = useState(item.description);   //  Current Item Description
+    const [compressedFile, setCompressedFile] = useState(null); //  State that holds data of image compressed with handleCompressedImage function
 
-    const [title, setTitle] = useState(item.title);
-    const [priceEUR, setPriceEUR] = useState(parseFloat(item.priceEUR));
-    const [priceKN, setPriceKN] = useState(item.priceKN);
-    const [category, setCategory] = useState(item.category);
-    const [description, setDescription] = useState(item.description);
-    const [compressedFile, setCompressedFile] = useState(null);
+    const fileInputRef = useRef(null);  //  Ref to a file input element
 
-    const fileInputRef = useRef(null);
-
-     //  Live show categories in category select dropdown
+     // Firebase React Hook useCollectionData used to display categories in select input.
      const categoriesPath = `menu/${item.mainCategory}/categories`;
      const categoriesQuery = query(collection(db, categoriesPath));
      const [categories] = useCollectionData(categoriesQuery);
 
-     //  Compressing the image before upload to Firebase
+     //  Compressing and resizing the image before uploading to Firebase
     const handleCompressedImage = (e) => {
         const image = e.target.files[0];
         new Compressor(image, {
@@ -81,7 +80,7 @@ function EditItemModalForm({item, setIsEditing}) {
             }
         }
 
-        //  Prepare editedItem and path and send it as an argument to Items component to handle editing.
+        //  Prepare editedItem and path and send it as an argument to AdminItems.jsx to handle editing.
         const editedItem = {
             title: title,
             priceEUR: parseFloat(priceEUR),
@@ -93,6 +92,7 @@ function EditItemModalForm({item, setIsEditing}) {
             dateEdited: Date.now(),
         }
         handleEdit(editedItem, item.fullPath)
+        //  Close the edit modal
         setIsEditing(false)
     };
 

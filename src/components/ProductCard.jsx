@@ -6,13 +6,16 @@ import EditItemModal from './modals/editItemModal/EditItemModal'
 import { ReactComponent as TrashIcon } from "../icons/trashicon.svg";
 
 function ProductCard({item, handleDelete, isAdmin}) {
-
+    
+    //  Creating a date object for date created
     const dateCreatedTimestamp = item.dateCreated
     const dateCreated = new Date(dateCreatedTimestamp)
 
+    //  Creating a date object for date edited
     const dateEditedTimestamp = item.dateEdited
     const dateEdited = new Date(dateEditedTimestamp)
 
+    //  formatting options
     const dateOptions = {
         year: 'numeric',
         month: 'short',
@@ -20,8 +23,9 @@ function ProductCard({item, handleDelete, isAdmin}) {
         hour: '2-digit',
         minute: '2-digit',
         hour12: false
-      };
+    };
 
+    //  formatting date created and date edited date objects.
     const formattedDateCreated = dateCreated.toLocaleString('en-US', dateOptions)
     const formattedDateEdited = dateEdited.toLocaleString('en-US', dateOptions)
 

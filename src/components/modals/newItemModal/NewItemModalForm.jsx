@@ -20,6 +20,7 @@ function NewItemModalForm({ isDrink }) {
 
     const fileInputRef = useRef(null);
 
+    //  Paths to reach firebase database documents
     const categoriesPath = isDrink ? "menu/drink/categories" : "menu/food/categories";
     const itemsPath = isDrink ? "menu/drink" : "menu/food";
 
@@ -27,7 +28,7 @@ function NewItemModalForm({ isDrink }) {
     const categoriesQuery = query(collection(db, categoriesPath));
     const [categories] = useCollectionData(categoriesQuery);
 
-    //  Compressing the image before upload to Firebase
+    //  Compressing the image before uploading to Firebase
     const handleCompressedImage = (e) => {
         const image = e.target.files[0];
         new Compressor(image, {

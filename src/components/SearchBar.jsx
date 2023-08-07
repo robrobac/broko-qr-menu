@@ -5,16 +5,18 @@ import { TabNav } from './styledComponents/StyledNavigation';
 import { FormInput} from './styledComponents/StyledForm';
 
 function SearchBar({homeMenuData, allAdminItems}) {
-    const [allItems, setAllItems] = useState()
-    const [filteredItems, setFilteredItems] = useState()
-    console.log("Filtered", filteredItems)
-    const [searchValue, setSearchValue] = useState("")
+    const [allItems, setAllItems] = useState()  //  All items for Home page
+    const [filteredItems, setFilteredItems] = useState()    //  Filtered items that will appear in search result
+    const [searchValue, setSearchValue] = useState("")  //  Handling search input value
 
-    const inputRef = useRef(null)
+    const inputRef = useRef(null)   //  Search Input reference, handles onBlur for input in order to close virtual keyboard on scroll
 
+    //  Fetching homeMenuData from Home.jsx and extracting separate items and storing them in the allItems state.
     useEffect(() => {
+        //  have effect only if homeMenuData is passed from Home.jsx.
         if (homeMenuData) {
             const items = []
+            //  Going deep in main category and each subcategory to reach its respective items and gather them all in one place.
             homeMenuData?.drink.forEach(category => {
                 category.items.forEach(item => {
                     items.push(item)
@@ -25,19 +27,24 @@ function SearchBar({homeMenuData, allAdminItems}) {
                     items.push(item)
                 })
             })
+            //  pushing items to allItems state.
             setAllItems(items)
         }
     }, [homeMenuData])
 
+    //  Fetching data to use in admin search bar(the difference is that admin have live updates while home must refresh to spare reads with random users)
     useEffect(() => {
         if (allAdminItems) {
             setAllItems(allAdminItems)
         }
     }, [allAdminItems])
 
+    //  use effect that filters data when searchValue is changed
     useEffect(() => {
+        //  Normalizing the string to eliminate special characters for easier search
         const query = normalizeString(searchValue)
 
+        //  if there's no query value, set filtered data to null, if there is query value then set filtered data to match search value
         if (!query) {
             setFilteredItems(null);
         } else {
@@ -51,6 +58,7 @@ function SearchBar({homeMenuData, allAdminItems}) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchValue])
 
+    //  event listeners for closing the virtual keyboard on touch outside the input field
     useEffect(() => {
         // Attach scroll event listener when component mounts
         window.addEventListener('touchstart', handleOutsideClick);
@@ -61,6 +69,7 @@ function SearchBar({homeMenuData, allAdminItems}) {
         };
     }, []);
 
+    //  function that handles tapping outside the input value in order to close virtual keyboard
     const handleOutsideClick = (e) => {
         // Blur input if the click is outside of the input element
         if (inputRef.current && !inputRef.current.contains(e.target)) {
@@ -68,6 +77,7 @@ function SearchBar({homeMenuData, allAdminItems}) {
         }
     };
 
+    //  close virtual keyboard on enter
     const onEnter = (e) => {
         if (e.key === "Enter") {
             e.target.blur();

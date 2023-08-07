@@ -8,8 +8,9 @@ import { ReactComponent as EditIcon } from "../../icons/editicon.svg";
 import { ReactComponent as XIcon } from "../../icons/xicon.svg";
 
 function EditCategoryModal({category}) {
-    const [isEditing, setIsEditing] = useState(false)
     const [categoryValue, setCategoryValue] = useState(category.category);
+    const [isEditing, setIsEditing] = useState(false)
+    
 
     const handleCategoryChange = async (e) => {
         e.preventDefault()

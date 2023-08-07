@@ -4,19 +4,22 @@ import { db, storage } from '../firebase/config';
 import { deleteObject, ref } from 'firebase/storage';
 import ProductCard from './ProductCard';
 
-export const EditContext2 = createContext()
+export const EditContext = createContext()
 
-function AdminItems({category, getAllAdminItems}) {
+function AdminItems({category, getAllAdminItems, removeAdminItem}) {
     const [items, setItems] = useState([]);
-
+    
+    //  Fetching data from Firebase and storing all items in one array to handle search.
     useEffect(() => {
             const q = query(collection(db, `${category.categoryPath}/items`));
             const unsubscribe = onSnapshot(q, (querySnapshot) => {
                 const snapshotData = [];
                 querySnapshot.forEach((doc) => {
+                    //  On each loop push current Item data to snapshotData array.
                     snapshotData.push(doc.data());
-                    getAllAdminItems(doc.data())
+                    getAllAdminItems(doc.data())    //  Sends data to CategoryTabs.jsx to use in search bar
                 });
+                //  Put snapshotData array into Items state
                 setItems(snapshotData)
                 
             });
@@ -29,7 +32,7 @@ function AdminItems({category, getAllAdminItems}) {
 
 
 
-    //  Handles delete for item passed as an argument from ItemCard component
+    //  Handles delete for item passed as an argument from ProductCard.jsx.
     const handleDelete = async (item) => {
         //  Confirmation before proceeding
         if (window.confirm("Are you sure you want to delete this product?")) {
@@ -42,6 +45,7 @@ function AdminItems({category, getAllAdminItems}) {
                 });
             }
             //  Delete item
+            removeAdminItem(item); //  Removes data from CategoryTabs.jsx to remove it from search bar
             await deleteDoc(doc(db, item.fullPath));
 
             //  Update lastedited timestamp to handle fetching from firestore or local storage.
@@ -50,11 +54,10 @@ function AdminItems({category, getAllAdminItems}) {
         }
     }
 
-        //  Handles edit for item passed as an argument from ItemCard component
-        //  These functions should be put into context and sent over ItemCard component, not through it
+        //  Handles edit for item passed as an argument from ProductCard.jsx
     const handleEdit = async (itemObject, itemPath) => {
         try {
-            //  Getting document ref from argument passed from ItemCard component
+            //  Getting document ref from argument passed from ProductCard.jsx
             const docRef = doc(db, itemPath)
             //  Update the item and close the form
             await updateDoc(docRef, itemObject)
@@ -69,7 +72,7 @@ function AdminItems({category, getAllAdminItems}) {
 
 
     return (
-        <EditContext2.Provider value={{
+        <EditContext.Provider value={{
             handleEdit,
         }}>
         <div>
@@ -77,7 +80,7 @@ function AdminItems({category, getAllAdminItems}) {
                 <ProductCard item={item} key={item.id} handleDelete={handleDelete} isAdmin={true}/>
             ))}
         </div>
-        </EditContext2.Provider>
+        </EditContext.Provider>
     )
 }
 

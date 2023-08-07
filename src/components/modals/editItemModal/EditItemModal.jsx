@@ -5,7 +5,6 @@ import { HeaderClose, HeaderTitle, Modal, ModalBody, ModalContent, ModalHeader }
 import { ReactComponent as EditIcon } from "../../../icons/editicon.svg";
 import { ReactComponent as XIcon } from "../../../icons/xicon.svg";
 
-
 function EditItemModal({item}) {
     const [isEditing, setIsEditing] = useState(false)
     return (
@@ -13,8 +12,7 @@ function EditItemModal({item}) {
         <EditButton onClick={() => setIsEditing(true)}>
             <EditIcon height="100%"/>
         </EditButton>
-
-            <Modal $showModal={isEditing ? 1 : 0} onClick={() => setIsEditing(false)}>
+        <Modal $showModal={isEditing ? 1 : 0} onClick={() => setIsEditing(false)}>
             <ModalContent onClick={(e) => e.stopPropagation()}>
                 <ModalHeader>
                     <HeaderTitle>Edit {item.mainCategory}</HeaderTitle>
@@ -26,9 +24,7 @@ function EditItemModal({item}) {
                     <EditItemModalForm item={item} setIsEditing={setIsEditing}/>
                 </ModalBody>
             </ModalContent>
-        </Modal>
-
-        
+        </Modal>  
         </>
     )
 }

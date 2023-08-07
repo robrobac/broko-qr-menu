@@ -10,16 +10,18 @@ import AdminItems from './AdminItems'
 import ProductCard from './ProductCard'
 import { ReactComponent as TrashIcon } from "../icons/trashicon.svg";
 
-function TabContent({selectedTab, homeMenuData, isAdmin, isDrink, getAllAdminItems}) {
+function TabContent({selectedTab, homeMenuData, isAdmin, isDrink, getAllAdminItems, removeAdminItem}) {
     const [categories, setCategories] = useState([])
     console.log(categories)
 
+    //  If homeMenuData is passed from CategoryTabs.jsx, set categories
     useEffect(() => {
         if (homeMenuData && selectedTab) {
             setCategories(homeMenuData[selectedTab])
         }
     }, [selectedTab, homeMenuData])
 
+    //  if no homeMenuData is passed from CategoryTabs.jsx, get data from Firebase onSnapshot
     useEffect(() => {
         if (!homeMenuData) {
             const categoriesPath = isDrink ? "menu/drink/categories" : "menu/food/categories"
@@ -88,7 +90,7 @@ function TabContent({selectedTab, homeMenuData, isAdmin, isDrink, getAllAdminIte
                             </DeleteButton>
                             <EditCategoryModal category={category} />
                         </div>
-                        <AdminItems category={category} getAllAdminItems={getAllAdminItems}/>
+                        <AdminItems category={category} getAllAdminItems={getAllAdminItems} removeAdminItem={removeAdminItem}/>
                         </>
                     ) : 
                         <div>
