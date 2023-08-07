@@ -6,9 +6,8 @@ import ProductCard from './ProductCard';
 
 export const EditContext2 = createContext()
 
-function AdminItems({category}) {
+function AdminItems({category, getAllAdminItems}) {
     const [items, setItems] = useState([]);
-    console.log(items)
 
     useEffect(() => {
             const q = query(collection(db, `${category.categoryPath}/items`));
@@ -16,13 +15,18 @@ function AdminItems({category}) {
                 const snapshotData = [];
                 querySnapshot.forEach((doc) => {
                     snapshotData.push(doc.data());
+                    getAllAdminItems(doc.data())
                 });
                 setItems(snapshotData)
+                
             });
             return () => {
                 unsubscribe();
             }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [category.categoryPath])
+
+
 
 
     //  Handles delete for item passed as an argument from ItemCard component

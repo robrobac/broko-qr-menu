@@ -2,7 +2,6 @@ import React from 'react'
 import Logout from './Logout'
 import Logo from "../images/brokologo.png"
 import "./Header.scss"
-import SearchBar from './SearchBar'
 
 function Header() {
     return (

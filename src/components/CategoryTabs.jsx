@@ -11,6 +11,12 @@ import SearchBar from './SearchBar'
 
 function CategoryTabs({homeMenuData, isAdmin}) {
     const [selectedTab, setSelectedTab] = useState("food")
+    const [allAdminItems, setAllAdminItems] = useState([])
+    console.log("all admin items", allAdminItems)
+
+    const getAllAdminItems = (items) => {
+        setAllAdminItems(prevAdminItems => [...prevAdminItems, items]);
+    };
 
     //  On tab change scroll to top and reset the active category navigation
     useEffect(() => {
@@ -46,24 +52,27 @@ function CategoryTabs({homeMenuData, isAdmin}) {
                 <>
                 <ContentAdmin $isActive={selectedTab === "drink" ? "true" : undefined}>
                     <TabNavigation selectedTab={selectedTab} homeMenuData={homeMenuData} />
-                    <TabContent selectedTab={selectedTab} homeMenuData={homeMenuData} isAdmin={isAdmin} isDrink={true}/>
+                    <TabContent selectedTab={selectedTab} homeMenuData={homeMenuData} isAdmin={isAdmin} isDrink={true} getAllAdminItems={getAllAdminItems}/>
                     <NewItemModal isDrink={true}/>
                 </ContentAdmin>
                 <ContentAdmin $isActive={selectedTab === "food" ? "true" : undefined}>
                     <TabNavigation selectedTab={selectedTab} homeMenuData={homeMenuData} />
-                    <TabContent selectedTab={selectedTab} homeMenuData={homeMenuData} isAdmin={isAdmin} isDrink={false}/>
+                    <TabContent selectedTab={selectedTab} homeMenuData={homeMenuData} isAdmin={isAdmin} isDrink={false} getAllAdminItems={getAllAdminItems}/>
                     <NewItemModal isDrink={false}/>
+                </ContentAdmin>
+                <ContentAdmin $isActive={selectedTab === "search" ? "true" : undefined}>
+                    <SearchBar allAdminItems={allAdminItems}/>
                 </ContentAdmin>
                 </>
             ) : (
                 <>
                 {selectedTab !== "search" ? (
-                    <ContentHome $isActive={selectedTab === "drink" ? "true" : undefined}>
+                    <ContentHome>
                         <TabNavigation selectedTab={selectedTab} homeMenuData={homeMenuData}/>
                         <TabContent selectedTab={selectedTab} homeMenuData={homeMenuData} />
                      </ContentHome>
                 ) : (
-                    <ContentHome $isActive={selectedTab === "search" ? "true" : undefined}>
+                    <ContentHome>
                         <SearchBar homeMenuData={homeMenuData}/>
                     </ContentHome>
                 ) }

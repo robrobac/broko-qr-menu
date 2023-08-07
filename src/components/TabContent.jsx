@@ -10,7 +10,7 @@ import AdminItems from './AdminItems'
 import ProductCard from './ProductCard'
 import { ReactComponent as TrashIcon } from "../icons/trashicon.svg";
 
-function TabContent({selectedTab, homeMenuData, isAdmin, isDrink}) {
+function TabContent({selectedTab, homeMenuData, isAdmin, isDrink, getAllAdminItems}) {
     const [categories, setCategories] = useState([])
     console.log(categories)
 
@@ -88,7 +88,7 @@ function TabContent({selectedTab, homeMenuData, isAdmin, isDrink}) {
                             </DeleteButton>
                             <EditCategoryModal category={category} />
                         </div>
-                        <AdminItems category={category}/>
+                        <AdminItems category={category} getAllAdminItems={getAllAdminItems}/>
                         </>
                     ) : 
                         <div>

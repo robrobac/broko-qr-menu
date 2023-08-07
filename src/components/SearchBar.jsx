@@ -4,7 +4,7 @@ import { normalizeString } from '../helpers/normalizeString'
 import { TabNav } from './styledComponents/StyledNavigation';
 import { FormInput} from './styledComponents/StyledForm';
 
-function SearchBar({homeMenuData}) {
+function SearchBar({homeMenuData, allAdminItems}) {
     const [allItems, setAllItems] = useState()
     const [filteredItems, setFilteredItems] = useState()
     console.log("Filtered", filteredItems)
@@ -13,20 +13,27 @@ function SearchBar({homeMenuData}) {
     const inputRef = useRef(null)
 
     useEffect(() => {
-        const items = []
-        homeMenuData?.drink.forEach(category => {
-            category.items.forEach(item => {
-                items.push(item)
+        if (homeMenuData) {
+            const items = []
+            homeMenuData?.drink.forEach(category => {
+                category.items.forEach(item => {
+                    items.push(item)
+                })
             })
-        })
-        homeMenuData?.food.forEach(category => {
-            category.items.forEach(item => {
-                items.push(item)
+            homeMenuData?.food.forEach(category => {
+                category.items.forEach(item => {
+                    items.push(item)
+                })
             })
-        })
-        setAllItems(items)
-
+            setAllItems(items)
+        }
     }, [homeMenuData])
+
+    useEffect(() => {
+        if (allAdminItems) {
+            setAllItems(allAdminItems)
+        }
+    }, [allAdminItems])
 
     useEffect(() => {
         const query = normalizeString(searchValue)
@@ -41,6 +48,7 @@ function SearchBar({homeMenuData}) {
             })
             setFilteredItems(filteredItems)
         }        
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchValue])
 
     useEffect(() => {
