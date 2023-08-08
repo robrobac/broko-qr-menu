@@ -73,7 +73,7 @@ function TabNavigation({selectedTab, homeMenuData}) {
                     to={category.id}
                     spy={true}
                     smooth={true}
-                    offset={-180}
+                    offset={-133}
                     duration={200}>
                         <NavigationButton $isActive={activeCategory === category.id ? "true" : undefined}>{category.category}</NavigationButton>
                     </Link>

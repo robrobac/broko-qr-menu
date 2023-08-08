@@ -80,7 +80,7 @@ function CategoryTabs({homeMenuData, isAdmin}) {
                     <NewItemModal isDrink={false}/>
                 </ContentAdmin>
                 <ContentAdmin $isActive={selectedTab === "search" ? "true" : undefined}>
-                    <SearchBar allAdminItems={allAdminItems}/>
+                    <SearchBar allAdminItems={allAdminItems} selectedTab={selectedTab}/>
                 </ContentAdmin>
                 </>
             ) : (

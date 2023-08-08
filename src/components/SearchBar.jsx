@@ -4,12 +4,21 @@ import { normalizeString } from '../helpers/normalizeString'
 import { TabNav } from './styledComponents/StyledNavigation';
 import { FormInput} from './styledComponents/StyledForm';
 
-function SearchBar({homeMenuData, allAdminItems}) {
+function SearchBar({homeMenuData, allAdminItems, selectedTab }) {
     const [allItems, setAllItems] = useState()  //  All items for Home page
     const [filteredItems, setFilteredItems] = useState()    //  Filtered items that will appear in search result
     const [searchValue, setSearchValue] = useState("")  //  Handling search input value
+    console.log("allItems", allItems)
+    console.log("filtered", filteredItems)
 
     const inputRef = useRef(null)   //  Search Input reference, handles onBlur for input in order to close virtual keyboard on scroll
+
+    //  Since all admin data is loaded at once and then hidden depending on what we want to see I had to use this way to focus on search input once the search tab is unhidden.
+    useEffect(() => {
+        if (selectedTab === "search") {
+            inputRef.current.focus();
+        }
+    }, [selectedTab])
 
     //  Fetching homeMenuData from Home.jsx and extracting separate items and storing them in the allItems state.
     useEffect(() => {
@@ -88,7 +97,7 @@ function SearchBar({homeMenuData, allAdminItems}) {
         <div>
             <TabNav >
                 <FormInput ref={inputRef}
-                required
+                autoFocus
                 type="text"
                 id="inputTitle"
                 placeholder="Search Product"

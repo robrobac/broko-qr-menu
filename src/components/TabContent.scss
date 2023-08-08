@@ -2,7 +2,6 @@
     text-align: center;
     padding: 1rem;
     border-bottom: 1px solid #5b7e6c;
-    margin-bottom: 3rem;
 
     &:last-of-type {
         border-bottom: none;
@@ -10,6 +9,7 @@
 
 
     .categoryTitle {
+        margin-top: 3rem;
         color: #235239;
         font-weight: 700;
         font-size: 2rem;
