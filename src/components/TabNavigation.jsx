@@ -65,7 +65,7 @@ function TabNavigation({selectedTab, homeMenuData}) {
     return (
         <TabNav ref={scrollContainerRef}>
             {categories?.map((category) => (
-                <Nav>
+                <Nav key={category.id}>
                     <Link
                     activeClass='active'
                     onSetActive={() => handleActive(category.id)}

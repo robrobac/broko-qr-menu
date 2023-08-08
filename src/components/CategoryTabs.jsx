@@ -71,7 +71,7 @@ function CategoryTabs({homeMenuData, isAdmin}) {
                 <>
                 <ContentAdmin $isActive={selectedTab === "drink" ? "true" : undefined}>
                     <TabNavigation selectedTab={selectedTab} homeMenuData={homeMenuData} />
-                    <TabContent selectedTab={selectedTab} homeMenuData={homeMenuData} isAdmin={isAdmin} isDrink={true} getAllAdminItems={getAllAdminItems} removeAdminItem={removeAdminItem}/>
+                    <TabContent selectedTab={selectedTab} homeMenuData={homeMenuData} isAdmin={isAdmin} isDrink={true} getAllAdminItems={getAllAdminItems} removeAdminItem={removeAdminItem} />
                     <NewItemModal isDrink={true}/>
                 </ContentAdmin>
                 <ContentAdmin $isActive={selectedTab === "food" ? "true" : undefined}>

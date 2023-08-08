@@ -107,7 +107,7 @@ function SearchBar({homeMenuData, allAdminItems, selectedTab }) {
                 />
             </TabNav>
             {filteredItems?.map(item => (
-                <ProductCard item={item}/>
+                <ProductCard item={item} key={item.id}/>
             ))}
         </div>
     )

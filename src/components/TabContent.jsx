@@ -95,9 +95,7 @@ function TabContent({selectedTab, homeMenuData, isAdmin, isDrink, getAllAdminIte
                     ) : 
                         <div>
                             {category.items?.map((item) => (
-                                <>
                                 <ProductCard item={item} key={item.id}/>
-                                </>
                             ))}
                         </div>
                     }
