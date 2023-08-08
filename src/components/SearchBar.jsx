@@ -3,10 +3,11 @@ import ProductCard from './ProductCard'
 import { normalizeString } from '../helpers/normalizeString'
 import { TabNav } from './styledComponents/StyledNavigation';
 import { FormInput} from './styledComponents/StyledForm';
+import AdminItems from './AdminItems';
 
-function SearchBar({homeMenuData, allAdminItems, selectedTab }) {
+function SearchBar({homeMenuData, allAdminItems, selectedTab, removeAdminItem }) {
     const [allItems, setAllItems] = useState()  //  All items for Home page
-    const [filteredItems, setFilteredItems] = useState()    //  Filtered items that will appear in search result
+    const [filteredItems, setFilteredItems] = useState([])    //  Filtered items that will appear in search result
     const [searchValue, setSearchValue] = useState("")  //  Handling search input value
     console.log("allItems", allItems)
     console.log("filtered", filteredItems)
@@ -65,7 +66,7 @@ function SearchBar({homeMenuData, allAdminItems, selectedTab }) {
             setFilteredItems(filteredItems)
         }        
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [searchValue])
+    }, [searchValue, allItems])
 
     //  event listeners for closing the virtual keyboard on touch outside the input field
     useEffect(() => {
@@ -106,9 +107,13 @@ function SearchBar({homeMenuData, allAdminItems, selectedTab }) {
                 onKeyUp={onEnter}
                 />
             </TabNav>
-            {filteredItems?.map(item => (
-                <ProductCard item={item} key={item.id}/>
-            ))}
+            {homeMenuData ? 
+                filteredItems?.map((item) => (
+                    <ProductCard item={item} key={item.id}/>
+                ))
+            :
+            (<AdminItems filteredItems={filteredItems} removeAdminItem={removeAdminItem}/>)}
+            
         </div>
     )
 }

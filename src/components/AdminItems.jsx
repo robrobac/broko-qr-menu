@@ -6,11 +6,15 @@ import ProductCard from './ProductCard';
 
 export const EditContext = createContext()
 
-function AdminItems({category, getAllAdminItems, removeAdminItem}) {
+function AdminItems({category, getAllAdminItems, removeAdminItem, filteredItems}) {
     const [items, setItems] = useState([]);
     
     //  Fetching data from Firebase and storing all items in one array to handle search.
+    //  useEffect works differently depending if filteredItems or Category is passed as a prop
     useEffect(() => {
+        if (filteredItems) {
+            setItems(filteredItems)
+        } else if (category) {
             const q = query(collection(db, `${category.categoryPath}/items`));
             const unsubscribe = onSnapshot(q, (querySnapshot) => {
                 const snapshotData = [];
@@ -26,8 +30,10 @@ function AdminItems({category, getAllAdminItems, removeAdminItem}) {
             return () => {
                 unsubscribe();
             }
+        }
+            
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [category.categoryPath])
+    }, [category, filteredItems])
 
 
 
