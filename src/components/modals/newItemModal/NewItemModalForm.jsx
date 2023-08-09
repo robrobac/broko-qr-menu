@@ -96,6 +96,7 @@ function NewItemModalForm({ isDrink }) {
                 fullPath: `${itemsPath}/categories/${category}/items/${newId}`,
                 dateCreated: Date.now(),
                 dateEdited: Date.now(),
+                orderTimestamp: Date.now()
             });
 
             //  Reset form states
@@ -112,7 +113,7 @@ function NewItemModalForm({ isDrink }) {
             await updateDoc(doc(db, "/menu/additional"), {lastedited: Date.now()})
 
         } catch (error) {
-            console.error("error creating a new item", error);
+            console.error(error);
         }
     };
 

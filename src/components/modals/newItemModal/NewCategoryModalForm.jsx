@@ -40,7 +40,7 @@ function NewCategoryModalForm({ handleAddingCategory, isDrink }) {
             await updateDoc(doc(db, "/menu/additional"), {lastedited: Date.now()})
 
         } catch (error) {
-            console.error("error creating a new item", error);
+            console.error(error);
         }
     };
 

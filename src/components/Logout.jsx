@@ -20,6 +20,7 @@ function Logout() {
         try {
             await signOut(auth);
         } catch (error) {
+            console.log(error)
         }
     };
 

@@ -25,7 +25,7 @@ function EditCategoryModal({category}) {
             //  Update the item
             await updateDoc(docRef, categoryObject)
         } catch (error) {
-            console.error("error creating a new item", error);
+            console.error(error);
         }
         
         //  Update lastedited timestamp to handle fetching from firestore or local storage.

@@ -75,7 +75,7 @@ function EditItemModalForm({item, setIsEditing}) {
                 deleteObject(oldFileRef).then(() => {
  
                 }).catch((error) => {
-                    
+                    console.log(error)
                 });
             }
         }

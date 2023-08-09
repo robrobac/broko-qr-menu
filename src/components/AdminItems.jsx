@@ -1,4 +1,4 @@
-import { collection, deleteDoc, doc, onSnapshot, query, updateDoc } from 'firebase/firestore';
+import { collection, deleteDoc, doc, onSnapshot, orderBy, query, updateDoc } from 'firebase/firestore';
 import React, { createContext, useEffect, useState } from 'react'
 import { db, storage } from '../firebase/config';
 import { deleteObject, ref } from 'firebase/storage';
@@ -6,7 +6,7 @@ import ProductCard from './ProductCard';
 
 export const EditContext = createContext()
 
-function AdminItems({category, getAllAdminItems, removeAdminItem, filteredItems}) {
+function AdminItems({category, getAllAdminItems, removeAdminItem, filteredItems, isSearch}) {
     const [items, setItems] = useState([]);
     
     //  Fetching data from Firebase and storing all items in one array to handle search.
@@ -15,7 +15,7 @@ function AdminItems({category, getAllAdminItems, removeAdminItem, filteredItems}
         if (filteredItems) {
             setItems(filteredItems)
         } else if (category) {
-            const q = query(collection(db, `${category.categoryPath}/items`));
+            const q = query(collection (db, `${category.categoryPath}/items`), orderBy("orderTimestamp", "asc"));
             const unsubscribe = onSnapshot(q, (querySnapshot) => {
                 const snapshotData = [];
                 querySnapshot.forEach((doc) => {
@@ -30,6 +30,8 @@ function AdminItems({category, getAllAdminItems, removeAdminItem, filteredItems}
             return () => {
                 unsubscribe();
             }
+        } else {
+            setItems([])
         }
             
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -47,7 +49,7 @@ function AdminItems({category, getAllAdminItems, removeAdminItem, filteredItems}
                 const fileRef = ref(storage, item.filePath)
                 deleteObject(fileRef).then(() => {
                 }).catch((error) => {
-                    
+                    console.log(error)
                 });
             }
             //  Delete item
@@ -72,10 +74,114 @@ function AdminItems({category, getAllAdminItems, removeAdminItem, filteredItems}
             await updateDoc(doc(db, "/menu/additional"), {lastedited: Date.now()})
 
         } catch (error) {
-            console.error("error creating a new item", error);
+            console.error(error);
         }
     }
 
+
+    //  Handling manual item ordering with buttons UP and DOWN
+    const handleReorder = async (item, direction) => {
+
+        //  Calculating a middle timestamp value in order to put moving item inbetween two compared timestamps.
+        const getMiddleValue = (num1, num2) => {
+            const sum = num1 + num2
+            const number = sum / 2
+            return number
+        }
+        //  Getting moving item index and firebase ref
+        const itemIndex = items.findIndex(doc => doc.id === item.id )
+        const docRef = doc(db, items[itemIndex].fullPath)
+
+        const itemsLength = items.length - 1
+
+        //  If one item in array, do nothing.
+        if (items.length <= 1) {
+            return
+        }
+
+        //  Handling move UP
+        if (direction === "up") {
+
+            //  If moving item is first, don't move UP
+            if (itemIndex === 0) {
+                return
+            }
+
+            //  If moving item is second in array
+            if (itemIndex === 1) {
+                const prevOrder1 = items[1 - 1].orderTimestamp
+                const middleValue = getMiddleValue(0, prevOrder1)
+                //  Saving current scroll position to handle "scroll lock"
+                try {
+                    //  Updating moved item document's orderTimestamp
+                    await updateDoc(docRef, {
+                        orderTimestamp: middleValue,
+                    })
+                    //  Update lastedited timestamp to handle fetching from firestore or local storage.
+                    await updateDoc(doc(db, "/menu/additional"), {lastedited: Date.now()})
+                } catch (error) {
+                    console.log(error)
+                }
+            }
+
+            //  If moving item is neither first nor second in array
+            if (itemIndex >= 2) {
+                const prevOrder1 = items[itemIndex - 1].orderTimestamp
+                const prevOrder2 = items[itemIndex - 2].orderTimestamp
+                const middleValue = getMiddleValue(prevOrder1, prevOrder2)
+                try {
+                    //  Updating moved item document's orderTimestamp
+                    await updateDoc(docRef, {
+                        orderTimestamp: middleValue,
+                    })
+                    //  Update lastedited timestamp to handle fetching from firestore or local storage.
+                    await updateDoc(doc(db, "/menu/additional"), {lastedited: Date.now()})
+                } catch (error) {
+                    console.log(error)
+                }
+            }
+
+        //  Handling move DOWN
+        } else if (direction === "down") {
+
+            //  If moving item is last in the array
+            if (itemIndex === itemsLength) {
+                return
+            }
+
+            //  If moving item is second to last in the array
+            if (itemIndex === itemsLength - 1) {
+                const prevOrder1 = items[itemsLength].orderTimestamp
+                const middleValue = prevOrder1 + 10
+                try {
+                    //  Updating moved item document's orderTimestamp
+                    await updateDoc(docRef, {
+                        orderTimestamp: middleValue,
+                    })
+                    //  Update lastedited timestamp to handle fetching from firestore or local storage.
+                    await updateDoc(doc(db, "/menu/additional"), {lastedited: Date.now()})
+                } catch (error) {
+                    console.log(error)
+                }
+            }
+
+            //  If moving item is neither last nor second to last in the array
+            else {
+                const prevOrder1 = items[itemIndex + 1].orderTimestamp
+                const prevOrder2 = items[itemIndex + 2].orderTimestamp
+                const middleValue = getMiddleValue(prevOrder1, prevOrder2)
+                try {
+                    //  Updating moved item document's orderTimestamp
+                    await updateDoc(docRef, {
+                        orderTimestamp: middleValue,
+                    })
+                    //  Update lastedited timestamp to handle fetching from firestore or local storage.
+                } catch (error) {
+                    console.log(error)
+                }
+            }
+        }
+    }
 
     return (
         <EditContext.Provider value={{
@@ -83,7 +189,7 @@ function AdminItems({category, getAllAdminItems, removeAdminItem, filteredItems}
         }}>
         <div>
             {items?.map((item) => (
-                <ProductCard item={item} key={item.id} handleDelete={handleDelete} isAdmin={true}/>
+                <ProductCard item={item} key={item.id} handleDelete={handleDelete} isAdmin={true} handleReorder={handleReorder} isSearch={isSearch}/>
             ))}
         </div>
         </EditContext.Provider>

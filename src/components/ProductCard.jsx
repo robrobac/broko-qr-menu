@@ -5,7 +5,7 @@ import noimage from "../noimage.png"
 import EditItemModal from './modals/editItemModal/EditItemModal'
 import { ReactComponent as TrashIcon } from "../icons/trashicon.svg";
 
-function ProductCard({item, handleDelete, isAdmin}) {
+function ProductCard({item, handleDelete, isAdmin, handleReorder, isSearch}) {
     
     //  Creating a date object for date created
     const dateCreatedTimestamp = item.dateCreated
@@ -54,6 +54,12 @@ function ProductCard({item, handleDelete, isAdmin}) {
                             </DeleteButton>
                             <EditItemModal item={item}/>
                         </AdminButtons>
+                        {!isSearch ? (
+                            <>
+                            <button style={{margin: "5px", padding: "10px"}} onClick={() => handleReorder(item, "up")}>UP</button>
+                            <button style={{margin: "5px", padding: "10px"}} onClick={() => handleReorder(item, "down")}>DOWN</button>
+                            </>
+                        ) : ""}
                     </CardAdmin>
                 ) : ""}
             </CardBody>

@@ -9,8 +9,6 @@ function SearchBar({homeMenuData, allAdminItems, selectedTab, removeAdminItem })
     const [allItems, setAllItems] = useState()  //  All items for Home page
     const [filteredItems, setFilteredItems] = useState([])    //  Filtered items that will appear in search result
     const [searchValue, setSearchValue] = useState("")  //  Handling search input value
-    console.log("allItems", allItems)
-    console.log("filtered", filteredItems)
 
     const inputRef = useRef(null)   //  Search Input reference, handles onBlur for input in order to close virtual keyboard on scroll
 
@@ -111,8 +109,9 @@ function SearchBar({homeMenuData, allAdminItems, selectedTab, removeAdminItem })
                 filteredItems?.map((item) => (
                     <ProductCard item={item} key={item.id}/>
                 ))
-            :
-            (<AdminItems filteredItems={filteredItems} removeAdminItem={removeAdminItem}/>)}
+            : (
+                <AdminItems filteredItems={filteredItems} removeAdminItem={removeAdminItem} isSearch={true}/>
+            )}
             
         </div>
     )

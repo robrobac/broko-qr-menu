@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../components/Header'
-import { collection, doc, getDoc, getDocs } from 'firebase/firestore'
+import { collection, doc, getDoc, getDocs, orderBy, query } from 'firebase/firestore'
 import { db } from '../firebase/config'
 import CategoryTabs from '../components/CategoryTabs'
 
 
 function Home() {
     const [homeMenuData, setHomeMenuData] = useState()
-    console.log("homeMenuData from Home", homeMenuData)
 
     //  Fetching data from Firestore or LocalStorage, depending on the last edited timestamp. Fetched data is stored in homeMenuData state.
     useEffect(() => {
@@ -27,7 +26,7 @@ function Home() {
 
                     //  Category Items path, query and snapshot
                     const itemsPath = `menu/${mainCategory}/categories/${doc.id}/items`;
-                    const itemsQuery = collection(db, itemsPath)
+                    const itemsQuery = query(collection(db, itemsPath), orderBy("orderTimestamp", "asc"))
                     const itemsSnapshot = await getDocs(itemsQuery)
 
                     //  Fetching category's respective items and settings it as categoryData's items.
@@ -98,7 +97,6 @@ function Home() {
         }
 
         fetchAllData()
-        console.log("Home Page Data Fetched")
     }, [])
     //  End of Fetching data from Firestore or LocalStorage.
 

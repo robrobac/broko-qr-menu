@@ -12,7 +12,6 @@ import { ReactComponent as TrashIcon } from "../icons/trashicon.svg";
 
 function TabContent({selectedTab, homeMenuData, isAdmin, isDrink, getAllAdminItems, removeAdminItem}) {
     const [categories, setCategories] = useState([])
-    console.log(categories)
 
     //  If homeMenuData is passed from CategoryTabs.jsx, set categories
     useEffect(() => {
@@ -61,7 +60,7 @@ function TabContent({selectedTab, homeMenuData, isAdmin, isDrink, getAllAdminIte
                         //  Delete file from the storage
                         await deleteObject(fileRef).then(() => {
                         }).catch((error) => {
-
+                            console.log(error)
                         });
                     }
                     //  After and if the file is deleted from the storage, remove the item from the collection
