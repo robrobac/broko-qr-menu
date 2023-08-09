@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import "./TabContent.scss"
 import { Element } from 'react-scroll'
-import { collection, deleteDoc, doc, getDocs, onSnapshot, query, updateDoc } from 'firebase/firestore'
+import { collection, deleteDoc, doc, getDocs, onSnapshot, orderBy, query, updateDoc } from 'firebase/firestore'
 import { db, storage } from '../firebase/config'
 import { DeleteButton } from './styledComponents/StyledButtons'
 import EditCategoryModal from './modals/EditCategoryModal'
@@ -9,6 +8,7 @@ import { deleteObject, ref } from 'firebase/storage'
 import AdminItems from './AdminItems'
 import ProductCard from './ProductCard'
 import { ReactComponent as TrashIcon } from "../icons/trashicon.svg";
+import { CategoryContainer, CategoryControls, CategoryItems, CategoryTitle } from './styledComponents/StyledCategory'
 
 function TabContent({selectedTab, homeMenuData, isAdmin, isDrink, getAllAdminItems, removeAdminItem}) {
     const [categories, setCategories] = useState([])
@@ -24,7 +24,7 @@ function TabContent({selectedTab, homeMenuData, isAdmin, isDrink, getAllAdminIte
     useEffect(() => {
         if (!homeMenuData) {
             const categoriesPath = isDrink ? "menu/drink/categories" : "menu/food/categories"
-            const q = query(collection(db, categoriesPath));
+            const q = query(collection(db, categoriesPath), orderBy("dateCreated", "asc"));
             const unsubscribe = onSnapshot(q, (querySnapshot) => {
                 const snapshotData = [];
                 querySnapshot.forEach((doc) => {
@@ -79,26 +79,28 @@ function TabContent({selectedTab, homeMenuData, isAdmin, isDrink, getAllAdminIte
     return (
         <div>
             {categories?.map((category) => (
-                <Element key={category.id} name={category.id} className='categoryContainer'>
-                    <h2 className="categoryTitle" id={category.id}>{category.category}</h2>
+                <CategoryContainer key={category.id}>
+                <Element key={category.id} name={category.id}>
+                    <CategoryTitle id={category.id}>{category.category}</CategoryTitle>
                     {isAdmin ? (
                         <>
-                        <div className='categoryControls'>
+                        <CategoryControls>
                             <DeleteButton onClick={() => handleDeleteCategory(category)}>
                                 <TrashIcon height="100%"/>
                             </DeleteButton>
                             <EditCategoryModal category={category} />
-                        </div>
+                        </CategoryControls>
                         <AdminItems category={category} getAllAdminItems={getAllAdminItems} removeAdminItem={removeAdminItem}/>
                         </>
                     ) : 
-                        <div>
+                        <CategoryItems>
                             {category.items?.map((item) => (
                                 <ProductCard item={item} key={item.id}/>
                             ))}
-                        </div>
+                        </CategoryItems>
                     }
                 </Element>
+                </CategoryContainer>
             ))}
         </div>
     )

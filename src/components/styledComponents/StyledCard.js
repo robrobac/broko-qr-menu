@@ -8,6 +8,7 @@ export const Card = styled.div`
     color: #235239;
     margin: 3rem auto;
     z-index: 1;
+    text-align: center;
 `
 export const CardImage = styled.img`
     border-radius: 10px 10px 0 0;

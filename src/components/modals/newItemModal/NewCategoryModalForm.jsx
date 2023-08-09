@@ -30,6 +30,7 @@ function NewCategoryModalForm({ handleAddingCategory, isDrink }) {
                 id: newId,
                 dateCreated: Date.now(),
                 dateEdited: Date.now(),
+                orderTimestamp: Date.now()
             });
 
             //  Reset form states

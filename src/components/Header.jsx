@@ -1,14 +1,14 @@
 import React from 'react'
 import Logout from './Logout'
 import Logo from "../images/brokologo.png"
-import "./Header.scss"
+import { HeaderLogo, HeaderWrap } from './styledComponents/styledHeader'
 
 function Header() {
     return (
-        <header>
-            <img src={Logo} alt='logo' className='logoImg'></img>
+        <HeaderWrap>
+            <HeaderLogo src={Logo} alt='logo' className='logoImg'></HeaderLogo>
             <Logout />
-        </header>
+        </HeaderWrap>
     )
 }
 

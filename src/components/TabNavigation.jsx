@@ -1,9 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
-import "./TabNavigation.scss"
 import { Nav, TabNav } from './styledComponents/StyledNavigation';
 import { NavigationButton } from './styledComponents/StyledButtons';
 import { Link } from 'react-scroll';
-import { collection, onSnapshot, query } from 'firebase/firestore';
+import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
 import { db } from '../firebase/config';
 
 function TabNavigation({selectedTab, homeMenuData}) {
@@ -19,7 +18,7 @@ function TabNavigation({selectedTab, homeMenuData}) {
 
         //  if no homeMenuData is passed from CategoryTabs.jsx, get data from Firebase onSnapshot
         if (!homeMenuData) {
-            const q = query(collection(db, `menu/${selectedTab}/categories`));
+            const q = query(collection(db, `menu/${selectedTab}/categories`), orderBy("dateCreated", "asc"));
             const unsubscribe = onSnapshot(q, (querySnapshot) => {
                 const snapshotData = [];
                 querySnapshot.forEach((doc) => {

@@ -3,6 +3,7 @@ import React, { createContext, useEffect, useState } from 'react'
 import { db, storage } from '../firebase/config';
 import { deleteObject, ref } from 'firebase/storage';
 import ProductCard from './ProductCard';
+import { CategoryItems } from './styledComponents/StyledCategory';
 
 export const EditContext = createContext()
 
@@ -176,6 +177,7 @@ function AdminItems({category, getAllAdminItems, removeAdminItem, filteredItems,
                         orderTimestamp: middleValue,
                     })
                     //  Update lastedited timestamp to handle fetching from firestore or local storage.
+                    await updateDoc(doc(db, "/menu/additional"), {lastedited: Date.now()})
                 } catch (error) {
                     console.log(error)
                 }
@@ -187,11 +189,11 @@ function AdminItems({category, getAllAdminItems, removeAdminItem, filteredItems,
         <EditContext.Provider value={{
             handleEdit,
         }}>
-        <div>
+        <CategoryItems>
             {items?.map((item) => (
                 <ProductCard item={item} key={item.id} handleDelete={handleDelete} isAdmin={true} handleReorder={handleReorder} isSearch={isSearch}/>
             ))}
-        </div>
+        </CategoryItems>
         </EditContext.Provider>
     )
 }

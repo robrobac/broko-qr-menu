@@ -16,7 +16,7 @@ function Home() {
             try {
                 //  Categories path, query and snapshot.
                 const menuPath = `menu/${mainCategory}/categories`;
-                const menuQuery = collection(db, menuPath)
+                const menuQuery = query(collection(db, menuPath), orderBy("dateCreated", "asc"))
                 const menuSnapshot = await getDocs(menuQuery)
 
                 const categories = []

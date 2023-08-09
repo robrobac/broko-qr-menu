@@ -48,7 +48,7 @@ const AddProductButton = styled(Button)`
     padding: 1rem;
 
     position: fixed;
-    left: 1rem;
+    left: .5rem;
     bottom: 1rem;
 
     -webkit-box-shadow: 0px 5px 20px 6px rgba(0, 0, 0, 0.2);
