@@ -1,18 +1,28 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Header from '../components/Header'
 import { collection, doc, getDoc, getDocs, orderBy, query } from 'firebase/firestore'
 import { db } from '../firebase/config'
 import CategoryTabs from '../components/CategoryTabs'
+import { AppContext } from '../App'
+import Loading from '../components/Loading'
 
 
 function Home() {
+    const {isLoading, handleLoading} = useContext(AppContext)
     const [homeMenuData, setHomeMenuData] = useState()
+    
+
+    //  Setting loading state to true once the component mounts, then setting it to false once the ProductCard image is loaded.
+    useEffect(() => {
+        handleLoading(true)
+    }, [])
 
     //  Fetching data from Firestore or LocalStorage, depending on the last edited timestamp. Fetched data is stored in homeMenuData state.
     useEffect(() => {
 
         //  Fetching data from Firestore if no Local Storage is available, after the fetch save the current data to Local Storage for later use.
         const fetchData = async (mainCategory) => {
+            
             try {
                 //  Categories path, query and snapshot.
                 const menuPath = `menu/${mainCategory}/categories`;
@@ -88,12 +98,10 @@ function Home() {
                     timestamp: Date.now(),
                 };
                 localStorage.setItem('homeMenuData', JSON.stringify(dataToCache));
-
             }
 
             //  Save the data to homeMenuData State
             setHomeMenuData(allData)
-            
         }
 
         fetchAllData()
@@ -101,14 +109,13 @@ function Home() {
     //  End of Fetching data from Firestore or LocalStorage.
 
     return (
-
         <div>
+            <Loading loading={isLoading ? 1 : 0}/>
             <Header />
             <main>
                 <CategoryTabs homeMenuData={homeMenuData}/>
             </main>
         </div>
-
     )
 }
 

@@ -5,10 +5,14 @@ import { Divider, Form, FormInput, FormLabel, FormSection } from '../components/
 import { BackButton, SubmitButton } from '../components/styledComponents/StyledButtons';
 import { Modal, ModalBody, ModalContent } from '../components/styledComponents/StyledModal';
 import { useNavigate } from 'react-router-dom';
+import Loading from '../components/Loading';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+
+    const [user, loading, error] = useAuthState(auth);
 
     const navigate = useNavigate();
 
@@ -36,44 +40,48 @@ function Login() {
     }
 
     return (
-        <Modal $showModal={1}>
-            <ModalContent>
-                <ModalBody>
-                    <Form id="loginForm" onSubmit={handleFormSubmit}>
-                        <FormSection>
-                            <FormLabel htmlFor="inputEmail">
-                                Email address
-                            </FormLabel>
-                            <FormInput
-                            required
-                            type="email"
-                            id="inputEmail"
-                            placeholder="name@example.com"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}/>
-                        </FormSection>
-                        <Divider></Divider>
-                        <FormSection>
-                            <FormLabel htmlFor="inputPassword">
-                                Password
-                            </FormLabel>
-                            <FormInput
-                            required
-                            type="password"
-                            id="inputPassword"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}/>
-                        </FormSection>
-                        <SubmitButton type="submit">
-                            Sign In
-                        </SubmitButton>
-                    </Form>
-                    <BackButton style={{marginTop: "1rem", width: "100%"}} onClick={handleGoBack}>
-                    Go Back To Home
-                    </BackButton>
-                </ModalBody>
-            </ModalContent>
-        </Modal>
+            <>
+            <Loading loading={loading ? 1 : 0}/>
+            <Modal $showModal={1} style={{backgroundColor: "#5b7e6c"}}>
+                
+                <ModalContent>
+                    <ModalBody>
+                        <Form id="loginForm" onSubmit={handleFormSubmit}>
+                            <FormSection>
+                                <FormLabel htmlFor="inputEmail">
+                                    Email address
+                                </FormLabel>
+                                <FormInput
+                                required
+                                type="email"
+                                id="inputEmail"
+                                placeholder="name@example.com"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}/>
+                            </FormSection>
+                            <Divider></Divider>
+                            <FormSection>
+                                <FormLabel htmlFor="inputPassword">
+                                    Password
+                                </FormLabel>
+                                <FormInput
+                                required
+                                type="password"
+                                id="inputPassword"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}/>
+                            </FormSection>
+                            <SubmitButton type="submit">
+                                Sign In
+                            </SubmitButton>
+                        </Form>
+                        <BackButton style={{marginTop: "1rem", width: "100%"}} onClick={handleGoBack}>
+                        Go Back To Home
+                        </BackButton>
+                    </ModalBody>
+                </ModalContent>
+            </Modal>
+            </>
     )
 }
 

@@ -8,20 +8,23 @@ import Admin from "./pages/Admin";
 import Login from "./pages/Login";
 
 
-export const AuthContext = createContext();
+export const AppContext = createContext();
 
 function App() {
+    const [isAuth, setIsAuth] = useState(null);
+    const [isLoading, setIsLoading] = useState(true)
+
+    const handleLoading = (loading) => {
+        setIsLoading(loading)
+    }
 
     //  Auth Check
-    const [isAuth, setIsAuth] = useState(null);
     onAuthStateChanged(auth, (user) => {
         setIsAuth(!!user)
     })
 
     return (
-        <AuthContext.Provider value={{
-            isAuth,
-        }}>
+        <AppContext.Provider value={{ isAuth, isLoading, handleLoading }}>
             <div className="App">
                 <Routes>
                     <Route path="/" element={<Home />} />
@@ -29,7 +32,7 @@ function App() {
                     <Route path="/admin" element={isAuth ? <Admin /> : <Navigate to="/login" />} />
                 </Routes>
             </div>
-        </AuthContext.Provider>
+        </AppContext.Provider>
     );
 }
 
