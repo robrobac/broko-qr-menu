@@ -4,6 +4,7 @@ import { normalizeString } from '../helpers/normalizeString'
 import { TabNav } from './styledComponents/StyledNavigation';
 import { FormInput} from './styledComponents/StyledForm';
 import AdminItems from './AdminItems';
+import { CategoryItems } from './styledComponents/StyledCategory';
 
 function SearchBar({homeMenuData, allAdminItems, selectedTab, removeAdminItem }) {
     const [allItems, setAllItems] = useState()  //  All items for Home page
@@ -107,10 +108,14 @@ function SearchBar({homeMenuData, allAdminItems, selectedTab, removeAdminItem })
             </TabNav>
             {homeMenuData ? 
                 filteredItems?.map((item) => (
-                    <ProductCard item={item} key={item.id}/>
+                    <CategoryItems>
+                        <ProductCard item={item} key={item.id}/>
+                    </CategoryItems>
                 ))
             : (
-                <AdminItems filteredItems={filteredItems} removeAdminItem={removeAdminItem} isSearch={true}/>
+                
+                    <AdminItems filteredItems={filteredItems} removeAdminItem={removeAdminItem} isSearch={true}/>
+                
             )}
             
         </div>
