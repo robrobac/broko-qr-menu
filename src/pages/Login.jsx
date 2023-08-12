@@ -43,7 +43,6 @@ function Login() {
             <>
             <Loading loading={loading ? 1 : 0}/>
             <Modal $showModal={1} style={{backgroundColor: "#5b7e6c"}}>
-                
                 <ModalContent>
                     <ModalBody>
                         <Form id="loginForm" onSubmit={handleFormSubmit}>

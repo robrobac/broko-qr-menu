@@ -5,11 +5,13 @@ import { TabNav } from './styledComponents/StyledNavigation';
 import { FormInput} from './styledComponents/StyledForm';
 import AdminItems from './AdminItems';
 import { CategoryItems } from './styledComponents/StyledCategory';
+import { SearchMessage } from './styledComponents/StyledMisc';
 
 function SearchBar({homeMenuData, allAdminItems, selectedTab, removeAdminItem }) {
     const [allItems, setAllItems] = useState()  //  All items for Home page
     const [filteredItems, setFilteredItems] = useState([])    //  Filtered items that will appear in search result
     const [searchValue, setSearchValue] = useState("")  //  Handling search input value
+    console.log(filteredItems)
 
     const inputRef = useRef(null)   //  Search Input reference, handles onBlur for input in order to close virtual keyboard on scroll
 
@@ -55,7 +57,7 @@ function SearchBar({homeMenuData, allAdminItems, selectedTab, removeAdminItem })
 
         //  if there's no query value, set filtered data to null, if there is query value then set filtered data to match search value
         if (!query) {
-            setFilteredItems(null);
+            setFilteredItems([]);
         } else {
             const filteredItems = allItems?.filter(item => {
                 const titleMatch = normalizeString(item.title).includes(query);
@@ -93,6 +95,8 @@ function SearchBar({homeMenuData, allAdminItems, selectedTab, removeAdminItem })
         }
     };
 
+    const noResult = searchValue === "" ? "Search all products" : filteredItems.length === 0 ? `No results for "${searchValue}", please try again` : ""
+
     return (
         <div>
             <TabNav >
@@ -106,6 +110,7 @@ function SearchBar({homeMenuData, allAdminItems, selectedTab, removeAdminItem })
                 onKeyUp={onEnter}
                 />
             </TabNav>
+            <SearchMessage>{noResult}</SearchMessage>
             {homeMenuData ? 
                 filteredItems?.map((item) => (
                     <CategoryItems>
@@ -113,9 +118,7 @@ function SearchBar({homeMenuData, allAdminItems, selectedTab, removeAdminItem })
                     </CategoryItems>
                 ))
             : (
-                
-                    <AdminItems filteredItems={filteredItems} removeAdminItem={removeAdminItem} isSearch={true}/>
-                
+                <AdminItems filteredItems={filteredItems} removeAdminItem={removeAdminItem} isSearch={true}/>
             )}
             
         </div>
