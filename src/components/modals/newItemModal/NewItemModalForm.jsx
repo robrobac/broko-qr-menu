@@ -6,7 +6,7 @@ import { collection, doc, query, setDoc, updateDoc } from 'firebase/firestore';
 import Compressor from 'compressorjs';
 import NewCategoryModalForm from './NewCategoryModalForm';
 import noimage from "../../../noimage.png"
-import { Divider, Form, FormInput, FormLabel, FormSection, FormSelect, FormTextarea, FormUpload, PriceConversion } from '../../styledComponents/StyledForm';
+import { Divider, Form, FormInput, FormLabel, FormSection, FormSelect, FormTextarea, FormUpload, PriceConversion, UploadedImage } from '../../styledComponents/StyledForm';
 import { AddCategoryButton, SubmitButton } from '../../styledComponents/StyledButtons';
 
 function NewItemModalForm({ isDrink }) {
@@ -17,6 +17,8 @@ function NewItemModalForm({ isDrink }) {
     const [description, setDescription] = useState("");
     const [compressedFile, setCompressedFile] = useState(null);
     const [addingCategory, setAddingCategory] = useState(false);
+
+    const [isUploading, setIsUploading] = useState(false)
 
     const fileInputRef = useRef(null);
 
@@ -30,15 +32,28 @@ function NewItemModalForm({ isDrink }) {
 
     //  Compressing the image before uploading to Firebase
     const handleCompressedImage = (e) => {
+        setIsUploading(true)
         const image = e.target.files[0];
-        new Compressor(image, {
-            quality: 0.6,
-            maxWidth: 425,
-            success: (compressedResult) => {
-                setCompressedFile(compressedResult);
-            }
-        });
+        if (image) {
+            new Compressor(image, {
+                quality: 0.6,
+                maxWidth: 425,
+                success: (compressedResult) => {
+                    setCompressedFile(compressedResult);
+                    setIsUploading(false)
+                }
+            });
+        } else {
+            setIsUploading(false)
+            setCompressedFile(null)
+        }
     };
+
+    const handleClearImage = (e) => {
+        e.preventDefault()
+        setCompressedFile(null)
+        fileInputRef.current.value = null;
+    }
 
     //  Eur to Kn converter
     const eurToKn = (e) => {
@@ -195,14 +210,17 @@ function NewItemModalForm({ isDrink }) {
                     <FormSection>
                         <FormLabel htmlFor="inputFile">
                             Upload Image
+                            {compressedFile ? <AddCategoryButton type='button' onClick={(e) => handleClearImage(e)}>Clear Image</AddCategoryButton>  : ""}
                         </FormLabel>
                         <FormUpload
                         type="file"
                         accept='image/*'
                         id="inputFile"
                         ref={fileInputRef}
-                        onChange={handleCompressedImage}/>
+                        onChange={handleCompressedImage}
+                        disabled={isUploading}/>
                     </FormSection>
+                    {compressedFile ? <UploadedImage src={URL.createObjectURL(compressedFile)} alt='uploadedImage'/> : <UploadedImage src={noimage} alt="uploadedImage"></UploadedImage>}
                     <Divider></Divider>
                     <SubmitButton type="submit">
                         Submit New {isDrink ? "Drink" : "Food"}

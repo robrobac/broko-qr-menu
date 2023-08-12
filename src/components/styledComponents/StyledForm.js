@@ -102,4 +102,8 @@ padding: 0;
 opacity: 5%;
 `
 
-export { Form, FormInput, FormLabel, FormSection, PriceConversion, FormSelect, FormTextarea, FormUpload, Divider }
+const UploadedImage = styled.img`
+    border-radius: 10px;
+`
+
+export { Form, FormInput, FormLabel, FormSection, PriceConversion, FormSelect, FormTextarea, FormUpload, Divider, UploadedImage }

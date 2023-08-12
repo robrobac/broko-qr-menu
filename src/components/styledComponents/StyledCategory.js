@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 
 export const CategoryContainer = styled.div`
-    text-align: center;
     border-bottom: 1px solid #5b7e6c;
 
     &:last-of-type {
@@ -17,7 +16,8 @@ export const CategoryTitle = styled.h2`
     color: #235239;
     font-weight: 700;
     font-size: 2rem;
-    padding-bottom: 1rem;    
+    padding-bottom: 1rem; 
+    text-align: center;  
 `
 
 export const CategoryControls = styled.div`

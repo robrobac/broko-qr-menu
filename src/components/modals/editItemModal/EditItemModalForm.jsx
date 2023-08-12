@@ -4,8 +4,8 @@ import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { db, storage } from '../../../firebase/config';
 import Compressor from 'compressorjs';
 import { deleteObject, getDownloadURL, ref, uploadBytes } from 'firebase/storage';
-import { Divider, Form, FormInput, FormLabel, FormSection, FormSelect, FormTextarea, FormUpload, PriceConversion } from '../../styledComponents/StyledForm';
-import { SubmitButton } from '../../styledComponents/StyledButtons';
+import { Divider, Form, FormInput, FormLabel, FormSection, FormSelect, FormTextarea, FormUpload, PriceConversion, UploadedImage } from '../../styledComponents/StyledForm';
+import { AddCategoryButton, SubmitButton } from '../../styledComponents/StyledButtons';
 import { EditContext } from '../../AdminItems';
 
 function EditItemModalForm({item, setIsEditing}) {
@@ -17,6 +17,7 @@ function EditItemModalForm({item, setIsEditing}) {
     const [description, setDescription] = useState(item.description);   //  Current Item Description
     const [compressedFile, setCompressedFile] = useState(null); //  State that holds data of image compressed with handleCompressedImage function
 
+    const [isUploading, setIsUploading] = useState(false)
     const fileInputRef = useRef(null);  //  Ref to a file input element
 
      // Firebase React Hook useCollectionData used to display categories in select input.
@@ -27,14 +28,27 @@ function EditItemModalForm({item, setIsEditing}) {
      //  Compressing and resizing the image before uploading to Firebase
     const handleCompressedImage = (e) => {
         const image = e.target.files[0];
-        new Compressor(image, {
-            quality: 0.6,
-            maxWidth: 425,
-            success: (compressedResult) => {
-                setCompressedFile(compressedResult);
-            }
-        });
+        setIsUploading(true)
+        if (image) {
+            new Compressor(image, {
+                quality: 0.6,
+                maxWidth: 425,
+                success: (compressedResult) => {
+                    setCompressedFile(compressedResult);
+                    setIsUploading(false)
+                }
+            });
+        } else {
+            setIsUploading(false)
+            setCompressedFile(null)
+        }
     };
+
+    const handleClearImage = (e) => {
+        e.preventDefault()
+        setCompressedFile(null)
+        fileInputRef.current.value = null;
+    }
 
     //  Eur to Kn converter
     const eurToKn = (e) => {
@@ -164,11 +178,10 @@ function EditItemModalForm({item, setIsEditing}) {
                     onChange={(e) => setDescription(e.target.value)}/>
                 </FormSection>
                 <Divider></Divider>
-                <img src={item?.fileUrl} className="img-thumbnail mx-auto d-block" alt="..."></img>
-                <Divider></Divider>
                 <FormSection>
                     <FormLabel htmlFor="inputFile">
                         Upload New Image
+                        {compressedFile ? <AddCategoryButton type='button' onClick={(e) => handleClearImage(e)}>Restart to original Image</AddCategoryButton>  : ""}
                     </FormLabel>
                     <FormUpload
                     type="file"
@@ -177,6 +190,7 @@ function EditItemModalForm({item, setIsEditing}) {
                     ref={fileInputRef}
                     onChange={handleCompressedImage}/>
                 </FormSection>
+                {compressedFile ? <UploadedImage src={URL.createObjectURL(compressedFile)} alt='uploadedImage'/> : <UploadedImage src={item?.fileUrl} alt="uploadedImage"></UploadedImage>}
                 <Divider></Divider>
                 <SubmitButton type="submit">
                     Save Changes

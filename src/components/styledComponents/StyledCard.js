@@ -8,7 +8,7 @@ export const Card = styled.div`
     color: #235239;
     margin: 3rem auto;
     z-index: 1;
-    text-align: center;
+    
 `
 export const CardImage = styled.img`
     border-radius: 10px 10px 0 0;
@@ -26,6 +26,7 @@ export const CardTitle = styled.h3`
     font-size: 1.5rem;
     font-weight: 700;
     margin-bottom: 0;
+    text-align: center;
     
 
 `
@@ -34,6 +35,7 @@ export const CardPrice = styled.div`
     color: white;
     background-color: #235239;
     padding: .5rem;
+    text-align: center;
 
 `
 export const PriceEUR = styled.h4`
@@ -66,6 +68,7 @@ export const AdminTimestamp = styled.p`
     color: #5b7e6c;
     margin-bottom: 0;
     flex: 1;
+    text-align: center;
 
 `
 export const AdminButtons = styled.div`
