@@ -3,10 +3,12 @@ import NewItemModalForm from './NewItemModalForm';
 import { AddProductButton } from '../../styledComponents/StyledButtons';
 import { HeaderClose, HeaderTitle, Modal, ModalBody, ModalContent, ModalHeader } from '../../styledComponents/StyledModal';
 import { ReactComponent as XIcon } from "../../../icons/xicon.svg";
+import { UploadLoader } from '../../styledComponents/StyledLoader';
 
 function NewItemModal({isDrink}) {
     const [showFoodModal, setShowFoodModal] = useState(false);
     const [showDrinkModal, setShowDrinkModal] = useState(false);
+    const [isUploading, setIsUploading] = useState(false)
 
     //  Close modal once clicked or tapped outside the modal.
     const outsideClick = (e) => {
@@ -24,6 +26,7 @@ function NewItemModal({isDrink}) {
 
     return (
         <div className='newItemModal'>
+            {isUploading ? <UploadLoader><span className="uploadLoader"></span></UploadLoader> : ""}
             {isDrink ? (
                 <AddProductButton onClick={() => setShowDrinkModal(true)}>Add New Drink</AddProductButton>
             ) : (
@@ -39,7 +42,7 @@ function NewItemModal({isDrink}) {
                             </HeaderClose>
                         </ModalHeader>
                         <ModalBody>
-                            <NewItemModalForm isDrink={false}/>
+                            <NewItemModalForm isDrink={false} setIsUploading={setIsUploading}/>
                         </ModalBody>
                     </ModalContent>
                 </Modal>
@@ -54,7 +57,7 @@ function NewItemModal({isDrink}) {
                             </HeaderClose>
                         </ModalHeader>
                         <ModalBody>
-                            <NewItemModalForm isDrink={true}/>
+                            <NewItemModalForm isDrink={true} setIsUploading={setIsUploading}/>
                         </ModalBody>
                     </ModalContent>
                 </Modal>

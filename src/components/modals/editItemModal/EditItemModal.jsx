@@ -4,11 +4,15 @@ import { EditButton } from '../../styledComponents/StyledButtons';
 import { HeaderClose, HeaderTitle, Modal, ModalBody, ModalContent, ModalHeader } from '../../styledComponents/StyledModal';
 import { ReactComponent as EditIcon } from "../../../icons/editicon.svg";
 import { ReactComponent as XIcon } from "../../../icons/xicon.svg";
+import { UploadLoader } from '../../styledComponents/StyledLoader';
 
 function EditItemModal({item}) {
     const [isEditing, setIsEditing] = useState(false)
+    const [isUploading, setIsUploading] = useState(false)
+
     return (
         <>
+        {isUploading ? <UploadLoader><span className="uploadLoader"></span></UploadLoader> : ""}
         <EditButton onClick={() => setIsEditing(true)}>
             <EditIcon height="100%"/>
         </EditButton>
@@ -21,7 +25,7 @@ function EditItemModal({item}) {
                     </HeaderClose>
                 </ModalHeader>
                 <ModalBody>
-                    <EditItemModalForm item={item} setIsEditing={setIsEditing}/>
+                    <EditItemModalForm item={item} setIsEditing={setIsEditing} setIsUploading={setIsUploading}/>
                 </ModalBody>
             </ModalContent>
         </Modal>  

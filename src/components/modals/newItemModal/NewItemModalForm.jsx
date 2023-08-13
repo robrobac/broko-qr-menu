@@ -9,7 +9,7 @@ import noimage from "../../../noimage.png"
 import { Divider, Form, FormInput, FormLabel, FormSection, FormSelect, FormTextarea, FormUpload, PriceConversion, UploadedImage } from '../../styledComponents/StyledForm';
 import { AddCategoryButton, SubmitButton } from '../../styledComponents/StyledButtons';
 
-function NewItemModalForm({ isDrink }) {
+function NewItemModalForm({ isDrink, setIsUploading }) {
     const [title, setTitle] = useState("");
     const [priceEUR, setPriceEUR] = useState("");
     const [priceKN, setPriceKN] = useState("");
@@ -17,8 +17,6 @@ function NewItemModalForm({ isDrink }) {
     const [description, setDescription] = useState("");
     const [compressedFile, setCompressedFile] = useState(null);
     const [addingCategory, setAddingCategory] = useState(false);
-
-    const [isUploading, setIsUploading] = useState(false)
 
     const fileInputRef = useRef(null);
 
@@ -217,8 +215,7 @@ function NewItemModalForm({ isDrink }) {
                         accept='image/*'
                         id="inputFile"
                         ref={fileInputRef}
-                        onChange={handleCompressedImage}
-                        disabled={isUploading}/>
+                        onChange={handleCompressedImage}/>
                     </FormSection>
                     {compressedFile ? <UploadedImage src={URL.createObjectURL(compressedFile)} alt='uploadedImage'/> : <UploadedImage src={noimage} alt="uploadedImage"></UploadedImage>}
                     <Divider></Divider>

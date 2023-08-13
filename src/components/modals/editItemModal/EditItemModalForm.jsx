@@ -8,7 +8,7 @@ import { Divider, Form, FormInput, FormLabel, FormSection, FormSelect, FormTexta
 import { AddCategoryButton, SubmitButton } from '../../styledComponents/StyledButtons';
 import { EditContext } from '../../AdminItems';
 
-function EditItemModalForm({item, setIsEditing}) {
+function EditItemModalForm({item, setIsEditing, setIsUploading}) {
     const {handleEdit} = useContext(EditContext)    //  Edit item function passed from AdminItems.jsx via context.
     const [title, setTitle] = useState(item.title); //  Current Item Title
     const [priceEUR, setPriceEUR] = useState(parseFloat(item.priceEUR));    //  Current Item Price in EUR
@@ -16,8 +16,6 @@ function EditItemModalForm({item, setIsEditing}) {
     const [category, setCategory] = useState(item.category);    //  Current Item Category, not changeable yet
     const [description, setDescription] = useState(item.description);   //  Current Item Description
     const [compressedFile, setCompressedFile] = useState(null); //  State that holds data of image compressed with handleCompressedImage function
-
-    const [isUploading, setIsUploading] = useState(false)
     const fileInputRef = useRef(null);  //  Ref to a file input element
 
      // Firebase React Hook useCollectionData used to display categories in select input.
