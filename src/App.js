@@ -6,6 +6,7 @@ import "./App.scss"
 import Home from "./pages/Home";
 import Admin from "./pages/Admin";
 import Login from "./pages/Login";
+import NotFound from "./components/NotFound";
 
 
 export const AppContext = createContext();
@@ -27,6 +28,7 @@ function App() {
         <AppContext.Provider value={{ isAuth, isLoading, handleLoading }}>
             <div className="App">
                 <Routes>
+                    <Route path='*' element={<NotFound />} />
                     <Route path="/" element={<Home />} />
                     <Route path="/login" element={!isAuth ? <Login /> : <Navigate to="/admin" />} />
                     <Route path="/admin" element={isAuth ? <Admin /> : <Navigate to="/login" />} />
