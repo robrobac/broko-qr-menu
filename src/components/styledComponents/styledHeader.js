@@ -5,6 +5,7 @@ export const HeaderWrap = styled.header`
     background-color: #235239;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 `
 
 export const HeaderLogo = styled.img`

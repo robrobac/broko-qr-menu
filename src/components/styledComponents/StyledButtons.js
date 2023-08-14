@@ -71,4 +71,11 @@ const AddCategoryButton = styled.button`
 
 `
 
-export { Button, DeleteButton, EditButton, AuthButton, NavigationButton, AddProductButton, AddCategoryButton, SubmitButton, BackButton }
+const UpDownButton = styled(Button)`
+    background-color: unset;
+    fill: #235239;
+    height: 2rem;
+    padding: 0;
+`
+
+export { Button, DeleteButton, EditButton, AuthButton, NavigationButton, AddProductButton, AddCategoryButton, SubmitButton, BackButton, UpDownButton }

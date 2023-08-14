@@ -57,9 +57,7 @@ export const CardDesc = styled.p`
 `
 export const CardAdmin = styled.div`
     display: flex;
-    justify-content: center;
-    align-items: center;
-
+    justify-content: space-evenly;
 `
 export const AdminTimestamp = styled.p`
     font-size: .7rem;
@@ -67,7 +65,7 @@ export const AdminTimestamp = styled.p`
     justify-content: space-evenly;
     color: #5b7e6c;
     margin-bottom: 0;
-    flex: 1;
+    /* flex: 1; */
     text-align: center;
 
 `

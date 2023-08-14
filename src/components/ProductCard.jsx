@@ -1,9 +1,11 @@
 import React, { useContext } from 'react'
 import { AdminButtons, AdminTimestamp, Card, CardAdmin, CardBody, CardDesc, CardImage, CardPrice, CardTitle, PriceEUR, PriceKN } from './styledComponents/StyledCard'
-import { DeleteButton } from './styledComponents/StyledButtons'
+import { DeleteButton, UpDownButton } from './styledComponents/StyledButtons'
 import noimage from "../noimage.png"
 import EditItemModal from './modals/editItemModal/EditItemModal'
 import { ReactComponent as TrashIcon } from "../icons/trashicon.svg";
+import { ReactComponent as UpIcon } from "../icons/upicon.svg";
+import { ReactComponent as DownIcon } from "../icons/downicon.svg";
 import { AppContext } from '../App';
 
 function ProductCard({item, handleDelete, isAdmin, handleReorder, isSearch}) {
@@ -47,9 +49,8 @@ function ProductCard({item, handleDelete, isAdmin, handleReorder, isSearch}) {
                 </CardPrice>
                 <CardDesc>{item.description}</CardDesc>
                 {isAdmin ? (
+                    <>
                     <CardAdmin>
-                        <AdminTimestamp>Created: {formattedDateCreated}</AdminTimestamp>
-                        <AdminTimestamp>Edited: {formattedDateEdited}</AdminTimestamp>
                         <AdminButtons>
                             <DeleteButton onClick={() => handleDelete(item)}>
                                 <TrashIcon height="100%"/>
@@ -57,12 +58,23 @@ function ProductCard({item, handleDelete, isAdmin, handleReorder, isSearch}) {
                             <EditItemModal item={item}/>
                         </AdminButtons>
                         {!isSearch ? (
-                            <>
-                            <button style={{margin: "5px", padding: "10px"}} onClick={() => handleReorder(item, "up")}>UP</button>
-                            <button style={{margin: "5px", padding: "10px"}} onClick={() => handleReorder(item, "down")}>DOWN</button>
-                            </>
-                        ) : ""}
+                            <AdminButtons>
+                                <UpDownButton>
+                                    <UpIcon height="100%" onClick={() => handleReorder(item, "up")}/>
+                                </UpDownButton>
+                                <UpDownButton>
+                                    <DownIcon height="100%" onClick={() => handleReorder(item, "down")}/>
+                                </UpDownButton>
+                            </AdminButtons>
+                        ) : ""} 
                     </CardAdmin>
+                    <CardAdmin>
+                        <AdminButtons>
+                            <AdminTimestamp>Created: {formattedDateCreated}</AdminTimestamp>
+                            <AdminTimestamp>Edited: {formattedDateEdited}</AdminTimestamp>
+                        </AdminButtons>
+                    </CardAdmin>
+                    </>
                 ) : ""}
             </CardBody>
         </Card>
