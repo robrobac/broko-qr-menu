@@ -2,16 +2,20 @@ import React, { useEffect, useState } from 'react'
 import { Element } from 'react-scroll'
 import { collection, deleteDoc, doc, getDocs, onSnapshot, orderBy, query, updateDoc } from 'firebase/firestore'
 import { db, storage } from '../firebase/config'
-import { DeleteButton } from './styledComponents/StyledButtons'
+import { DeleteButton, UpDownButton } from './styledComponents/StyledButtons'
 import EditCategoryModal from './modals/EditCategoryModal'
 import { deleteObject, ref } from 'firebase/storage'
 import AdminItems from './AdminItems'
 import ProductCard from './ProductCard'
 import { ReactComponent as TrashIcon } from "../icons/trashicon.svg";
 import { CategoryContainer, CategoryControls, CategoryItems, CategoryTitle } from './styledComponents/StyledCategory'
+import { ReactComponent as UpIcon } from "../icons/upicon.svg";
+import { ReactComponent as DownIcon } from "../icons/downicon.svg";
+import { getMiddleValue } from '../helpers/getMiddleValue'
 
 function TabContent({selectedTab, homeMenuData, isAdmin, isDrink, getAllAdminItems, removeAdminItem}) {
     const [categories, setCategories] = useState([])
+    const itemsLength = categories.length - 1
 
     //  If homeMenuData is passed from CategoryTabs.jsx, set categories
     useEffect(() => {
@@ -24,7 +28,7 @@ function TabContent({selectedTab, homeMenuData, isAdmin, isDrink, getAllAdminIte
     useEffect(() => {
         if (!homeMenuData) {
             const categoriesPath = isDrink ? "menu/drink/categories" : "menu/food/categories"
-            const q = query(collection(db, categoriesPath), orderBy("dateCreated", "asc"));
+            const q = query(collection(db, categoriesPath), orderBy("orderTimestamp", "asc"));
             const unsubscribe = onSnapshot(q, (querySnapshot) => {
                 const snapshotData = [];
                 querySnapshot.forEach((doc) => {
@@ -76,9 +80,107 @@ function TabContent({selectedTab, homeMenuData, isAdmin, isDrink, getAllAdminIte
     }
 
 
+    //  Handling manual item ordering with buttons UP and DOWN
+    const handleReorder = async (item, direction) => {
+
+        //  Getting moving item index and firebase ref
+        const itemIndex = categories.findIndex(doc => doc.id === item.id )
+        const docRef = doc(db, categories[itemIndex].categoryPath)
+
+        //  If one item in array, do nothing.
+        if (categories.length <= 1) {
+            return
+        }
+
+        //  Handling move UP
+        if (direction === "up") {
+
+            //  If moving item is first, don't move UP
+            if (itemIndex === 0) {
+                return
+            }
+
+            //  If moving item is second in array
+            if (itemIndex === 1) {
+                const prevOrder1 = categories[1 - 1].orderTimestamp
+                const middleValue = getMiddleValue(0, prevOrder1)
+                //  Saving current scroll position to handle "scroll lock"
+                try {
+                    //  Updating moved item document's orderTimestamp
+                    await updateDoc(docRef, {
+                        orderTimestamp: middleValue,
+                    })
+                    //  Update lastedited timestamp to handle fetching from firestore or local storage.
+                    await updateDoc(doc(db, "/menu/additional"), {lastedited: Date.now()})
+                } catch (error) {
+                    console.log(error)
+                }
+            }
+
+            //  If moving item is neither first nor second in array
+            if (itemIndex >= 2) {
+                const prevOrder1 = categories[itemIndex - 1].orderTimestamp
+                const prevOrder2 = categories[itemIndex - 2].orderTimestamp
+                const middleValue = getMiddleValue(prevOrder1, prevOrder2)
+                try {
+                    //  Updating moved item document's orderTimestamp
+                    await updateDoc(docRef, {
+                        orderTimestamp: middleValue,
+                    })
+                    //  Update lastedited timestamp to handle fetching from firestore or local storage.
+                    await updateDoc(doc(db, "/menu/additional"), {lastedited: Date.now()})
+                } catch (error) {
+                    console.log(error)
+                }
+            }
+
+        //  Handling move DOWN
+        } else if (direction === "down") {
+
+            //  If moving item is last in the array
+            if (itemIndex === itemsLength) {
+                return
+            }
+
+            //  If moving item is second to last in the array
+            if (itemIndex === itemsLength - 1) {
+                const prevOrder1 = categories[itemsLength].orderTimestamp
+                const middleValue = prevOrder1 + 10
+                try {
+                    //  Updating moved item document's orderTimestamp
+                    await updateDoc(docRef, {
+                        orderTimestamp: middleValue,
+                    })
+                    //  Update lastedited timestamp to handle fetching from firestore or local storage.
+                    await updateDoc(doc(db, "/menu/additional"), {lastedited: Date.now()})
+                } catch (error) {
+                    console.log(error)
+                }
+            }
+
+            //  If moving item is neither last nor second to last in the array
+            else {
+                const prevOrder1 = categories[itemIndex + 1].orderTimestamp
+                const prevOrder2 = categories[itemIndex + 2].orderTimestamp
+                const middleValue = getMiddleValue(prevOrder1, prevOrder2)
+                try {
+                    //  Updating moved item document's orderTimestamp
+                    await updateDoc(docRef, {
+                        orderTimestamp: middleValue,
+                    })
+                    //  Update lastedited timestamp to handle fetching from firestore or local storage.
+                    await updateDoc(doc(db, "/menu/additional"), {lastedited: Date.now()})
+                } catch (error) {
+                    console.log(error)
+                }
+            }
+        }
+    }
+
+
     return (
         <div>
-            {categories?.map((category) => (
+            {categories?.map((category, index) => (
                 <CategoryContainer key={category.id}>
                 <Element key={category.id} name={category.id}>
                     <CategoryTitle id={category.id}>{category.category}</CategoryTitle>
@@ -89,6 +191,12 @@ function TabContent({selectedTab, homeMenuData, isAdmin, isDrink, getAllAdminIte
                                 <TrashIcon height="100%"/>
                             </DeleteButton>
                             <EditCategoryModal category={category} />
+                                <UpDownButton $isActive={index === 0 ? "true" : undefined}>
+                                    <UpIcon height="100%" onClick={() => handleReorder(category, "up")}/>
+                                </UpDownButton>
+                                <UpDownButton $isActive={index === itemsLength ? "true" : undefined}>
+                                    <DownIcon height="100%" onClick={() => handleReorder(category, "down")}/>
+                                </UpDownButton>
                         </CategoryControls>
                         <AdminItems category={category} getAllAdminItems={getAllAdminItems} removeAdminItem={removeAdminItem}/>
                         </>

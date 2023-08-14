@@ -4,6 +4,7 @@ import { db, storage } from '../firebase/config';
 import { deleteObject, ref } from 'firebase/storage';
 import ProductCard from './ProductCard';
 import { CategoryItems } from './styledComponents/StyledCategory';
+import { getMiddleValue } from '../helpers/getMiddleValue';
 
 export const EditContext = createContext()
 
@@ -85,12 +86,6 @@ function AdminItems({category, getAllAdminItems, removeAdminItem, filteredItems,
     //  Handling manual item ordering with buttons UP and DOWN
     const handleReorder = async (item, direction) => {
 
-        //  Calculating a middle timestamp value in order to put moving item inbetween two compared timestamps.
-        const getMiddleValue = (num1, num2) => {
-            const sum = num1 + num2
-            const number = sum / 2
-            return number
-        }
         //  Getting moving item index and firebase ref
         const itemIndex = items.findIndex(doc => doc.id === item.id )
         const docRef = doc(db, items[itemIndex].fullPath)

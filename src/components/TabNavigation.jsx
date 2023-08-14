@@ -18,7 +18,7 @@ function TabNavigation({selectedTab, homeMenuData}) {
 
         //  if no homeMenuData is passed from CategoryTabs.jsx, get data from Firebase onSnapshot
         if (!homeMenuData) {
-            const q = query(collection(db, `menu/${selectedTab}/categories`), orderBy("dateCreated", "asc"));
+            const q = query(collection(db, `menu/${selectedTab}/categories`), orderBy("orderTimestamp", "asc"));
             const unsubscribe = onSnapshot(q, (querySnapshot) => {
                 const snapshotData = [];
                 querySnapshot.forEach((doc) => {

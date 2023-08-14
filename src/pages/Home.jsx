@@ -15,6 +15,7 @@ function Home() {
     //  Setting loading state to true once the component mounts, then setting it to false once the ProductCard image is loaded.
     useEffect(() => {
         handleLoading(true)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     //  Fetching data from Firestore or LocalStorage, depending on the last edited timestamp. Fetched data is stored in homeMenuData state.
@@ -26,7 +27,7 @@ function Home() {
             try {
                 //  Categories path, query and snapshot.
                 const menuPath = `menu/${mainCategory}/categories`;
-                const menuQuery = query(collection(db, menuPath), orderBy("dateCreated", "asc"))
+                const menuQuery = query(collection(db, menuPath), orderBy("orderTimestamp", "asc"))
                 const menuSnapshot = await getDocs(menuQuery)
 
                 const categories = []

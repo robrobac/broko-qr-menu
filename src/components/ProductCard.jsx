@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import { AdminButtons, AdminTimestamp, Card, CardAdmin, CardBody, CardDesc, CardImage, CardPrice, CardTitle, PriceEUR, PriceKN } from './styledComponents/StyledCard'
 import { DeleteButton, UpDownButton } from './styledComponents/StyledButtons'
 import noimage from "../noimage.png"
@@ -10,14 +10,6 @@ import { AppContext } from '../App';
 
 function ProductCard({item, handleDelete, isAdmin, handleReorder, isSearch, itemIndex, itemsLength }) {
     const { handleLoading } = useContext(AppContext)
-    
-    useEffect(() => {
-        if (itemIndex === 0) {
-            console.log("nula", item?.title)
-        } else if (itemIndex === itemsLength) {
-            console.log("zadnji", item?.title)
-        }
-    }, [])
     
     //  Creating a date object for date created
     const dateCreatedTimestamp = item.dateCreated
