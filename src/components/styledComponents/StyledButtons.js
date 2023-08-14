@@ -73,7 +73,7 @@ const AddCategoryButton = styled.button`
 
 const UpDownButton = styled(Button)`
     background-color: unset;
-    fill: #235239;
+    fill: ${(props) => (props.$isActive) ? "#5b7e6c" : "#235239"};
     height: 2rem;
     padding: 0;
 `

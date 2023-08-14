@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { AdminButtons, AdminTimestamp, Card, CardAdmin, CardBody, CardDesc, CardImage, CardPrice, CardTitle, PriceEUR, PriceKN } from './styledComponents/StyledCard'
 import { DeleteButton, UpDownButton } from './styledComponents/StyledButtons'
 import noimage from "../noimage.png"
@@ -8,8 +8,16 @@ import { ReactComponent as UpIcon } from "../icons/upicon.svg";
 import { ReactComponent as DownIcon } from "../icons/downicon.svg";
 import { AppContext } from '../App';
 
-function ProductCard({item, handleDelete, isAdmin, handleReorder, isSearch}) {
+function ProductCard({item, handleDelete, isAdmin, handleReorder, isSearch, itemIndex, itemsLength }) {
     const { handleLoading } = useContext(AppContext)
+    
+    useEffect(() => {
+        if (itemIndex === 0) {
+            console.log("nula", item?.title)
+        } else if (itemIndex === itemsLength) {
+            console.log("zadnji", item?.title)
+        }
+    }, [])
     
     //  Creating a date object for date created
     const dateCreatedTimestamp = item.dateCreated
@@ -59,10 +67,10 @@ function ProductCard({item, handleDelete, isAdmin, handleReorder, isSearch}) {
                         </AdminButtons>
                         {!isSearch ? (
                             <AdminButtons>
-                                <UpDownButton>
+                                <UpDownButton $isActive={itemIndex === 0 ? "true" : undefined}>
                                     <UpIcon height="100%" onClick={() => handleReorder(item, "up")}/>
                                 </UpDownButton>
-                                <UpDownButton>
+                                <UpDownButton $isActive={itemIndex === itemsLength ? "true" : undefined}>
                                     <DownIcon height="100%" onClick={() => handleReorder(item, "down")}/>
                                 </UpDownButton>
                             </AdminButtons>

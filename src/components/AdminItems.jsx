@@ -9,6 +9,8 @@ export const EditContext = createContext()
 
 function AdminItems({category, getAllAdminItems, removeAdminItem, filteredItems, isSearch}) {
     const [items, setItems] = useState([]);
+    const itemsLength = items.length - 1
+    
     
     //  Fetching data from Firebase and storing all items in one array to handle search.
     //  useEffect works differently depending if filteredItems or Category is passed as a prop
@@ -92,8 +94,6 @@ function AdminItems({category, getAllAdminItems, removeAdminItem, filteredItems,
         //  Getting moving item index and firebase ref
         const itemIndex = items.findIndex(doc => doc.id === item.id )
         const docRef = doc(db, items[itemIndex].fullPath)
-
-        const itemsLength = items.length - 1
 
         //  If one item in array, do nothing.
         if (items.length <= 1) {
@@ -190,8 +190,8 @@ function AdminItems({category, getAllAdminItems, removeAdminItem, filteredItems,
             handleEdit,
         }}>
         <CategoryItems>
-            {items?.map((item) => (
-                <ProductCard item={item} key={item.id} handleDelete={handleDelete} isAdmin={true} handleReorder={handleReorder} isSearch={isSearch}/>
+            {items?.map((item, index) => (
+                <ProductCard item={item} key={item.id} handleDelete={handleDelete} isAdmin={true} handleReorder={handleReorder} isSearch={isSearch} itemIndex={index} itemsLength={itemsLength}/>
             ))}
         </CategoryItems>
         </EditContext.Provider>
