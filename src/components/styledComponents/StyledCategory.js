@@ -9,7 +9,7 @@ export const CategoryContainer = styled.div`
 `
 
 export const CategoryItems = styled.div`
-    padding: 0 1rem;
+    padding: 0 1rem 1rem 1rem;
 `
 export const CategoryTitle = styled.h2`
     padding-top: 3rem;

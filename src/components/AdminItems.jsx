@@ -1,16 +1,18 @@
 import { collection, deleteDoc, doc, onSnapshot, orderBy, query, updateDoc } from 'firebase/firestore';
-import React, { createContext, useEffect, useState } from 'react'
+import React, { createContext, useContext, useEffect, useState } from 'react'
 import { db, storage } from '../firebase/config';
 import { deleteObject, ref } from 'firebase/storage';
 import ProductCard from './ProductCard';
 import { CategoryItems } from './styledComponents/StyledCategory';
 import { getMiddleValue } from '../helpers/getMiddleValue';
+import { ViewContext } from './CategoryTabs';
 
 export const EditContext = createContext()
 
-function AdminItems({category, getAllAdminItems, removeAdminItem, filteredItems, isSearch}) {
+function AdminItems({category, getAllAdminItems, removeAdminItem, filteredItems, isSearch }) {
     const [items, setItems] = useState([]);
     const itemsLength = items.length - 1
+    const { viewStyle } = useContext(ViewContext)
     
     
     //  Fetching data from Firebase and storing all items in one array to handle search.
@@ -186,7 +188,7 @@ function AdminItems({category, getAllAdminItems, removeAdminItem, filteredItems,
         }}>
         <CategoryItems>
             {items?.map((item, index) => (
-                <ProductCard item={item} key={item.id} handleDelete={handleDelete} isAdmin={true} handleReorder={handleReorder} isSearch={isSearch} itemIndex={index} itemsLength={itemsLength}/>
+                <ProductCard item={item} key={item.id} handleDelete={handleDelete} isAdmin={true} handleReorder={handleReorder} isSearch={isSearch} itemIndex={index} itemsLength={itemsLength} viewStyle={viewStyle}/>
             ))}
         </CategoryItems>
         </EditContext.Provider>

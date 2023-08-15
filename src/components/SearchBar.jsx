@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import ProductCard from './ProductCard'
 import { normalizeString } from '../helpers/normalizeString'
 import { TabNav } from './styledComponents/StyledNavigation';
@@ -6,11 +6,16 @@ import { FormInput} from './styledComponents/StyledForm';
 import AdminItems from './AdminItems';
 import { CategoryItems } from './styledComponents/StyledCategory';
 import { SearchMessage } from './styledComponents/StyledMisc';
+import { ViewContext } from './CategoryTabs';
+import { ViewButton, ViewContainer } from './styledComponents/StyledButtons';
+import { ReactComponent as ListIcon } from "../icons/listicon.svg";
+import { ReactComponent as CardIcon } from "../icons/cardicon.svg";
 
 function SearchBar({homeMenuData, allAdminItems, selectedTab, removeAdminItem }) {
     const [allItems, setAllItems] = useState()  //  All items for Home page
     const [filteredItems, setFilteredItems] = useState([])    //  Filtered items that will appear in search result
     const [searchValue, setSearchValue] = useState("")  //  Handling search input value
+    const { viewStyle, handleViewStyle } = useContext(ViewContext)
 
     const inputRef = useRef(null)   //  Search Input reference, handles onBlur for input in order to close virtual keyboard on scroll
 
@@ -97,7 +102,7 @@ function SearchBar({homeMenuData, allAdminItems, selectedTab, removeAdminItem })
     const noResult = searchValue === "" ? "Search all products" : filteredItems.length === 0 ? `No results for "${searchValue}", please try again` : ""
 
     return (
-        <div>
+        <div style={{minHeight: "100vh"}}>
             <TabNav >
                 <FormInput ref={inputRef}
                 autoFocus
@@ -109,18 +114,25 @@ function SearchBar({homeMenuData, allAdminItems, selectedTab, removeAdminItem })
                 onKeyUp={onEnter}
                 />
             </TabNav>
+            <ViewContainer>
+                <ViewButton onClick={() => handleViewStyle("card")} $isActive={viewStyle === "card" ? "true" : undefined}>
+                    <CardIcon height="100%" />
+                </ViewButton>
+                <ViewButton onClick={() => handleViewStyle("list")} $isActive={viewStyle === "list" ? "true" : undefined}>
+                    <ListIcon height="100%" />
+                </ViewButton>
+            </ViewContainer>
             <SearchMessage>{noResult}</SearchMessage>
             {homeMenuData ? 
                 filteredItems?.map((item) => (
                     <CategoryItems>
-                        <ProductCard item={item} key={item.id}/>
+                        <ProductCard item={item} key={item.id} viewStyle={viewStyle}/>
                     </CategoryItems>
                 ))
             : (
                 <AdminItems filteredItems={filteredItems} removeAdminItem={removeAdminItem} isSearch={true}/>
-            )}
-            
-        </div>
+            )}   
+    </div>
     )
 }
 

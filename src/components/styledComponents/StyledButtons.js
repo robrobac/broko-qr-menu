@@ -40,6 +40,7 @@ const NavigationButton = styled(Button)`
     height: 38px;
     font-weight: 700;
     white-space: nowrap;
+    transition: color .1s ease-in, background-color .1s ease-in;
 `
 
 const AddProductButton = styled(Button)`
@@ -76,6 +77,31 @@ const UpDownButton = styled(Button)`
     fill: ${(props) => (props.$isActive) ? "#5b7e6c" : "#235239"};
     height: 2rem;
     padding: 0;
+`
+
+export const ViewContainer = styled.div`
+    display: flex;
+    justify-content: flex-end;
+    gap: .5rem;
+    padding: 1rem 1rem 0 1rem;
+    position: sticky;
+    top: 143px;
+`
+
+export const ViewButton = styled(Button)`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    height: 2.5rem;
+    width: 2.5rem;
+    padding: ${(props) => (props.$isActive) ? "5px" : "10px"};
+    background-color: #ffffff;
+    fill: ${(props) => (props.$isActive) ? "#5b7e6c" : "#dadada"};
+    border: ${(props) => (props.$isActive) ? "1px solid #dadada" : "1px solid #dadada"};
+    transition: padding .1s ease-in, fill .15s ease-in;
+    -webkit-box-shadow: 0px 0px 11px -1px rgba(0, 0, 0, 0.20);
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.20);
 `
 
 export { Button, DeleteButton, EditButton, AuthButton, NavigationButton, AddProductButton, AddCategoryButton, SubmitButton, BackButton, UpDownButton }

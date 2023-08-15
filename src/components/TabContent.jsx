@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Element } from 'react-scroll'
 import { collection, deleteDoc, doc, getDocs, onSnapshot, orderBy, query, updateDoc } from 'firebase/firestore'
 import { db, storage } from '../firebase/config'
-import { DeleteButton, UpDownButton } from './styledComponents/StyledButtons'
+import { DeleteButton, UpDownButton, ViewButton, ViewContainer } from './styledComponents/StyledButtons'
 import EditCategoryModal from './modals/EditCategoryModal'
 import { deleteObject, ref } from 'firebase/storage'
 import AdminItems from './AdminItems'
@@ -12,10 +12,14 @@ import { CategoryContainer, CategoryControls, CategoryItems, CategoryTitle } fro
 import { ReactComponent as UpIcon } from "../icons/upicon.svg";
 import { ReactComponent as DownIcon } from "../icons/downicon.svg";
 import { getMiddleValue } from '../helpers/getMiddleValue'
+import { ViewContext } from './CategoryTabs'
+import { ReactComponent as ListIcon } from "../icons/listicon.svg";
+import { ReactComponent as CardIcon } from "../icons/cardicon.svg";
 
 function TabContent({selectedTab, homeMenuData, isAdmin, isDrink, getAllAdminItems, removeAdminItem}) {
     const [categories, setCategories] = useState([])
     const itemsLength = categories.length - 1
+    const { viewStyle, handleViewStyle } = useContext(ViewContext)
 
     //  If homeMenuData is passed from CategoryTabs.jsx, set categories
     useEffect(() => {
@@ -177,9 +181,16 @@ function TabContent({selectedTab, homeMenuData, isAdmin, isDrink, getAllAdminIte
         }
     }
 
-
     return (
         <div>
+            <ViewContainer>
+                <ViewButton onClick={() => handleViewStyle("card")} $isActive={viewStyle === "card" ? "true" : undefined}>
+                    <CardIcon height="100%" />
+                </ViewButton>
+                <ViewButton onClick={() => handleViewStyle("list")} $isActive={viewStyle === "list" ? "true" : undefined}>
+                    <ListIcon height="100%" />
+                </ViewButton>
+            </ViewContainer>
             {categories?.map((category, index) => (
                 <CategoryContainer key={category.id}>
                 <Element key={category.id} name={category.id}>
@@ -203,7 +214,7 @@ function TabContent({selectedTab, homeMenuData, isAdmin, isDrink, getAllAdminIte
                     ) : 
                         <CategoryItems>
                             {category.items?.map((item) => (
-                                <ProductCard item={item} key={item.id}/>
+                                <ProductCard item={item} key={item.id} viewStyle={viewStyle}/>
                             ))}
                         </CategoryItems>
                     }

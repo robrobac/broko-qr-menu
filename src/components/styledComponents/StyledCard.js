@@ -25,7 +25,6 @@ export const CardBody = styled.div`
 export const CardTitle = styled.h3`
     font-size: 1.5rem;
     font-weight: 700;
-    margin-bottom: 0;
     text-align: center;
     
 
@@ -36,7 +35,6 @@ export const CardPrice = styled.div`
     background-color: #235239;
     padding: .5rem;
     text-align: center;
-
 `
 export const PriceEUR = styled.h4`
     display: flex;
@@ -73,4 +71,55 @@ export const AdminButtons = styled.div`
     display: flex;
     gap: 1rem;
 
+`
+
+export const List = styled(Card)`
+    display: flex;
+    margin: 1rem auto;
+`
+
+export const ListBody = styled(CardBody)`
+    flex-direction: column;
+    padding: 1rem;
+    flex: 1;
+    gap: 1rem;
+`
+
+export const ListHeader = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+`
+
+export const ListTitle = styled(CardTitle)`
+    font-size: 1.2rem;
+    text-align: left;
+    
+`
+
+export const ListDesc = styled(CardDesc)`
+
+`
+
+export const ListPrice = styled(CardPrice)`
+    border-radius: 5px;
+    padding: .5rem 0.7rem;
+
+`
+
+export const PriceEURlist = styled(PriceEUR)`
+    display: flex;
+    flex-direction: column;
+    font-size: 1.2rem;
+`
+export const PriceKNlist = styled(PriceKN)`
+    font-size: .7rem;
+    color: #5b7e6c;
+`
+
+export const ListAdmin = styled(CardAdmin)`
+    display: flex;
+    flex-direction: row;
+    align-content: space-between;
 `

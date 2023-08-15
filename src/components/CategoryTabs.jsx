@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { createContext, useEffect, useState } from 'react'
 import { scrollToTop } from '../helpers/scrollToTop'
 import { ContentAdmin, ContentHome, Icon, Tab, Tabs, TabsContainer } from './styledComponents/StyledTabs'
 import TabNavigation from './TabNavigation'
@@ -9,9 +9,16 @@ import { ReactComponent as FoodIcon } from "../icons/foodicon.svg";
 import { ReactComponent as SearchIcon } from "../icons/searchicon.svg";
 import SearchBar from './SearchBar'
 
+export const ViewContext = createContext();
+
 function CategoryTabs({homeMenuData, isAdmin}) {
     const [selectedTab, setSelectedTab] = useState("food")
     const [allAdminItems, setAllAdminItems] = useState([])  //  state array that hold all items to use them in search bar
+    const [viewStyle, setViewStyle] = useState("card");
+
+    const handleViewStyle = (style) => {
+        setViewStyle(style)
+    }
 
     //  Gathering all items at one place to handle search bar, newItem comes from AdminItems.jsx as an argument.
     const getAllAdminItems = (newItem) => {
@@ -43,6 +50,7 @@ function CategoryTabs({homeMenuData, isAdmin}) {
     }, [selectedTab])
     
     return (
+        <ViewContext.Provider value={{ viewStyle, handleViewStyle }}>
         <TabsContainer>
             <Tabs>
                 <Tab
@@ -99,6 +107,7 @@ function CategoryTabs({homeMenuData, isAdmin}) {
             )}  
             
         </TabsContainer>
+        </ViewContext.Provider>
     )
 }
 

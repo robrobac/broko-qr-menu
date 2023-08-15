@@ -6,7 +6,7 @@ const TabsContainer = styled.div`
 const Tabs = styled.div`
     display: flex;
     position: sticky;
-    top: -20px;
+    top: -10px;
     z-index: 3;
     padding-top: 20px;
     background-color: #5b7e6c;
@@ -26,7 +26,6 @@ const Tab = styled.button`
 
 const ContentAdmin = styled.div`
     background-color: white;
-
     ${props => (props.$isActive ? "" : "display:none")}
 `
 const ContentHome = styled.div`

@@ -12,6 +12,7 @@ export const Modal = styled.div`
     background-color: #5b7e6c79;
     padding: 2rem 2rem;
     backdrop-filter: blur(5px);
+    
 `
 export const ModalHeader = styled.div`
     display: flex;
