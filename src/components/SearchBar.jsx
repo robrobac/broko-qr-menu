@@ -10,12 +10,15 @@ import { ViewContext } from './CategoryTabs';
 import { ViewButton, ViewContainer } from './styledComponents/StyledButtons';
 import { ReactComponent as ListIcon } from "../icons/listicon.svg";
 import { ReactComponent as CardIcon } from "../icons/cardicon.svg";
+import { AppContext } from '../App';
 
 function SearchBar({homeMenuData, allAdminItems, selectedTab, removeAdminItem }) {
     const [allItems, setAllItems] = useState()  //  All items for Home page
     const [filteredItems, setFilteredItems] = useState([])    //  Filtered items that will appear in search result
     const [searchValue, setSearchValue] = useState("")  //  Handling search input value
     const { viewStyle, handleViewStyle } = useContext(ViewContext)
+    const { handleLoading } = useContext(AppContext)
+    handleLoading(false)
 
     const inputRef = useRef(null)   //  Search Input reference, handles onBlur for input in order to close virtual keyboard on scroll
 
@@ -23,6 +26,7 @@ function SearchBar({homeMenuData, allAdminItems, selectedTab, removeAdminItem })
     useEffect(() => {
         if (selectedTab === "search") {
             inputRef.current.focus();
+            
         }
     }, [selectedTab])
 

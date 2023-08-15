@@ -22,17 +22,36 @@ function CategoryTabs({homeMenuData, isAdmin}) {
         const cachedData = localStorage.getItem("styleData");
         if (cachedData) {
             const parsedData = JSON.parse(cachedData);
-            setViewStyle(parsedData.viewStyle)
-        } else {
-            setViewStyle("card")
+            if (parsedData.viewStyle) {
+                setViewStyle(parsedData.viewStyle)   
+            } else {
+                setViewStyle("card")
+            }
+            
+            if (parsedData.selectedTab) {
+                setSelectedTab(parsedData.selectedTab)
+            } else {
+                setSelectedTab("food")
+            }
         }
     }, [])
+
+    const handleSelectedTab = (tab) => {
+        setSelectedTab(tab)
+        //  Save data and timestamp to Local Storage.
+        const dataToCache = {
+            viewStyle: viewStyle,
+            selectedTab: tab,
+        };
+        localStorage.setItem('styleData', JSON.stringify(dataToCache));
+    }
 
     const handleViewStyle = (style) => {
         setViewStyle(style)
         //  Save data and timestamp to Local Storage.
         const dataToCache = {
             viewStyle: style,
+            selectedTab: selectedTab,
         };
         localStorage.setItem('styleData', JSON.stringify(dataToCache));
     }
@@ -71,21 +90,21 @@ function CategoryTabs({homeMenuData, isAdmin}) {
         <TabsContainer>
             <Tabs>
                 <Tab
-                onClick={() => setSelectedTab("drink")}
+                onClick={() => handleSelectedTab("drink")}
                 $isActive={selectedTab === "drink" ? "true" : undefined}>
                     <Icon $isActive={selectedTab === "drink" ? "true" : undefined}>
                         <DrinkIcon height="100%"/>
                     </Icon>
                 </Tab>
                 <Tab
-                onClick={() => setSelectedTab("food")}
+                onClick={() => handleSelectedTab("food")}
                 $isActive={selectedTab === "food" ? "true" : undefined}>
                     <Icon $isActive={selectedTab === "food" ? "true" : undefined}>
                         <FoodIcon height="100%"/>
                     </Icon>
                 </Tab>
                 <Tab style={{flex: "1"}}
-                onClick={() => setSelectedTab("search")}
+                onClick={() => handleSelectedTab("search")}
                 $isActive={selectedTab === "search" ? "true" : undefined}>
                     <Icon $isActive={selectedTab === "search" ? "true" : undefined}>
                         <SearchIcon height="100%"/>
