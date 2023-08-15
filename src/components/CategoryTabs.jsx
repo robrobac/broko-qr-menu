@@ -16,8 +16,25 @@ function CategoryTabs({homeMenuData, isAdmin}) {
     const [allAdminItems, setAllAdminItems] = useState([])  //  state array that hold all items to use them in search bar
     const [viewStyle, setViewStyle] = useState("card");
 
+
+    useEffect(() => {
+        //  Fetching data from Local Storage.
+        const cachedData = localStorage.getItem("styleData");
+        if (cachedData) {
+            const parsedData = JSON.parse(cachedData);
+            setViewStyle(parsedData.viewStyle)
+        } else {
+            setViewStyle("card")
+        }
+    }, [])
+
     const handleViewStyle = (style) => {
         setViewStyle(style)
+        //  Save data and timestamp to Local Storage.
+        const dataToCache = {
+            viewStyle: style,
+        };
+        localStorage.setItem('styleData', JSON.stringify(dataToCache));
     }
 
     //  Gathering all items at one place to handle search bar, newItem comes from AdminItems.jsx as an argument.

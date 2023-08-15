@@ -10,7 +10,6 @@ import { AppContext } from '../App';
 
 function ProductCard({item, handleDelete, isAdmin, handleReorder, isSearch, itemIndex, itemsLength, viewStyle}) {
     const { handleLoading } = useContext(AppContext)
-    console.log(viewStyle)
 
     if (viewStyle === "list") {
         handleLoading(false)
