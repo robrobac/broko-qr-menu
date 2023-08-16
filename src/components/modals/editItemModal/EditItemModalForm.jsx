@@ -12,10 +12,13 @@ import { useTranslation } from 'react-i18next';
 function EditItemModalForm({item, setIsEditing, setIsUploading}) {
     const {handleEdit} = useContext(EditContext)    //  Edit item function passed from AdminItems.jsx via context.
     const [title, setTitle] = useState(item.title); //  Current Item Title
+    const [titleEng, setTitleEng] = useState(item.titleEng);
     const [priceEUR, setPriceEUR] = useState(parseFloat(item.priceEUR));    //  Current Item Price in EUR
     const [priceKN, setPriceKN] = useState(item.priceKN);   //  Current Item Price in KN
     const [category, setCategory] = useState(item.category);    //  Current Item Category, not changeable yet
+    const [categoryEng, setCategoryEng] = useState(item.categoryEng);
     const [description, setDescription] = useState(item.description);   //  Current Item Description
+    const [descriptionEng, setDescriptionEng] = useState(item.description);
     const [compressedFile, setCompressedFile] = useState(null); //  State that holds data of image compressed with handleCompressedImage function
     const fileInputRef = useRef(null);  //  Ref to a file input element
 
@@ -98,10 +101,12 @@ function EditItemModalForm({item, setIsEditing, setIsUploading}) {
         //  Prepare editedItem and path and send it as an argument to AdminItems.jsx to handle editing.
         const editedItem = {
             title: title,
+            titleEng: titleEng,
             priceEUR: parseFloat(priceEUR),
             priceKN: priceKN,
             // category: category, Got to find out how to change categories of already created item, how to move the document from one collection to another
             description: description,
+            descriptionEng: descriptionEng,
             fileUrl: url,
             filePath: filePath,
             dateEdited: Date.now(),
@@ -125,6 +130,12 @@ function EditItemModalForm({item, setIsEditing, setIsUploading}) {
                     placeholder={t("Title")}
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}/>
+                    <FormInput
+                    type="text"
+                    id="inputTitleEng"
+                    placeholder={t("English Title")}
+                    value={titleEng}
+                    onChange={(e) => setTitleEng(e.target.value)}/>
                 </FormSection>
                 <Divider></Divider>
                 <FormSection>
@@ -177,6 +188,13 @@ function EditItemModalForm({item, setIsEditing, setIsUploading}) {
                     rows={3}
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}/>
+                    <FormTextarea
+                    id="inputDescriptionEng"
+                    form='newItemForm'
+                    placeholder={t("English Description")}
+                    rows={3}
+                    value={descriptionEng}
+                    onChange={(e) => setDescriptionEng(e.target.value)}/>
                 </FormSection>
                 <Divider></Divider>
                 <FormSection>

@@ -32,11 +32,13 @@ i18next.use(initReactI18next).init({
 
                 //  NewItemModalForm.jsx, EditItemModalForm.jsx
                 "Title": "Title",
+                "English Title": "English Title",
                 "Price": "Price",
                 "Category": "Category",
                 "Add New Drink Category": "Add New Drink Category",
                 "Add New Food Category": "Add New Food Category",
                 "Description": "Description",
+                "English Description": "English Description",
                 "Upload Image": "Upload Image",
                 "Clear Image": "Clean Image",
                 "Publish": "Publish",
@@ -86,11 +88,13 @@ i18next.use(initReactI18next).init({
 
                 //  NewItemModalForm.jsx, EditItemModalForm.jsx
                 "Title": "Naziv",
+                "English Title": "Engleski Naziv",
                 "Price": "Cijena",
                 "Category": "Kategorija",
                 "Add New Drink Category": "Dodaj Novu Kategoriju Pića",
                 "Add New Food Category": "Dodaj Novu Kategoriju Hrane",
                 "Description": "Opis",
+                "English Description": "Engleski Opis",
                 "Upload Image": "Učitaj Sliku",
                 "Clear Image": "Ukloni Sliku",
                 "Publish": "Objavi",

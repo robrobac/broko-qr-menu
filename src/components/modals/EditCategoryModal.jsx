@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next';
 
 function EditCategoryModal({category}) {
     const [categoryValue, setCategoryValue] = useState(category.category);
+    const [categoryValueEng, setCategoryValueEng] = useState(category.categoryEng);
     const [isEditing, setIsEditing] = useState(false)
     const { t, i18n } = useTranslation()
     
@@ -19,6 +20,7 @@ function EditCategoryModal({category}) {
         //  Create category object with only properties that are changing
         const categoryObject = {
             category: categoryValue,
+            categoryEng: categoryValueEng,
             dateEdited: Date.now(),
         }
         try {
@@ -62,6 +64,12 @@ function EditCategoryModal({category}) {
                             id='inputCategory'
                             value={categoryValue}
                             onChange={(e) => setCategoryValue(e.target.value)}
+                            />
+                            <FormInput
+                            placeholder={t("English Title")}
+                            id='inputCategoryEng'
+                            value={categoryValueEng}
+                            onChange={(e) => setCategoryValueEng(e.target.value)}
                             />
                         </FormSection>
                         <Divider></Divider>

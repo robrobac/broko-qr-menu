@@ -12,10 +12,12 @@ import { useTranslation } from 'react-i18next';
 
 function NewItemModalForm({ isDrink, setIsUploading }) {
     const [title, setTitle] = useState("");
+    const [titleEng, setTitleEng] = useState("");
     const [priceEUR, setPriceEUR] = useState("");
     const [priceKN, setPriceKN] = useState("");
     const [category, setCategory] = useState("");
     const [description, setDescription] = useState("");
+    const [descriptionEng, setDescriptionEng] = useState("");
     const [compressedFile, setCompressedFile] = useState(null);
     const [addingCategory, setAddingCategory] = useState(false);
 
@@ -101,11 +103,13 @@ function NewItemModalForm({ isDrink, setIsUploading }) {
             //  Store the item in the firestore
             await setDoc(doc(db, path, newId), {
                 title: title,
+                titleEng: titleEng,
                 priceEUR: parseFloat(priceEUR),
                 priceKN: priceKN,
                 mainCategory: isDrink ? "drink" : "food",
                 category: category,
                 description: description,
+                descriptionEng: descriptionEng,
                 fileUrl: url,
                 filePath: filePath,
                 id: newId,
@@ -117,10 +121,12 @@ function NewItemModalForm({ isDrink, setIsUploading }) {
 
             //  Reset form states
             setTitle("");
+            setTitleEng("");
             setPriceEUR("");
             setPriceKN("");
             setCategory("");
             setDescription("");
+            setDescriptionEng("");
             setCompressedFile(null)
             fileInputRef.current.value = null;
             // handleClose();
@@ -153,6 +159,12 @@ function NewItemModalForm({ isDrink, setIsUploading }) {
                         placeholder={t("Title")}
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}/>
+                        <FormInput
+                        type="text"
+                        id="inputTitleEng"
+                        placeholder={t("English Title")}
+                        value={titleEng}
+                        onChange={(e) => setTitleEng(e.target.value)}/>
                     </FormSection>
                     <Divider></Divider>
                     <FormSection>
@@ -206,6 +218,13 @@ function NewItemModalForm({ isDrink, setIsUploading }) {
                         rows={3}
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}/>
+                        <FormTextarea
+                        id="inputDescriptionEng"
+                        form='newItemForm'
+                        placeholder={t("English Description")}
+                        rows={3}
+                        value={descriptionEng}
+                        onChange={(e) => setDescriptionEng(e.target.value)}/>
                     </FormSection>
                     <Divider></Divider>
                     <FormSection>

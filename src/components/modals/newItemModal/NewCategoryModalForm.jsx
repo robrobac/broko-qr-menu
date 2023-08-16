@@ -7,6 +7,8 @@ import { useTranslation } from 'react-i18next';
 
 function NewCategoryModalForm({ handleAddingCategory, isDrink }) {
     const [category, setCategory] = useState("");
+    const [categoryEng, setCategoryEng] = useState("");
+    
     const { t, i18n } = useTranslation()
 
     //  Create new category
@@ -28,6 +30,7 @@ function NewCategoryModalForm({ handleAddingCategory, isDrink }) {
             //  Store the category in the firestore
             await setDoc(doc(db, path, newId), {
                 category: category,
+                categoryEng: categoryEng,
                 categoryPath: `${path}/${newId}`,
                 id: newId,
                 dateCreated: Date.now(),
@@ -37,6 +40,7 @@ function NewCategoryModalForm({ handleAddingCategory, isDrink }) {
 
             //  Reset form states
             setCategory("");
+            setCategoryEng("");
             handleAddingCategory();
 
             //  Update lastedited timestamp to handle fetching from firestore or local storage.
@@ -60,6 +64,12 @@ function NewCategoryModalForm({ handleAddingCategory, isDrink }) {
             id='inputCategory'
             value={category}
             onChange={(e) => setCategory(e.target.value)}
+            />
+            <FormInput
+            placeholder={t("English Title")}
+            id='inputCategory'
+            value={categoryEng}
+            onChange={(e) => setCategoryEng(e.target.value)}
             />
         </FormSection>
         <Divider></Divider>
