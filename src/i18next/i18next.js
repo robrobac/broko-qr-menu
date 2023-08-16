@@ -58,6 +58,10 @@ i18next.use(initReactI18next).init({
                 "Edit Food": "Edit Food",
                 "Edit Drink": "Edit Drink",
 
+                //  ProductCard.jsx
+                "Published": "Created",
+                "Edited": "Edited"
+
             }
         },
         hr: {
@@ -113,6 +117,10 @@ i18next.use(initReactI18next).init({
                 //  EditItemModal.jsx
                 "Edit Food": "Uredi Hranu",
                 "Edit Drink": "Uredi Piće",
+
+                //  ProductCard.jsx
+                "Published": "Objavljeno",
+                "Edited": "Uređeno",
             }
         }
     },

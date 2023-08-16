@@ -15,11 +15,15 @@ import { getMiddleValue } from '../helpers/getMiddleValue'
 import { ViewContext } from './CategoryTabs'
 import { ReactComponent as ListIcon } from "../icons/listicon.svg";
 import { ReactComponent as CardIcon } from "../icons/cardicon.svg";
+import { useTranslation } from 'react-i18next'
 
 function TabContent({selectedTab, homeMenuData, isAdmin, isDrink, getAllAdminItems, removeAdminItem}) {
     const [categories, setCategories] = useState([])
     const itemsLength = categories.length - 1
     const { viewStyle, handleViewStyle } = useContext(ViewContext)
+
+    
+    
 
     //  If homeMenuData is passed from CategoryTabs.jsx, set categories
     useEffect(() => {
@@ -47,6 +51,19 @@ function TabContent({selectedTab, homeMenuData, isAdmin, isDrink, getAllAdminIte
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
+
+    const { i18n } = useTranslation()
+    const handleTranslate = (en) => {
+        if (i18n?.language === "hr") {
+            return false
+        } else if (i18n?.language === "en") {
+            if (en) {
+                return true
+            } else {
+                return false
+            }
+        }
+    }
 
     //  Handles delete of whole category
     const handleDeleteCategory = async (category) => {
@@ -194,7 +211,9 @@ function TabContent({selectedTab, homeMenuData, isAdmin, isDrink, getAllAdminIte
             {categories?.map((category, index) => (
                 <CategoryContainer key={category.id}>
                 <Element key={category.id} name={category.id}>
-                    <CategoryTitle id={category.id}>{category.category}</CategoryTitle>
+                    <CategoryTitle id={category.id}>
+                        {handleTranslate(category.categoryEng) ? category.categoryEng : category.category}
+                    </CategoryTitle>
                     {isAdmin ? (
                         <>
                         <CategoryControls>

@@ -158,7 +158,6 @@ function EditItemModalForm({item, setIsEditing, setIsUploading}) {
                         {t("Category")} 
                     </FormLabel>
                     <FormSelect
-                    required
                     id='selectCategory'
                     value={category}
                     disabled={true}

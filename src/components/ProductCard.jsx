@@ -7,6 +7,7 @@ import { ReactComponent as TrashIcon } from "../icons/trashicon.svg";
 import { ReactComponent as UpIcon } from "../icons/upicon.svg";
 import { ReactComponent as DownIcon } from "../icons/downicon.svg";
 import { AppContext } from '../App';
+import { useTranslation } from 'react-i18next'
 
 function ProductCard({item, handleDelete, isAdmin, handleReorder, isSearch, itemIndex, itemsLength, viewStyle}) {
     const { handleLoading } = useContext(AppContext)
@@ -18,6 +19,19 @@ function ProductCard({item, handleDelete, isAdmin, handleReorder, isSearch, item
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+
+    const { t, i18n } = useTranslation()
+    const handleTranslate = (en) => {
+        if (i18n?.language === "hr") {
+            return false
+        } else if (i18n?.language === "en") {
+            if (en) {
+                return true
+            } else {
+                return false
+            }
+        }
+    }
     
     //  Creating a date object for date created
     const dateCreatedTimestamp = item.dateCreated
@@ -46,11 +60,12 @@ function ProductCard({item, handleDelete, isAdmin, handleReorder, isSearch, item
             <Card>
                 <CardImage src={item?.fileUrl} key={item?.id} onError={(e) => { e.target.src = noimage}} onLoad={() => handleLoading(false)}/>
                 <CardBody>
-                    <CardTitle>{item.title}</CardTitle>
-                    
+                    <CardTitle>
+                        {handleTranslate(item.titleEng) ? item.titleEng : item.title}
+                    </CardTitle>
                     <TruncateWrap onClick={() => setTruncateDesc(!truncateDesc)}>
                         <CardDesc $truncate={truncateDesc ? "true" : undefined}>
-                            {item.description}
+                            {handleTranslate(item.descriptionEng) ? item.descriptionEng : item.description}
                         </CardDesc>
                         {truncateDesc ? <TruncateDots>...</TruncateDots> : ""}
                     </TruncateWrap>
@@ -84,8 +99,8 @@ function ProductCard({item, handleDelete, isAdmin, handleReorder, isSearch, item
                         </CardAdmin>
                         <CardAdmin>
                             <AdminButtons>
-                                <AdminTimestamp>Created: {formattedDateCreated}</AdminTimestamp>
-                                <AdminTimestamp>Edited: {formattedDateEdited}</AdminTimestamp>
+                                <AdminTimestamp>{t("Published")} {formattedDateCreated}</AdminTimestamp>
+                                <AdminTimestamp>{t("Edited")}  {formattedDateEdited}</AdminTimestamp>
                             </AdminButtons>
                         </CardAdmin>
                         </>
@@ -100,7 +115,9 @@ function ProductCard({item, handleDelete, isAdmin, handleReorder, isSearch, item
             <List id='list'>
                 <ListBody id='listBody'>
                     <ListHeader id='listHeader'>
-                        <ListTitle id='listTitle'>{item.title}</ListTitle>
+                        <ListTitle id='listTitle'>
+                            {handleTranslate(item.titleEng) ? item.titleEng : item.title}
+                        </ListTitle>
                         <ListPrice id='listPrice'>
                             <PriceEURlist id='priceEurList'>
                                 {typeof item.priceEUR === 'number'
@@ -110,7 +127,9 @@ function ProductCard({item, handleDelete, isAdmin, handleReorder, isSearch, item
                             </PriceEURlist>
                         </ListPrice>
                     </ListHeader>
-                    <ListDesc>{item.description}</ListDesc>
+                    <ListDesc>
+                        {handleTranslate(item.descriptionEng) ? item.descriptionEng : item.description}
+                    </ListDesc>
                     {isAdmin ? (
                         <>
                         <ListAdmin>
@@ -133,8 +152,8 @@ function ProductCard({item, handleDelete, isAdmin, handleReorder, isSearch, item
                         </ListAdmin>
                         <CardAdmin>
                             <AdminButtons>
-                                <AdminTimestamp>Created: {formattedDateCreated}</AdminTimestamp>
-                                <AdminTimestamp>Edited: {formattedDateEdited}</AdminTimestamp>
+                                <AdminTimestamp>{t("Published")}  {formattedDateCreated}</AdminTimestamp>
+                                <AdminTimestamp>{t("Edited")}  {formattedDateEdited}</AdminTimestamp>
                             </AdminButtons>
                         </CardAdmin>
                         </>

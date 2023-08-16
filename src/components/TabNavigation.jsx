@@ -4,6 +4,7 @@ import { NavigationButton } from './styledComponents/StyledButtons';
 import { Link } from 'react-scroll';
 import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
 import { db } from '../firebase/config';
+import { useTranslation } from 'react-i18next';
 
 function TabNavigation({selectedTab, homeMenuData}) {
     const [categories, setCategories] = useState([])
@@ -61,6 +62,19 @@ function TabNavigation({selectedTab, homeMenuData}) {
         }
     }, [activeCategory, categories]);
 
+    const { i18n } = useTranslation()
+    const handleTranslate = (en) => {
+        if (i18n?.language === "hr") {
+            return false
+        } else if (i18n?.language === "en") {
+            if (en) {
+                return true
+            } else {
+                return false
+            }
+        }
+    }
+
     return (
         <TabNav ref={scrollContainerRef}>
             {categories?.map((category) => (
@@ -74,7 +88,9 @@ function TabNavigation({selectedTab, homeMenuData}) {
                     smooth={true}
                     offset={-133}
                     duration={200}>
-                        <NavigationButton $isActive={activeCategory === category.id ? "true" : undefined}>{category.category}</NavigationButton>
+                        <NavigationButton $isActive={activeCategory === category.id ? "true" : undefined}>
+                            {handleTranslate(category.categoryEng) ? category.categoryEng : category.category}
+                        </NavigationButton>
                     </Link>
                 </Nav>
                 ))}     
