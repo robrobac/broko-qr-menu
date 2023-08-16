@@ -7,6 +7,7 @@ import { deleteObject, getDownloadURL, ref, uploadBytes } from 'firebase/storage
 import { Divider, Form, FormInput, FormLabel, FormSection, FormSelect, FormTextarea, FormUpload, PriceConversion, UploadedImage } from '../../styledComponents/StyledForm';
 import { AddCategoryButton, SubmitButton } from '../../styledComponents/StyledButtons';
 import { EditContext } from '../../AdminItems';
+import { useTranslation } from 'react-i18next';
 
 function EditItemModalForm({item, setIsEditing, setIsUploading}) {
     const {handleEdit} = useContext(EditContext)    //  Edit item function passed from AdminItems.jsx via context.
@@ -17,6 +18,8 @@ function EditItemModalForm({item, setIsEditing, setIsUploading}) {
     const [description, setDescription] = useState(item.description);   //  Current Item Description
     const [compressedFile, setCompressedFile] = useState(null); //  State that holds data of image compressed with handleCompressedImage function
     const fileInputRef = useRef(null);  //  Ref to a file input element
+
+    const { t, i18n } = useTranslation()
 
      // Firebase React Hook useCollectionData used to display categories in select input.
      const categoriesPath = `menu/${item.mainCategory}/categories`;
@@ -113,27 +116,27 @@ function EditItemModalForm({item, setIsEditing, setIsUploading}) {
             <Form id="newItemForm" onSubmit={handleEditedItem}>
                 <FormSection>
                     <FormLabel htmlFor="inputTitle">
-                        Title
+                        {t("Title")}
                     </FormLabel>
                     <FormInput
                     required
                     type="text"
                     id="inputTitle"
-                    placeholder="Title"
+                    placeholder={t("Title")}
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}/>
                 </FormSection>
                 <Divider></Divider>
                 <FormSection>
                     <FormLabel htmlFor="inputPrice">
-                        Price
+                        {t("Price")}
                     </FormLabel>
                     <FormInput
                     required
                     step="any"
                     type="number"
                     id="inputPrice"
-                    placeholder="Price"
+                    placeholder={t("Price")}
                     value={priceEUR}
                     onChange={(e) => eurToKn(e.target.value)}/>
                     <PriceConversion>{priceEUR} € x 7.53450 = <span style={{ fontWeight: 'bold' }}>{priceKN} kn</span></PriceConversion>
@@ -141,7 +144,7 @@ function EditItemModalForm({item, setIsEditing, setIsUploading}) {
                 <Divider></Divider>
                 <FormSection>
                     <FormLabel htmlFor="selectCategory">
-                        Category  
+                        {t("Category")} 
                     </FormLabel>
                     <FormSelect
                     required
@@ -165,12 +168,12 @@ function EditItemModalForm({item, setIsEditing, setIsUploading}) {
                 <Divider></Divider>
                 <FormSection>
                     <FormLabel htmlFor="inputDescription">
-                        Description
+                        {t("Description")}
                     </FormLabel>
                     <FormTextarea
                     id="inputDescription"
                     form='newItemForm'
-                    placeholder="Description"
+                    placeholder={t("Description")}
                     rows={3}
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}/>
@@ -178,8 +181,10 @@ function EditItemModalForm({item, setIsEditing, setIsUploading}) {
                 <Divider></Divider>
                 <FormSection>
                     <FormLabel htmlFor="inputFile">
-                        Upload New Image
-                        {compressedFile ? <AddCategoryButton type='button' onClick={(e) => handleClearImage(e)}>Restart to original Image</AddCategoryButton>  : ""}
+                        {t("Upload Image")}
+                        {compressedFile ? <AddCategoryButton type='button' onClick={(e) => handleClearImage(e)}>
+                            {t("Restart to original Image")}
+                        </AddCategoryButton>  : ""}
                     </FormLabel>
                     <FormUpload
                     type="file"
@@ -191,7 +196,7 @@ function EditItemModalForm({item, setIsEditing, setIsUploading}) {
                 {compressedFile ? <UploadedImage src={URL.createObjectURL(compressedFile)} alt='uploadedImage'/> : <UploadedImage src={item?.fileUrl} alt="uploadedImage"></UploadedImage>}
                 <Divider></Divider>
                 <SubmitButton type="submit">
-                    Save Changes
+                    {t("Save Changes")}
                 </SubmitButton>
             </Form>
     	</div>

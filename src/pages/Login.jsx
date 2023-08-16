@@ -7,10 +7,12 @@ import { Modal, ModalBody, ModalContent } from '../components/styledComponents/S
 import { useNavigate } from 'react-router-dom';
 import Loading from '../components/Loading';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { useTranslation } from 'react-i18next';
 
 function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const { t, i18n } = useTranslation()
 
     const [user, loading, error] = useAuthState(auth);
 
@@ -48,7 +50,7 @@ function Login() {
                         <Form id="loginForm" onSubmit={handleFormSubmit}>
                             <FormSection>
                                 <FormLabel htmlFor="inputEmail">
-                                    Email address
+                                    {t("Email Address")}
                                 </FormLabel>
                                 <FormInput
                                 required
@@ -61,7 +63,7 @@ function Login() {
                             <Divider></Divider>
                             <FormSection>
                                 <FormLabel htmlFor="inputPassword">
-                                    Password
+                                    {t("Password")}
                                 </FormLabel>
                                 <FormInput
                                 required
@@ -71,11 +73,11 @@ function Login() {
                                 onChange={(e) => setPassword(e.target.value)}/>
                             </FormSection>
                             <SubmitButton type="submit">
-                                Sign In
+                                {t("Sign In")}
                             </SubmitButton>
                         </Form>
                         <BackButton style={{marginTop: "1rem", width: "100%"}} onClick={handleGoBack}>
-                        Go Back To Home
+                            {t("Go Back To Home")}
                         </BackButton>
                     </ModalBody>
                 </ModalContent>

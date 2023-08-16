@@ -5,10 +5,12 @@ import { HeaderClose, HeaderTitle, Modal, ModalBody, ModalContent, ModalHeader }
 import { ReactComponent as EditIcon } from "../../../icons/editicon.svg";
 import { ReactComponent as XIcon } from "../../../icons/xicon.svg";
 import { UploadLoader } from '../../styledComponents/StyledLoader';
+import { useTranslation } from 'react-i18next';
 
 function EditItemModal({item}) {
     const [isEditing, setIsEditing] = useState(false)
     const [isUploading, setIsUploading] = useState(false)
+    const { t, i18n } = useTranslation()
 
     return (
         <>
@@ -19,7 +21,9 @@ function EditItemModal({item}) {
         <Modal $showModal={isEditing ? 1 : 0} onClick={() => setIsEditing(false)}>
             <ModalContent onClick={(e) => e.stopPropagation()}>
                 <ModalHeader>
-                    <HeaderTitle>Edit {item.mainCategory}</HeaderTitle>
+                    <HeaderTitle>
+                        {item.mainCategory === "food" ? t("Edit Food") : t("Edit Drink")}
+                    </HeaderTitle>
                     <HeaderClose onClick={() => setIsEditing(false)}>
                         <XIcon height="100%"/>
                     </HeaderClose>

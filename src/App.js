@@ -7,9 +7,7 @@ import Home from "./pages/Home";
 import Admin from "./pages/Admin";
 import Login from "./pages/Login";
 import NotFound from "./components/NotFound";
-
-
-
+import "./i18next/i18next"
 
 export const AppContext = createContext();
 

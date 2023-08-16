@@ -8,6 +8,7 @@ import NewCategoryModalForm from './NewCategoryModalForm';
 import noimage from "../../../noimage.png"
 import { Divider, Form, FormInput, FormLabel, FormSection, FormSelect, FormTextarea, FormUpload, PriceConversion, UploadedImage } from '../../styledComponents/StyledForm';
 import { AddCategoryButton, SubmitButton } from '../../styledComponents/StyledButtons';
+import { useTranslation } from 'react-i18next';
 
 function NewItemModalForm({ isDrink, setIsUploading }) {
     const [title, setTitle] = useState("");
@@ -17,6 +18,8 @@ function NewItemModalForm({ isDrink, setIsUploading }) {
     const [description, setDescription] = useState("");
     const [compressedFile, setCompressedFile] = useState(null);
     const [addingCategory, setAddingCategory] = useState(false);
+
+    const { t, i18n } = useTranslation()
 
     const fileInputRef = useRef(null);
 
@@ -141,26 +144,26 @@ function NewItemModalForm({ isDrink, setIsUploading }) {
                 <Form id="newItemForm" onSubmit={handleFileSubmit}>
                     <FormSection>
                         <FormLabel htmlFor="inputTitle">
-                            {isDrink ? "Drink" : "Food"} Title
+                            {t("Title")}
                         </FormLabel>
                         <FormInput
                         required
                         type="text"
                         id="inputTitle"
-                        placeholder="Title"
+                        placeholder={t("Title")}
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}/>
                     </FormSection>
                     <Divider></Divider>
                     <FormSection>
                         <FormLabel htmlFor="inputPrice">
-                            {isDrink ? "Drink" : "Food"} Price
+                        {t("Price")}
                         </FormLabel>
                         <FormInput
                         required
                         type="number"
                         id="inputPrice"
-                        placeholder="Price"
+                        placeholder={t("Price")}
                         value={priceEUR}
                         onChange={(e) => eurToKn(e.target.value)}/>
                         <PriceConversion>{priceEUR} € x 7.53450 = <span style={{ fontWeight: 'bold' }}>{priceKN} kn</span></PriceConversion>
@@ -168,9 +171,9 @@ function NewItemModalForm({ isDrink, setIsUploading }) {
                     <Divider></Divider>
                     <FormSection>
                         <FormLabel htmlFor="selectCategory">
-                            {isDrink ? "Drink" : "Food"} Category
+                                {t("Category")}
                             <AddCategoryButton type='button' onClick={handleAddingCategory}>
-                                Add New {isDrink ? "Drink" : "Food"} Category
+                                {isDrink ? t("Add New Drink Category") : t("Add New Food Category")}
                             </AddCategoryButton>    
                         </FormLabel>
                         <FormSelect
@@ -194,12 +197,12 @@ function NewItemModalForm({ isDrink, setIsUploading }) {
                     <Divider></Divider>
                     <FormSection>
                         <FormLabel htmlFor="inputDescription">
-                            {isDrink ? "Drink" : "Food"} Description
+                        {t("Description")}
                         </FormLabel>
                         <FormTextarea
                         id="inputDescription"
                         form='newItemForm'
-                        placeholder="Description"
+                        placeholder={t("Description")}
                         rows={3}
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}/>
@@ -207,8 +210,8 @@ function NewItemModalForm({ isDrink, setIsUploading }) {
                     <Divider></Divider>
                     <FormSection>
                         <FormLabel htmlFor="inputFile">
-                            Upload Image
-                            {compressedFile ? <AddCategoryButton type='button' onClick={(e) => handleClearImage(e)}>Clear Image</AddCategoryButton>  : ""}
+                            {t("Upload Image")}
+                            {compressedFile ? <AddCategoryButton type='button' onClick={(e) => handleClearImage(e)}>{t("Clear Image")}</AddCategoryButton>  : ""}
                         </FormLabel>
                         <FormUpload
                         type="file"
@@ -220,7 +223,7 @@ function NewItemModalForm({ isDrink, setIsUploading }) {
                     {compressedFile ? <UploadedImage src={URL.createObjectURL(compressedFile)} alt='uploadedImage'/> : <UploadedImage src={noimage} alt="uploadedImage"></UploadedImage>}
                     <Divider></Divider>
                     <SubmitButton type="submit">
-                        Submit New {isDrink ? "Drink" : "Food"}
+                        {t("Publish")}
                     </SubmitButton>
                 </Form>
             :

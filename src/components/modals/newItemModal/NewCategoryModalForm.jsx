@@ -3,9 +3,11 @@ import { db } from '../../../firebase/config';
 import { doc, setDoc, updateDoc } from 'firebase/firestore';
 import { Divider, Form, FormInput, FormLabel, FormSection } from '../../styledComponents/StyledForm';
 import { BackButton, SubmitButton } from '../../styledComponents/StyledButtons';
+import { useTranslation } from 'react-i18next';
 
 function NewCategoryModalForm({ handleAddingCategory, isDrink }) {
     const [category, setCategory] = useState("");
+    const { t, i18n } = useTranslation()
 
     //  Create new category
     const handleCategorySubmit = async (e) => {
@@ -48,10 +50,13 @@ function NewCategoryModalForm({ handleAddingCategory, isDrink }) {
   return (
     <Form onSubmit={handleCategorySubmit}>
         <FormSection>
-            <FormLabel htmlFor="inputCategory">New {isDrink ? "Drink" : "Food"} Category</FormLabel>
+            <FormLabel htmlFor="inputCategory">
+                {t("New Category Title")}
+            </FormLabel>
             <FormInput
             autoFocus
             required
+            placeholder={t("Title")}
             id='inputCategory'
             value={category}
             onChange={(e) => setCategory(e.target.value)}
@@ -59,10 +64,10 @@ function NewCategoryModalForm({ handleAddingCategory, isDrink }) {
         </FormSection>
         <Divider></Divider>
         <SubmitButton type="submit">
-            Submit New {isDrink ? "Drink" : "Food"} Category
+            {t("Save New Category")}
         </SubmitButton>
         <BackButton onClick={handleAddingCategory}>
-            Back
+            {t("Back")}
         </BackButton>
     </Form>
   );

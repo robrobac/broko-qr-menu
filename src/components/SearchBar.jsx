@@ -11,6 +11,7 @@ import { ViewButton, ViewContainer } from './styledComponents/StyledButtons';
 import { ReactComponent as ListIcon } from "../icons/listicon.svg";
 import { ReactComponent as CardIcon } from "../icons/cardicon.svg";
 import { AppContext } from '../App';
+import { useTranslation } from 'react-i18next';
 
 function SearchBar({homeMenuData, allAdminItems, selectedTab, removeAdminItem }) {
     const [allItems, setAllItems] = useState()  //  All items for Home page
@@ -18,6 +19,8 @@ function SearchBar({homeMenuData, allAdminItems, selectedTab, removeAdminItem })
     const [searchValue, setSearchValue] = useState("")  //  Handling search input value
     const { viewStyle, handleViewStyle } = useContext(ViewContext)
     const { handleLoading } = useContext(AppContext)
+
+    const { t, i18n } = useTranslation()
     
 
     const inputRef = useRef(null)   //  Search Input reference, handles onBlur for input in order to close virtual keyboard on scroll
@@ -103,7 +106,7 @@ function SearchBar({homeMenuData, allAdminItems, selectedTab, removeAdminItem })
         }
     };
 
-    const noResult = searchValue === "" ? "Search all products" : filteredItems.length === 0 ? `No results for "${searchValue}", please try again` : ""
+    const noResult = searchValue === "" ? t("Search food and drink menu") : filteredItems.length === 0 ? `${t("No results for")} "${searchValue}"` : ""
 
     return (
         <div style={{minHeight: "100vh"}}>

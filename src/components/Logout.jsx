@@ -4,10 +4,12 @@ import { auth } from '../firebase/config'
 import { AppContext } from '../App'
 import { AuthButton } from './styledComponents/StyledButtons'
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 
 function Logout() {
     const {isAuth} = useContext(AppContext)
+    const { t, i18n } = useTranslation()
 
     const navigate = useNavigate();
 
@@ -26,11 +28,11 @@ function Logout() {
 
     if (isAuth) {
         return (
-            <AuthButton onClick={handleLogout}>Logout</AuthButton>
+            <AuthButton onClick={handleLogout}>{t("Logout")}</AuthButton>
         )
     } else {
         return (
-            <AuthButton onClick={handleLogin}>Login</AuthButton>
+            <AuthButton onClick={handleLogin}>{t("Login")}</AuthButton>
         )
     }
     

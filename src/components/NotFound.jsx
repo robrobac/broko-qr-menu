@@ -1,9 +1,12 @@
 import React from 'react'
 import { LinkDesc, NotFoundDesc, NotFoundLink, NotFoundMessage, NotFoundPage } from './styledComponents/StyledMisc'
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 function NotFound() {
     const navigate = useNavigate();
+
+    const { t, i18n } = useTranslation()
 
     const handleGoBack = (page) => {
         if (page === "home") {
@@ -19,10 +22,17 @@ function NotFound() {
             
             <NotFoundDesc>
                 <NotFoundMessage>
-                    404 Page Not Found
+                    {t("404 Page Not Found")}
                 </NotFoundMessage>
-                <NotFoundLink onClick={() => handleGoBack("home")}>Home</NotFoundLink>
-                <NotFoundLink onClick={() => handleGoBack("admin")}>Admin <LinkDesc className='buttonDescription'>Login required</LinkDesc></NotFoundLink>
+                <NotFoundLink onClick={() => handleGoBack("home")}>
+                    {t("Home")}
+                </NotFoundLink>
+                <NotFoundLink onClick={() => handleGoBack("admin")}>
+                    {t("Admin")}
+                    <LinkDesc className='buttonDescription'>
+                        {t("Login Required")}
+                    </LinkDesc>
+                </NotFoundLink>
             </NotFoundDesc>
             
         </NotFoundPage>

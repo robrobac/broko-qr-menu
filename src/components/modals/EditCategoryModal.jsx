@@ -6,10 +6,12 @@ import { EditButton, SubmitButton } from '../styledComponents/StyledButtons';
 import { Divider, Form, FormInput, FormLabel, FormSection } from '../styledComponents/StyledForm';
 import { ReactComponent as EditIcon } from "../../icons/editicon.svg";
 import { ReactComponent as XIcon } from "../../icons/xicon.svg";
+import { useTranslation } from 'react-i18next';
 
 function EditCategoryModal({category}) {
     const [categoryValue, setCategoryValue] = useState(category.category);
     const [isEditing, setIsEditing] = useState(false)
+    const { t, i18n } = useTranslation()
     
 
     const handleCategoryChange = async (e) => {
@@ -44,7 +46,7 @@ function EditCategoryModal({category}) {
             <Modal $showModal={isEditing ? 1 : 0} onClick={() => setIsEditing(false)}>
             <ModalContent onClick={(e) => e.stopPropagation()}>
                 <ModalHeader>
-                    <HeaderTitle>Edit Category</HeaderTitle>
+                    <HeaderTitle>{t("Edit Category")}</HeaderTitle>
                     <HeaderClose onClick={() => setIsEditing(false)}>
                         <XIcon height="100%"/>
                     </HeaderClose>
@@ -52,10 +54,11 @@ function EditCategoryModal({category}) {
                 <ModalBody>
                 <Form onSubmit={handleCategoryChange}>
                         <FormSection>
-                            <FormLabel htmlFor="inputCategory">Title</FormLabel>
+                            <FormLabel htmlFor="inputCategory">{t("Title")}</FormLabel>
                             <FormInput
                             autoFocus
                             required
+                            placeholder={t("Title")}
                             id='inputCategory'
                             value={categoryValue}
                             onChange={(e) => setCategoryValue(e.target.value)}
@@ -63,7 +66,7 @@ function EditCategoryModal({category}) {
                         </FormSection>
                         <Divider></Divider>
                         <SubmitButton type="submit">
-                            Save Changes
+                            {t("Save Changes")}
                         </SubmitButton>
                     </Form>
                 </ModalBody>

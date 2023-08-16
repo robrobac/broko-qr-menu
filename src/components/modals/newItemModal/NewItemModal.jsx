@@ -4,11 +4,14 @@ import { AddProductButton } from '../../styledComponents/StyledButtons';
 import { HeaderClose, HeaderTitle, Modal, ModalBody, ModalContent, ModalHeader } from '../../styledComponents/StyledModal';
 import { ReactComponent as XIcon } from "../../../icons/xicon.svg";
 import { UploadLoader } from '../../styledComponents/StyledLoader';
+import { useTranslation } from 'react-i18next';
 
 function NewItemModal({isDrink}) {
     const [showFoodModal, setShowFoodModal] = useState(false);
     const [showDrinkModal, setShowDrinkModal] = useState(false);
     const [isUploading, setIsUploading] = useState(false)
+
+    const { t, i18n } = useTranslation()
 
     //  Close modal once clicked or tapped outside the modal.
     const outsideClick = (e) => {
@@ -28,15 +31,15 @@ function NewItemModal({isDrink}) {
         <div className='newItemModal'>
             {isUploading ? <UploadLoader><span className="uploadLoader"></span></UploadLoader> : ""}
             {isDrink ? (
-                <AddProductButton onClick={() => setShowDrinkModal(true)}>Add New Drink</AddProductButton>
+                <AddProductButton onClick={() => setShowDrinkModal(true)}>{t("Add New Drink")}</AddProductButton>
             ) : (
-                <AddProductButton onClick={() => setShowFoodModal(true)}>Add New Food</AddProductButton>
+                <AddProductButton onClick={() => setShowFoodModal(true)}>{t("Add New Food")}</AddProductButton>
             )}
             {showFoodModal ? (
                 <Modal $showModal={showFoodModal ? 1 : 0} onClick={() => outsideClick("food")}>
                     <ModalContent onClick={(e) => e.stopPropagation()}>
                         <ModalHeader>
-                            <HeaderTitle>Add New Food</HeaderTitle>
+                            <HeaderTitle>{t("Add New Food")}</HeaderTitle>
                             <HeaderClose onClick={() => setShowFoodModal(false)}>
                                 <XIcon height="100%"/>
                             </HeaderClose>
@@ -51,7 +54,7 @@ function NewItemModal({isDrink}) {
                 <Modal $showModal={showDrinkModal ? 1 : 0} onClick={() => outsideClick("drink")}>
                     <ModalContent onClick={(e) => e.stopPropagation()}>
                         <ModalHeader>
-                            <HeaderTitle>Add New Drink</HeaderTitle>
+                            <HeaderTitle>{t("Add New Drink")}</HeaderTitle>
                             <HeaderClose onClick={() => setShowDrinkModal(false)}>
                                 <XIcon height="100%"/>
                             </HeaderClose>
