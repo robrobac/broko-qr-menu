@@ -19,31 +19,35 @@ function CategoryTabs({homeMenuData, isAdmin}) {
 
     useEffect(() => {
         //  Fetching data from Local Storage.
-        const cachedData = localStorage.getItem("styleData");
-        if (cachedData) {
-            const parsedData = JSON.parse(cachedData);
-            if (parsedData.viewStyle) {
-                setViewStyle(parsedData.viewStyle)   
-            } else {
-                setViewStyle("card")
-            }
-            
-            if (parsedData.selectedTab) {
-                setSelectedTab(parsedData.selectedTab)
-            } else {
-                setSelectedTab("food")
-            }
+        const cachedView = localStorage.getItem("viewStyle");
+        const cachedTab = localStorage.getItem("selectedTab");
+
+        if (cachedView) {
+            const parsedData = JSON.parse(cachedView)
+            setViewStyle(parsedData.viewStyle)
+        } else {
+            setViewStyle("card")
+        }
+
+        if (cachedTab) {
+            const parsedData = JSON.parse(cachedTab)
+            setSelectedTab(parsedData.selectedTab)
+        } else {
+            setSelectedTab("food")
         }
     }, [])
 
     const handleSelectedTab = (tab) => {
         setSelectedTab(tab)
         //  Save data and timestamp to Local Storage.
+
+        if (tab === "search") {
+            return
+        }
         const dataToCache = {
-            viewStyle: viewStyle,
             selectedTab: tab,
         };
-        localStorage.setItem('styleData', JSON.stringify(dataToCache));
+        localStorage.setItem('selectedTab', JSON.stringify(dataToCache));
     }
 
     const handleViewStyle = (style) => {
@@ -51,9 +55,8 @@ function CategoryTabs({homeMenuData, isAdmin}) {
         //  Save data and timestamp to Local Storage.
         const dataToCache = {
             viewStyle: style,
-            selectedTab: selectedTab,
         };
-        localStorage.setItem('styleData', JSON.stringify(dataToCache));
+        localStorage.setItem('viewStyle', JSON.stringify(dataToCache));
     }
 
     //  Gathering all items at one place to handle search bar, newItem comes from AdminItems.jsx as an argument.

@@ -52,6 +52,20 @@ export const CardDesc = styled.p`
     text-align: left;
     line-height: 1.5rem;
     margin-bottom: 0;
+    
+    max-height: ${props => (props.$truncate ? "25px" : "unset")};
+    white-space: ${props => (props.$truncate ? "nowrap" : "normal")};
+    overflow: ${props => (props.$truncate ? "hidden" : "unset")};
+    text-overflow: ${props => (props.$truncate ? "ellipsis" : "unset")};
+`
+
+export const TruncateWrap = styled.div`
+`
+export const TruncateDots = styled.p`
+    text-align: center;
+    line-height: .5;
+    font-size: 1.5rem;
+    font-weight: 1000;
 `
 export const CardAdmin = styled.div`
     display: flex;
@@ -93,13 +107,15 @@ export const ListHeader = styled.div`
 `
 
 export const ListTitle = styled(CardTitle)`
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     text-align: left;
     
 `
 
-export const ListDesc = styled(CardDesc)`
-
+export const ListDesc = styled.p`
+    text-align: left;
+    line-height: 1.5rem;
+    margin-bottom: 0;
 `
 
 export const ListPrice = styled(CardPrice)`

@@ -18,7 +18,7 @@ function SearchBar({homeMenuData, allAdminItems, selectedTab, removeAdminItem })
     const [searchValue, setSearchValue] = useState("")  //  Handling search input value
     const { viewStyle, handleViewStyle } = useContext(ViewContext)
     const { handleLoading } = useContext(AppContext)
-    handleLoading(false)
+    
 
     const inputRef = useRef(null)   //  Search Input reference, handles onBlur for input in order to close virtual keyboard on scroll
 
@@ -26,7 +26,7 @@ function SearchBar({homeMenuData, allAdminItems, selectedTab, removeAdminItem })
     useEffect(() => {
         if (selectedTab === "search") {
             inputRef.current.focus();
-            
+            handleLoading(false)
         }
     }, [selectedTab])
 

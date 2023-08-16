@@ -1,5 +1,5 @@
-import React, { useContext } from 'react'
-import { AdminButtons, AdminTimestamp, Card, CardAdmin, CardBody, CardDesc, CardImage, CardPrice, CardTitle, List, ListAdmin, ListBody, ListDesc, ListHeader, ListPrice, ListTitle, PriceEUR, PriceEURlist, PriceKN, PriceKNlist } from './styledComponents/StyledCard'
+import React, { useContext, useEffect, useState } from 'react'
+import { AdminButtons, AdminTimestamp, Card, CardAdmin, CardBody, CardDesc, CardImage, CardPrice, CardTitle, List, ListAdmin, ListBody, ListDesc, ListHeader, ListPrice, ListTitle, PriceEUR, PriceEURlist, PriceKN, PriceKNlist, TruncateDots, TruncateWrap } from './styledComponents/StyledCard'
 import { DeleteButton, UpDownButton } from './styledComponents/StyledButtons'
 import noimage from "../noimage.png"
 import EditItemModal from './modals/editItemModal/EditItemModal'
@@ -10,10 +10,14 @@ import { AppContext } from '../App';
 
 function ProductCard({item, handleDelete, isAdmin, handleReorder, isSearch, itemIndex, itemsLength, viewStyle}) {
     const { handleLoading } = useContext(AppContext)
+    const [truncateDesc, setTruncateDesc] = useState(!isAdmin)
 
-    if (viewStyle === "list") {
-        handleLoading(false)
-    }
+    useEffect(() => {
+        if (viewStyle === "list") {
+            handleLoading(false)
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
     
     //  Creating a date object for date created
     const dateCreatedTimestamp = item.dateCreated
@@ -43,6 +47,13 @@ function ProductCard({item, handleDelete, isAdmin, handleReorder, isSearch, item
                 <CardImage src={item?.fileUrl} key={item?.id} onError={(e) => { e.target.src = noimage}} onLoad={() => handleLoading(false)}/>
                 <CardBody>
                     <CardTitle>{item.title}</CardTitle>
+                    
+                    <TruncateWrap onClick={() => setTruncateDesc(!truncateDesc)}>
+                        <CardDesc $truncate={truncateDesc ? "true" : undefined}>
+                            {item.description}
+                        </CardDesc>
+                        {truncateDesc ? <TruncateDots>...</TruncateDots> : ""}
+                    </TruncateWrap>
                     <CardPrice>
                         <PriceEUR>
                             {typeof item.priceEUR === 'number'
@@ -51,7 +62,6 @@ function ProductCard({item, handleDelete, isAdmin, handleReorder, isSearch, item
                             <PriceKN>({item.priceKN}kn)</PriceKN>
                         </PriceEUR>
                     </CardPrice>
-                    <CardDesc>{item.description}</CardDesc>
                     {isAdmin ? (
                         <>
                         <CardAdmin>
