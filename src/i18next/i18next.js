@@ -60,7 +60,13 @@ i18next.use(initReactI18next).init({
 
                 //  ProductCard.jsx
                 "Published": "Created",
-                "Edited": "Edited"
+                "Edited": "Edited",
+
+                //  AdminItems.jsx
+                "Item Delete Confirmation": "Are you sure you want to delete this product? You won't be able to restore it once deleted",
+
+                //  TabContent.jsx
+                "Category Delete Confirmation": "Deleting this category will also delete all items within it. Are you sure you want to proceed?",
 
             }
         },
@@ -121,6 +127,12 @@ i18next.use(initReactI18next).init({
                 //  ProductCard.jsx
                 "Published": "Objavljeno",
                 "Edited": "Uređeno",
+
+                //  AdminItems.jsx
+                "Item Delete Confirmation": "Jeste li sigurni da želite izbrisati ovaj proizvod? Nakon brisanja nećete ga moći vratiti",
+
+                //  TabContent.jsx
+                "Category Delete Confirmation": "Brisanje ove kategorije također će izbrisati sve stavke unutar nje. Jeste li sigurni da želite nastaviti?",
             }
         }
     },

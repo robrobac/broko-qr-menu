@@ -19,6 +19,7 @@ import { useTranslation } from 'react-i18next'
 import { LanguageIconSticky, LanguageSelect, LanguageSticky, LanguageTitleSticky, LanguageTitleWrap } from './styledComponents/styledHeader'
 import { ReactComponent as GlobeIcon } from "../icons/globeicon.svg";
 import { handleTranslate } from '../helpers/handleTranslate'
+import { t } from 'i18next'
 
 function TabContent({selectedTab, homeMenuData, isAdmin, isDrink, getAllAdminItems, removeAdminItem}) {
     const [categories, setCategories] = useState([])
@@ -106,7 +107,7 @@ function TabContent({selectedTab, homeMenuData, isAdmin, isDrink, getAllAdminIte
     //  Handles delete of whole category
     const handleDeleteCategory = async (category) => {
         //  Confirmation before proceeding
-        if (window.confirm("Deleting category will delete all its items, are you sure you want to proceed?")) {
+        if (window.confirm(t("Category Delete Confirmation"))) {
             
             //  Get category subcollections items in order to delete them since Firebase doesn't delete subcollections
             const categoryItemsPath = `${category.categoryPath}/items`

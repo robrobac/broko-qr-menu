@@ -6,6 +6,7 @@ import ProductCard from './ProductCard';
 import { CategoryItems } from './styledComponents/StyledCategory';
 import { getMiddleValue } from '../helpers/getMiddleValue';
 import { ViewContext } from './CategoryTabs';
+import { t } from 'i18next';
 
 export const EditContext = createContext()
 
@@ -49,7 +50,7 @@ function AdminItems({category, getAllAdminItems, removeAdminItem, filteredItems,
     //  Handles delete for item passed as an argument from ProductCard.jsx.
     const handleDelete = async (item) => {
         //  Confirmation before proceeding
-        if (window.confirm("Are you sure you want to delete this product?")) {
+        if (window.confirm(t("Item Delete Confirmation"))) {
             //  If item contains image, delete it
             if (item.filePath !== "") {
                 const fileRef = ref(storage, item.filePath)
