@@ -17,8 +17,11 @@ export const CategoryTitle = styled.h2`
     color: #235239;
     font-weight: 700;
     font-size: 2rem;
-    padding-bottom: 1rem; 
-    text-align: center;  
+    padding-bottom: 1rem;
+    padding-left: 1rem;
+    text-align: left;
+    max-width: 425px;
+    margin: 0 auto;
 `
 
 export const CategoryControls = styled.div`

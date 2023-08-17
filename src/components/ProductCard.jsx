@@ -106,7 +106,7 @@ function ProductCard({item, handleDelete, isAdmin, handleReorder, isSearch, item
                 <ListBody id='listBody'>
                     <ListHeader id='listHeader'>
                         <ListTitle id='listTitle'>
-                            {handleTranslate(item.titleEng) ? item.titleEng : item.title}
+                            {handleTranslate(item.titleEng, i18n) ? item.titleEng : item.title}
                         </ListTitle>
                         <ListPrice id='listPrice'>
                             <PriceEURlist id='priceEurList'>
@@ -118,7 +118,7 @@ function ProductCard({item, handleDelete, isAdmin, handleReorder, isSearch, item
                         </ListPrice>
                     </ListHeader>
                     <ListDesc>
-                        {handleTranslate(item.descriptionEng) ? item.descriptionEng : item.description}
+                        {handleTranslate(item.descriptionEng, i18n) ? item.descriptionEng : item.description}
                     </ListDesc>
                     {isAdmin ? (
                         <>

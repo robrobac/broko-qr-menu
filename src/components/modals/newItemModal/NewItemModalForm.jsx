@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { db, storage } from '../../../firebase/config';
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useCollectionData } from "react-firebase-hooks/firestore";
-import { collection, doc, query, setDoc, updateDoc } from 'firebase/firestore';
+import { collection, doc, orderBy, query, setDoc, updateDoc } from 'firebase/firestore';
 import Compressor from 'compressorjs';
 import NewCategoryModalForm from './NewCategoryModalForm';
 import noimage from "../../../noimage.png"
@@ -30,7 +30,7 @@ function NewItemModalForm({ isDrink, setIsUploading }) {
     const itemsPath = isDrink ? "menu/drink" : "menu/food";
 
     //  Live show categories in new item form, handling showing new category right after creating it.
-    const categoriesQuery = query(collection(db, categoriesPath));
+    const categoriesQuery = query(collection(db, categoriesPath), orderBy("orderTimestamp", "asc"));
     const [categories] = useCollectionData(categoriesQuery);
 
     //  Compressing the image before uploading to Firebase
