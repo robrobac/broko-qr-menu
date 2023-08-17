@@ -50,7 +50,7 @@ const AddProductButton = styled(Button)`
 
     position: fixed;
     left: .5rem;
-    bottom: 1rem;
+    bottom: .5rem;
 
     -webkit-box-shadow: 0px 5px 20px 6px rgba(0, 0, 0, 0.2);
     box-shadow: 0px 5px 20px 6px rgba(0, 0, 0, 0.2);
@@ -83,9 +83,10 @@ export const ViewContainer = styled.div`
     display: flex;
     justify-content: flex-end;
     gap: .5rem;
-    padding: 1rem 1rem 0 1rem;
+    padding: .5rem .5rem 0 .5rem;
     position: sticky;
     top: 143px;
+    z-index: 19;
 `
 
 export const ViewButton = styled(Button)`

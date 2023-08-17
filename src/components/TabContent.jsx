@@ -16,14 +16,64 @@ import { ViewContext } from './CategoryTabs'
 import { ReactComponent as ListIcon } from "../icons/listicon.svg";
 import { ReactComponent as CardIcon } from "../icons/cardicon.svg";
 import { useTranslation } from 'react-i18next'
+import { LanguageIconSticky, LanguageSelect, LanguageSticky, LanguageTitleSticky, LanguageTitleWrap } from './styledComponents/styledHeader'
+import { ReactComponent as GlobeIcon } from "../icons/globeicon.svg";
 
 function TabContent({selectedTab, homeMenuData, isAdmin, isDrink, getAllAdminItems, removeAdminItem}) {
     const [categories, setCategories] = useState([])
     const itemsLength = categories.length - 1
     const { viewStyle, handleViewStyle } = useContext(ViewContext)
+    const { i18n } = useTranslation()
+    const [selectedLanguage, setSelectedLanguage] = useState("hr")
+    const [scrollY, setScrollY] = useState(0);
+    const [showLanguageButton, setShowLanguageButton] = useState(false)
 
+    useEffect(() => {
+        const handleScroll = () => {
+          setScrollY(window.scrollY);
+          setShowLanguageButton(window.scrollY >= 70);
+        };
     
+        window.addEventListener('scroll', handleScroll);
     
+        return () => {
+          window.removeEventListener('scroll', handleScroll);
+        };
+      }, []);
+    
+    useEffect(() => {
+        const cachedData = localStorage.getItem("selectedLanguage");
+
+        if (cachedData) {
+            const parsedData = JSON.parse(cachedData)
+            setSelectedLanguage(parsedData.selectedLanguage)
+            i18n.changeLanguage(parsedData.selectedLanguage)
+        }     
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    const handleLanguage = () => {
+        if (selectedLanguage === "hr") {
+            setSelectedLanguage("en")
+            i18n.changeLanguage("en")
+
+            const dataToCache = {
+                selectedLanguage: "en",
+            };
+
+            localStorage.setItem('selectedLanguage', JSON.stringify(dataToCache));
+        } else if (selectedLanguage === "en") {
+            setSelectedLanguage("hr")
+            i18n.changeLanguage("hr")
+
+            const dataToCache = {
+                selectedLanguage: "hr",
+            };
+
+            localStorage.setItem('selectedLanguage', JSON.stringify(dataToCache));
+        }
+    }
+
 
     //  If homeMenuData is passed from CategoryTabs.jsx, set categories
     useEffect(() => {
@@ -51,8 +101,6 @@ function TabContent({selectedTab, homeMenuData, isAdmin, isDrink, getAllAdminIte
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-
-    const { i18n } = useTranslation()
     const handleTranslate = (en) => {
         if (i18n?.language === "hr") {
             return false
@@ -201,6 +249,18 @@ function TabContent({selectedTab, homeMenuData, isAdmin, isDrink, getAllAdminIte
     return (
         <div>
             <ViewContainer>
+                <LanguageSticky $show={showLanguageButton ? "true" : undefined}>
+                    <LanguageSelect onClick={() => handleLanguage()}>
+                        <LanguageTitleWrap>
+                            <LanguageTitleSticky $isActive={i18n?.language === "hr" ? "true" : undefined}>hr</LanguageTitleSticky>
+                            <LanguageTitleSticky>|</LanguageTitleSticky>
+                            <LanguageTitleSticky $isActive={i18n?.language === "en" ? "true" : undefined}>en</LanguageTitleSticky>
+                        </LanguageTitleWrap>
+                        <LanguageIconSticky>
+                            <GlobeIcon/>
+                        </LanguageIconSticky>
+                    </LanguageSelect>
+                </LanguageSticky>
                 <ViewButton onClick={() => handleViewStyle("card")} $isActive={viewStyle === "card" ? "true" : undefined}>
                     <CardIcon height="100%" />
                 </ViewButton>

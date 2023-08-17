@@ -47,14 +47,14 @@ function Header() {
             <HeaderLogo src={Logo} alt='logo' className='logoImg'></HeaderLogo>
             <HeaderRight>
                 <LanguageSelect onClick={() => handleLanguage()}>
+                    <LanguageTitleWrap >
+                        <LanguageTitle $isActive={i18n?.language === "hr" ? "true" : undefined}>hr</LanguageTitle>
+                        <LanguageTitle>|</LanguageTitle>
+                        <LanguageTitle $isActive={i18n?.language === "en" ? "true" : undefined}>en</LanguageTitle>
+                    </LanguageTitleWrap>
                     <LanguageIcon>
                         <GlobeIcon/>
                     </LanguageIcon>
-                    <LanguageTitleWrap >
-                        <LanguageTitle $isActive={selectedLanguage === "hr" ? "true" : undefined}>hr</LanguageTitle>
-                        <LanguageTitle>|</LanguageTitle>
-                        <LanguageTitle $isActive={selectedLanguage === "en" ? "true" : undefined}>en</LanguageTitle>
-                    </LanguageTitleWrap>
                 </LanguageSelect>
                 <Logout />
             </HeaderRight>

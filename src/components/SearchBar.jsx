@@ -12,6 +12,8 @@ import { ReactComponent as ListIcon } from "../icons/listicon.svg";
 import { ReactComponent as CardIcon } from "../icons/cardicon.svg";
 import { AppContext } from '../App';
 import { useTranslation } from 'react-i18next';
+import { LanguageIconSticky, LanguageSelect, LanguageSticky, LanguageTitleSticky, LanguageTitleWrap } from './styledComponents/styledHeader';
+import { ReactComponent as GlobeIcon } from "../icons/globeicon.svg";
 
 function SearchBar({homeMenuData, allAdminItems, selectedTab, removeAdminItem }) {
     const [allItems, setAllItems] = useState()  //  All items for Home page
@@ -19,9 +21,24 @@ function SearchBar({homeMenuData, allAdminItems, selectedTab, removeAdminItem })
     const [searchValue, setSearchValue] = useState("")  //  Handling search input value
     const { viewStyle, handleViewStyle } = useContext(ViewContext)
     const { handleLoading } = useContext(AppContext)
+    const [selectedLanguage, setSelectedLanguage] = useState("hr")
+    const [scrollY, setScrollY] = useState(0);
+    const [showLanguageButton, setShowLanguageButton] = useState(false)
 
     const { t, i18n } = useTranslation()
+
+    useEffect(() => {
+        const handleScroll = () => {
+          setScrollY(window.scrollY);
+          setShowLanguageButton(window.scrollY >= 70);
+        };
     
+        window.addEventListener('scroll', handleScroll);
+    
+        return () => {
+          window.removeEventListener('scroll', handleScroll);
+        };
+      }, []);
 
     const inputRef = useRef(null)   //  Search Input reference, handles onBlur for input in order to close virtual keyboard on scroll
 
@@ -72,8 +89,10 @@ function SearchBar({homeMenuData, allAdminItems, selectedTab, removeAdminItem })
         } else {
             const filteredItems = allItems?.filter(item => {
                 const titleMatch = normalizeString(item.title).includes(query);
+                const titleEngMatch = normalizeString(item.titleEng).includes(query);
                 const descriptionMatch = normalizeString(item.description).includes(query);
-                return titleMatch || descriptionMatch
+                const descriptionEngMatch = normalizeString(item.descriptionEng).includes(query);
+                return titleMatch || descriptionMatch || titleEngMatch || descriptionEngMatch
             })
             setFilteredItems(filteredItems)
         }        
@@ -106,6 +125,28 @@ function SearchBar({homeMenuData, allAdminItems, selectedTab, removeAdminItem })
         }
     };
 
+    const handleLanguage = () => {
+        if (selectedLanguage === "hr") {
+            setSelectedLanguage("en")
+            i18n.changeLanguage("en")
+
+            const dataToCache = {
+                selectedLanguage: "en",
+            };
+
+            localStorage.setItem('selectedLanguage', JSON.stringify(dataToCache));
+        } else if (selectedLanguage === "en") {
+            setSelectedLanguage("hr")
+            i18n.changeLanguage("hr")
+
+            const dataToCache = {
+                selectedLanguage: "hr",
+            };
+
+            localStorage.setItem('selectedLanguage', JSON.stringify(dataToCache));
+        }
+    }
+
     const noResult = searchValue === "" ? t("Search food and drink menu") : filteredItems.length === 0 ? `${t("No results for")} "${searchValue}"` : ""
 
     return (
@@ -122,6 +163,18 @@ function SearchBar({homeMenuData, allAdminItems, selectedTab, removeAdminItem })
                 />
             </TabNav>
             <ViewContainer>
+                <LanguageSticky $show={showLanguageButton ? "true" : undefined}>
+                    <LanguageSelect onClick={() => handleLanguage()}>
+                        <LanguageTitleWrap>
+                            <LanguageTitleSticky $isActive={i18n?.language === "hr" ? "true" : undefined}>hr</LanguageTitleSticky>
+                            <LanguageTitleSticky>|</LanguageTitleSticky>
+                            <LanguageTitleSticky $isActive={i18n?.language === "en" ? "true" : undefined}>en</LanguageTitleSticky>
+                        </LanguageTitleWrap>
+                        <LanguageIconSticky>
+                            <GlobeIcon/>
+                        </LanguageIconSticky>
+                    </LanguageSelect>
+                </LanguageSticky>
                 <ViewButton onClick={() => handleViewStyle("card")} $isActive={viewStyle === "card" ? "true" : undefined}>
                     <CardIcon height="100%" />
                 </ViewButton>
