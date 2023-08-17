@@ -12,7 +12,10 @@ export const Card = styled.div`
 `
 export const CardImage = styled.img`
     border-radius: 10px 10px 0 0;
-    max-width: 100%;
+    object-fit: cover;
+    width: 100%;
+ 
+    aspect-ratio: 16 / 9;
 `
 
 export const CardBody = styled.div`

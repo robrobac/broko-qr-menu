@@ -8,6 +8,7 @@ import { Divider, Form, FormInput, FormLabel, FormSection, FormSelect, FormTexta
 import { AddCategoryButton, SubmitButton } from '../../styledComponents/StyledButtons';
 import { EditContext } from '../../AdminItems';
 import { useTranslation } from 'react-i18next';
+import { handleTranslate } from '../../../helpers/handleTranslate';
 
 function EditItemModalForm({item, setIsEditing, setIsUploading}) {
     const {handleEdit} = useContext(EditContext)    //  Edit item function passed from AdminItems.jsx via context.
@@ -21,7 +22,7 @@ function EditItemModalForm({item, setIsEditing, setIsUploading}) {
     const [compressedFile, setCompressedFile] = useState(null); //  State that holds data of image compressed with handleCompressedImage function
     const fileInputRef = useRef(null);  //  Ref to a file input element
 
-    const { t } = useTranslation()
+    const { t, i18n } = useTranslation()
 
      // Firebase React Hook useCollectionData used to display categories in select input.
      const categoriesPath = `menu/${item.mainCategory}/categories`;
@@ -169,7 +170,7 @@ function EditItemModalForm({item, setIsEditing, setIsUploading}) {
                             value={option.id}
                             name={option.id}
                             key={option.id}>
-                                {option.category}
+                                {handleTranslate(option.categoryEng, i18n) ? option.categoryEng : option.category}
                             </option>
                         ))}
                     </FormSelect>

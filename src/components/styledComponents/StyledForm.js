@@ -98,13 +98,17 @@ const PriceConversion = styled.p`
 `
 
 const Divider = styled.hr`
-margin: 0;
-padding: 0;
-opacity: 5%;
+    margin: 0;
+    padding: 0;
+    opacity: 5%;
 `
 
 const UploadedImage = styled.img`
     border-radius: 10px;
+    object-fit: cover;
+    width: 100%;
+
+    aspect-ratio: 16 / 9;
 `
 
 export { Form, FormInput, FormLabel, FormSection, PriceConversion, FormSelect, FormTextarea, FormUpload, Divider, UploadedImage }
