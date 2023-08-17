@@ -37,9 +37,13 @@ function CategoryTabs({homeMenuData, isAdmin}) {
         }
     }, [])
 
+    //  On tab change scroll to top and reset the active category navigation
+    useEffect(() => {
+        scrollToTop();
+    }, [selectedTab])
+
     const handleSelectedTab = (tab) => {
         setSelectedTab(tab)
-        //  Save data and timestamp to Local Storage.
 
         if (tab === "search") {
             return
@@ -82,11 +86,6 @@ function CategoryTabs({homeMenuData, isAdmin}) {
             return prevAdminItems.filter((item) => item.id !== itemToRemove.id);
         });
     };
-
-    //  On tab change scroll to top and reset the active category navigation
-    useEffect(() => {
-        scrollToTop();
-    }, [selectedTab])
     
     return (
         <ViewContext.Provider value={{ viewStyle, handleViewStyle }}>

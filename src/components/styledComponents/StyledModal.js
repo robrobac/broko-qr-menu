@@ -3,7 +3,7 @@ import styled from 'styled-components'
 export const Modal = styled.div`
     display: ${props => (props.$showModal ? "block" : "none")};
     position: fixed;
-    z-index: 3;
+    z-index: 10;
     left: 0;
     top: 0;
     width: 100%;
@@ -31,6 +31,7 @@ export const HeaderClose = styled.button`
     background-color: unset;
     fill: #5b7e6c;
     height: 2rem;
+    cursor: pointer;
 `
 
 export const ModalBody = styled.div`

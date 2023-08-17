@@ -119,33 +119,33 @@ function EditItemModalForm({item, setIsEditing, setIsUploading}) {
         <div>
             <Form id="newItemForm" onSubmit={handleEditedItem}>
                 <FormSection>
-                    <FormLabel htmlFor="inputTitle">
+                    <FormLabel htmlFor="inputTitleEdit">
                         {t("Title")}
                     </FormLabel>
                     <FormInput
                     required
                     type="text"
-                    id="inputTitle"
+                    id="inputTitleEdit"
                     placeholder={t("Title")}
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}/>
                     <FormInput
                     type="text"
-                    id="inputTitleEng"
+                    id="inputTitleEditEng"
                     placeholder={t("English Title")}
                     value={titleEng}
                     onChange={(e) => setTitleEng(e.target.value)}/>
                 </FormSection>
                 <Divider></Divider>
                 <FormSection>
-                    <FormLabel htmlFor="inputPrice">
+                    <FormLabel htmlFor="inputPriceEdit">
                         {t("Price")}
                     </FormLabel>
                     <FormInput
                     required
                     step="any"
                     type="number"
-                    id="inputPrice"
+                    id="inputPriceEdit"
                     placeholder={t("Price")}
                     value={priceEUR}
                     onChange={(e) => eurToKn(e.target.value)}/>
@@ -153,11 +153,11 @@ function EditItemModalForm({item, setIsEditing, setIsUploading}) {
                 </FormSection>
                 <Divider></Divider>
                 <FormSection>
-                    <FormLabel htmlFor="selectCategory">
+                    <FormLabel htmlFor="selectCategoryEdit">
                         {t("Category")} 
                     </FormLabel>
                     <FormSelect
-                    id='selectCategory'
+                    id='selectCategoryEdit'
                     value={category}
                     disabled={true}
                     onChange={(e) => setCategory(e.target.value)}
@@ -176,11 +176,11 @@ function EditItemModalForm({item, setIsEditing, setIsUploading}) {
                 </FormSection>
                 <Divider></Divider>
                 <FormSection>
-                    <FormLabel htmlFor="inputDescription">
+                    <FormLabel htmlFor="inputDescriptionEdit">
                         {t("Description")}
                     </FormLabel>
                     <FormTextarea
-                    id="inputDescription"
+                    id="inputDescriptionEdit"
                     form='newItemForm'
                     placeholder={t("Description")}
                     rows={3}
@@ -196,7 +196,7 @@ function EditItemModalForm({item, setIsEditing, setIsUploading}) {
                 </FormSection>
                 <Divider></Divider>
                 <FormSection>
-                    <FormLabel htmlFor="inputFile">
+                    <FormLabel htmlFor="inputFileEdit">
                         {t("Upload Image")}
                         {compressedFile ? <AddCategoryButton type='button' onClick={(e) => handleClearImage(e)}>
                             {t("Restart to original Image")}
@@ -205,7 +205,7 @@ function EditItemModalForm({item, setIsEditing, setIsUploading}) {
                     <FormUpload
                     type="file"
                     accept='image/*'
-                    id="inputFile"
+                    id="inputFileEdit"
                     ref={fileInputRef}
                     onChange={handleCompressedImage}/>
                 </FormSection>

@@ -187,7 +187,7 @@ function SearchBar({homeMenuData, allAdminItems, selectedTab, removeAdminItem })
             <SearchMessage>{noResult}</SearchMessage>
             {homeMenuData ? 
                 filteredItems?.map((item) => (
-                    <CategoryItems>
+                    <CategoryItems key={item.id}>
                         <ProductCard item={item} key={item.id} viewStyle={viewStyle}/>
                     </CategoryItems>
                 ))

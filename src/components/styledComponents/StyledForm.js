@@ -88,6 +88,7 @@ const FormTextarea = styled.textarea`
 
 const FormUpload = styled(FormInput)`
 padding-left: 5px;
+cursor: pointer;
 `
 
 const PriceConversion = styled.p`

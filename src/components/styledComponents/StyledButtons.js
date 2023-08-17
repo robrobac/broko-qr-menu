@@ -5,6 +5,7 @@ const Button = styled.button`
     line-height: 2;
     border-radius: 10px;
     padding: 0 10px;
+    cursor: pointer;
 `;
 
 const DeleteButton = styled(Button)`
@@ -86,7 +87,7 @@ export const ViewContainer = styled.div`
     padding: .5rem .5rem 0 .5rem;
     position: sticky;
     top: 143px;
-    z-index: 19;
+    z-index: 8;
 `
 
 export const ViewButton = styled(Button)`

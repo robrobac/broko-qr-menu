@@ -21,7 +21,7 @@ const Tab = styled.button`
     font-weight: ${props => (props.$isActive ? "700" : "0")};
     font-size: ${props => (props.$isActive ? "1.2rem" : "1rem")};
     transition: font-weight .2s, font-size .2s;
-    
+    cursor: pointer;
 `
 
 const ContentAdmin = styled.div`

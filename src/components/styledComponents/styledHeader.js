@@ -22,6 +22,7 @@ export const LanguageSelect = styled.div`
     display: flex;
     align-items: center;
     gap: .5rem;
+    cursor: pointer;
 `
 export const LanguageTitleWrap = styled.div`
     display: flex;
@@ -44,6 +45,7 @@ export const LanguageIcon = styled.div`
     padding: 1px;
 `
 export const LanguageSticky = styled.div`
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
