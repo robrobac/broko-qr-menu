@@ -8,10 +8,12 @@ import { ReactComponent as UpIcon } from "../icons/upicon.svg";
 import { ReactComponent as DownIcon } from "../icons/downicon.svg";
 import { AppContext } from '../App';
 import { useTranslation } from 'react-i18next'
+import { handleTranslate } from '../helpers/handleTranslate'
 
 function ProductCard({item, handleDelete, isAdmin, handleReorder, isSearch, itemIndex, itemsLength, viewStyle}) {
     const { handleLoading } = useContext(AppContext)
     const [truncateDesc, setTruncateDesc] = useState(!isAdmin)
+    const { t, i18n } = useTranslation()
 
     useEffect(() => {
         if (viewStyle === "list") {
@@ -20,18 +22,6 @@ function ProductCard({item, handleDelete, isAdmin, handleReorder, isSearch, item
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    const { t, i18n } = useTranslation()
-    const handleTranslate = (en) => {
-        if (i18n?.language === "hr") {
-            return false
-        } else if (i18n?.language === "en") {
-            if (en) {
-                return true
-            } else {
-                return false
-            }
-        }
-    }
     
     //  Creating a date object for date created
     const dateCreatedTimestamp = item.dateCreated
@@ -61,11 +51,11 @@ function ProductCard({item, handleDelete, isAdmin, handleReorder, isSearch, item
                 <CardImage src={item?.fileUrl} key={item?.id} onError={(e) => { e.target.src = noimage}} onLoad={() => handleLoading(false)}/>
                 <CardBody>
                     <CardTitle>
-                        {handleTranslate(item.titleEng) ? item.titleEng : item.title}
+                        {handleTranslate(item.titleEng, i18n) ? item.titleEng : item.title}
                     </CardTitle>
                     <TruncateWrap onClick={() => setTruncateDesc(!truncateDesc)}>
                         <CardDesc $truncate={truncateDesc ? "true" : undefined}>
-                            {handleTranslate(item.descriptionEng) ? item.descriptionEng : item.description}
+                            {handleTranslate(item.descriptionEng, i18n) ? item.descriptionEng : item.description}
                         </CardDesc>
                         {truncateDesc ? <TruncateDots>...</TruncateDots> : ""}
                     </TruncateWrap>

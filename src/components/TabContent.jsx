@@ -18,6 +18,7 @@ import { ReactComponent as CardIcon } from "../icons/cardicon.svg";
 import { useTranslation } from 'react-i18next'
 import { LanguageIconSticky, LanguageSelect, LanguageSticky, LanguageTitleSticky, LanguageTitleWrap } from './styledComponents/styledHeader'
 import { ReactComponent as GlobeIcon } from "../icons/globeicon.svg";
+import { handleTranslate } from '../helpers/handleTranslate'
 
 function TabContent({selectedTab, homeMenuData, isAdmin, isDrink, getAllAdminItems, removeAdminItem}) {
     const [categories, setCategories] = useState([])
@@ -101,18 +102,6 @@ function TabContent({selectedTab, homeMenuData, isAdmin, isDrink, getAllAdminIte
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
-
-    const handleTranslate = (en) => {
-        if (i18n?.language === "hr") {
-            return false
-        } else if (i18n?.language === "en") {
-            if (en) {
-                return true
-            } else {
-                return false
-            }
-        }
-    }
 
     //  Handles delete of whole category
     const handleDeleteCategory = async (category) => {
@@ -273,7 +262,7 @@ function TabContent({selectedTab, homeMenuData, isAdmin, isDrink, getAllAdminIte
                 <CategoryContainer key={category.id}>
                 <Element key={category.id} name={category.id}>
                     <CategoryTitle id={category.id}>
-                        {handleTranslate(category.categoryEng) ? category.categoryEng : category.category}
+                        {handleTranslate(category.categoryEng, i18n) ? category.categoryEng : category.category}
                     </CategoryTitle>
                     {isAdmin ? (
                         <>

@@ -5,11 +5,13 @@ import { Link } from 'react-scroll';
 import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
 import { db } from '../firebase/config';
 import { useTranslation } from 'react-i18next';
+import { handleTranslate } from '../helpers/handleTranslate';
 
 function TabNavigation({selectedTab, homeMenuData}) {
     const [categories, setCategories] = useState([])
     const [activeCategory, setActiveCategory] = useState();
     const scrollContainerRef = useRef(null);
+    const { i18n } = useTranslation()
 
     //  If homeMenuData is passed from CategoryTabs.jsx, set categories that will show in the navigation
     useEffect(() => {
@@ -62,19 +64,6 @@ function TabNavigation({selectedTab, homeMenuData}) {
         }
     }, [activeCategory, categories]);
 
-    const { i18n } = useTranslation()
-    const handleTranslate = (en) => {
-        if (i18n?.language === "hr") {
-            return false
-        } else if (i18n?.language === "en") {
-            if (en) {
-                return true
-            } else {
-                return false
-            }
-        }
-    }
-
     return (
         <TabNav ref={scrollContainerRef}>
             {categories?.map((category) => (
@@ -89,7 +78,7 @@ function TabNavigation({selectedTab, homeMenuData}) {
                     offset={-133}
                     duration={200}>
                         <NavigationButton $isActive={activeCategory === category.id ? "true" : undefined}>
-                            {handleTranslate(category.categoryEng) ? category.categoryEng : category.category}
+                            {handleTranslate(category.categoryEng, i18n) ? category.categoryEng : category.category}
                         </NavigationButton>
                     </Link>
                 </Nav>

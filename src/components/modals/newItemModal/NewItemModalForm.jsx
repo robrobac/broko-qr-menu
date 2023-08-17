@@ -9,6 +9,7 @@ import noimage from "../../../noimage.png"
 import { Divider, Form, FormInput, FormLabel, FormSection, FormSelect, FormTextarea, FormUpload, PriceConversion, UploadedImage } from '../../styledComponents/StyledForm';
 import { AddCategoryButton, SubmitButton } from '../../styledComponents/StyledButtons';
 import { useTranslation } from 'react-i18next';
+import { handleTranslate } from '../../../helpers/handleTranslate';
 
 function NewItemModalForm({ isDrink, setIsUploading }) {
     const [title, setTitle] = useState("");
@@ -20,8 +21,7 @@ function NewItemModalForm({ isDrink, setIsUploading }) {
     const [descriptionEng, setDescriptionEng] = useState("");
     const [compressedFile, setCompressedFile] = useState(null);
     const [addingCategory, setAddingCategory] = useState(false);
-
-    const { t } = useTranslation()
+    const { t, i18n } = useTranslation()
 
     const fileInputRef = useRef(null);
 
@@ -129,7 +129,6 @@ function NewItemModalForm({ isDrink, setIsUploading }) {
             setDescriptionEng("");
             setCompressedFile(null)
             fileInputRef.current.value = null;
-            // handleClose();
 
             //  Update lastedited timestamp to handle fetching from firestore or local storage.
             await updateDoc(doc(db, "/menu/additional"), {lastedited: Date.now()})
@@ -201,7 +200,7 @@ function NewItemModalForm({ isDrink, setIsUploading }) {
                                 value={option.id}
                                 name={option.id}
                                 key={option.id}>
-                                    {option.category}
+                                    {handleTranslate(option.categoryEng, i18n) ? option.categoryEng : option.category}
                                 </option>
                             ))}
                         </FormSelect>
