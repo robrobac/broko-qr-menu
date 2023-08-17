@@ -16,13 +16,12 @@ function EditItemModalForm({item, setIsEditing, setIsUploading}) {
     const [priceEUR, setPriceEUR] = useState(parseFloat(item.priceEUR));    //  Current Item Price in EUR
     const [priceKN, setPriceKN] = useState(item.priceKN);   //  Current Item Price in KN
     const [category, setCategory] = useState(item.category);    //  Current Item Category, not changeable yet
-    const [categoryEng, setCategoryEng] = useState(item.categoryEng);
     const [description, setDescription] = useState(item.description);   //  Current Item Description
     const [descriptionEng, setDescriptionEng] = useState(item.description);
     const [compressedFile, setCompressedFile] = useState(null); //  State that holds data of image compressed with handleCompressedImage function
     const fileInputRef = useRef(null);  //  Ref to a file input element
 
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation()
 
      // Firebase React Hook useCollectionData used to display categories in select input.
      const categoriesPath = `menu/${item.mainCategory}/categories`;

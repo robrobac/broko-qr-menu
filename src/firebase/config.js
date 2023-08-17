@@ -19,6 +19,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const storage = getStorage(app);
 const db = getFirestore(app);
+// eslint-disable-next-line no-unused-vars
 const analytics = getAnalytics(app);
 
 export { auth, storage, db }

@@ -1,5 +1,5 @@
 import { signOut } from 'firebase/auth'
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import { auth } from '../firebase/config'
 import { AppContext } from '../App'
 import { AuthButton } from './styledComponents/StyledButtons'
@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next'
 
 function Logout() {
     const {isAuth} = useContext(AppContext)
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation()
 
     const navigate = useNavigate();
 

@@ -21,7 +21,7 @@ function NewItemModalForm({ isDrink, setIsUploading }) {
     const [compressedFile, setCompressedFile] = useState(null);
     const [addingCategory, setAddingCategory] = useState(false);
 
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation()
 
     const fileInputRef = useRef(null);
 

@@ -22,6 +22,7 @@ function SearchBar({homeMenuData, allAdminItems, selectedTab, removeAdminItem })
     const { viewStyle, handleViewStyle } = useContext(ViewContext)
     const { handleLoading } = useContext(AppContext)
     const [selectedLanguage, setSelectedLanguage] = useState("hr")
+    // eslint-disable-next-line no-unused-vars
     const [scrollY, setScrollY] = useState(0);
     const [showLanguageButton, setShowLanguageButton] = useState(false)
 
@@ -48,6 +49,7 @@ function SearchBar({homeMenuData, allAdminItems, selectedTab, removeAdminItem })
             inputRef.current.focus();
             handleLoading(false)
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedTab])
 
     //  Fetching homeMenuData from Home.jsx and extracting separate items and storing them in the allItems state.

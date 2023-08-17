@@ -12,8 +12,9 @@ import { useTranslation } from 'react-i18next';
 function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation()
 
+    // eslint-disable-next-line no-unused-vars
     const [user, loading, error] = useAuthState(auth);
 
     const navigate = useNavigate();
@@ -26,6 +27,7 @@ function Login() {
     const handleLogin = async (email, password) => {
         try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            // eslint-disable-next-line no-unused-vars
             const user = userCredential.user
         } catch (error) {
             console.log(error)

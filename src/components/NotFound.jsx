@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 function NotFound() {
     const navigate = useNavigate();
 
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation()
 
     const handleGoBack = (page) => {
         if (page === "home") {

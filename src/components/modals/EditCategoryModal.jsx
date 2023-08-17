@@ -12,7 +12,7 @@ function EditCategoryModal({category}) {
     const [categoryValue, setCategoryValue] = useState(category.category);
     const [categoryValueEng, setCategoryValueEng] = useState(category.categoryEng);
     const [isEditing, setIsEditing] = useState(false)
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation()
     
 
     const handleCategoryChange = async (e) => {

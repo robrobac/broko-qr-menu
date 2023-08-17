@@ -25,6 +25,7 @@ function TabContent({selectedTab, homeMenuData, isAdmin, isDrink, getAllAdminIte
     const { viewStyle, handleViewStyle } = useContext(ViewContext)
     const { i18n } = useTranslation()
     const [selectedLanguage, setSelectedLanguage] = useState("hr")
+    // eslint-disable-next-line no-unused-vars
     const [scrollY, setScrollY] = useState(0);
     const [showLanguageButton, setShowLanguageButton] = useState(false)
 

@@ -11,7 +11,7 @@ function NewItemModal({isDrink}) {
     const [showDrinkModal, setShowDrinkModal] = useState(false);
     const [isUploading, setIsUploading] = useState(false)
 
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation()
 
     //  Close modal once clicked or tapped outside the modal.
     const outsideClick = (e) => {

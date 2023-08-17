@@ -9,7 +9,7 @@ function NewCategoryModalForm({ handleAddingCategory, isDrink }) {
     const [category, setCategory] = useState("");
     const [categoryEng, setCategoryEng] = useState("");
     
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation()
 
     //  Create new category
     const handleCategorySubmit = async (e) => {

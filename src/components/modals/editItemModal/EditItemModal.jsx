@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 function EditItemModal({item}) {
     const [isEditing, setIsEditing] = useState(false)
     const [isUploading, setIsUploading] = useState(false)
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation()
 
     return (
         <>
