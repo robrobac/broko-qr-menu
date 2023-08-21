@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase/config';
 import { Divider, Form, FormInput, FormLabel, FormSection } from '../components/styledComponents/StyledForm';
 import { BackButton, SubmitButton } from '../components/styledComponents/StyledButtons';
@@ -8,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import Loading from '../components/Loading';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useTranslation } from 'react-i18next';
+import { handleLogin } from '../hooks/useAuth';
 
 function Login() {
     const [email, setEmail] = useState("");
@@ -24,15 +24,6 @@ function Login() {
         navigate('/');
     };
 
-    const handleLogin = async (email, password) => {
-        try {
-            const userCredential = await signInWithEmailAndPassword(auth, email, password);
-            // eslint-disable-next-line no-unused-vars
-            const user = userCredential.user
-        } catch (error) {
-            console.log(error)
-        }
-    }
 
     const handleFormSubmit = (e) => {
         e.preventDefault();

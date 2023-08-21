@@ -8,21 +8,17 @@ import Admin from "./pages/Admin";
 import Login from "./pages/Login";
 import NotFound from "./components/NotFound";
 import "./i18next/i18next"
+import { useAuthCheck } from "./hooks/useAuth";
 
 export const AppContext = createContext();
 
 function App() {
-    const [isAuth, setIsAuth] = useState(null);
+    const isAuth = useAuthCheck()
     const [isLoading, setIsLoading] = useState(true)
 
     const handleLoading = (loading) => {
         setIsLoading(loading)
     }
-
-    //  Auth Check
-    onAuthStateChanged(auth, (user) => {
-        setIsAuth(!!user)
-    })
 
     return (
         <AppContext.Provider value={{ isAuth, isLoading, handleLoading }}>

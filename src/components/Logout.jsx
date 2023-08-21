@@ -1,10 +1,9 @@
-import { signOut } from 'firebase/auth'
 import React, { useContext } from 'react'
-import { auth } from '../firebase/config'
 import { AppContext } from '../App'
 import { AuthButton } from './styledComponents/StyledButtons'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { handleLogout } from '../hooks/useAuth'
 
 
 function Logout() {
@@ -13,26 +12,13 @@ function Logout() {
 
     const navigate = useNavigate();
 
-    const handleLogin = () => {
-        // Use the navigate function to navigate to the "Home" route
-        navigate('/login');
-    };
-
-    const handleLogout = async () => {
-        try {
-            await signOut(auth);
-        } catch (error) {
-            console.log(error)
-        }
-    };
-
     if (isAuth) {
         return (
             <AuthButton onClick={handleLogout}>{t("Logout")}</AuthButton>
         )
     } else {
         return (
-            <AuthButton onClick={handleLogin}>{t("Login")}</AuthButton>
+            <AuthButton onClick={() => navigate('/login')}>{t("Login")}</AuthButton>
         )
     }
     
