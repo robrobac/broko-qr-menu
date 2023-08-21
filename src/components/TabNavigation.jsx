@@ -44,7 +44,9 @@ function TabNavigation({selectedTab, homeMenuData}) {
 
     //  Set new active category
     const handleActive = (e) => {
-        setActiveCategory(e)
+        setTimeout(() => {
+            setActiveCategory(e);
+        }, 1);
     }
 
     //  Horizontal scroll to active category
@@ -58,7 +60,7 @@ function TabNavigation({selectedTab, homeMenuData}) {
                 const scrollOffset = elementOffset - (containerWidth - elementWidth) / 2;
                 scrollContainerRef.current.scrollTo({
                     left: scrollOffset,
-                    behavior: 'smooth',
+                    behavior: 'instant',
                 });
             }
         }
@@ -70,13 +72,15 @@ function TabNavigation({selectedTab, homeMenuData}) {
                 <Nav key={category.id}>
                     <Link
                     activeClass='active'
-                    onSetActive={() => handleActive(category.id)}
+                    onSetActive={() => setActiveCategory(category.id)}
+                    onClick={() => handleActive(category.id)}
                     key={category.id}
                     to={category.id}
                     spy={true}
-                    smooth={true}
-                    offset={-133}
-                    duration={200}>
+                    // smooth={true}
+                    offset={-208}
+                    // duration={200}
+                    >
                         <NavigationButton $isActive={activeCategory === category.id ? "true" : undefined}>
                             {handleTranslate(category.categoryEng, i18n) ? category.categoryEng : category.category}
                         </NavigationButton>

@@ -84,7 +84,7 @@ export const ViewContainer = styled.div`
     display: flex;
     justify-content: flex-end;
     gap: .5rem;
-    padding: .5rem .5rem 0 .5rem;
+    padding: .5rem .5rem 1rem .5rem;
     position: sticky;
     top: 143px;
     z-index: 8;
