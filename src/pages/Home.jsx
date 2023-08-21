@@ -11,6 +11,7 @@ import useFetchAllData from '../hooks/useFetchAllData'
 function Home() {
     const {isLoading, handleLoading} = useContext(AppContext)
     const homeMenuData = useFetchAllData()
+    console.log(homeMenuData)
     
 
     //  Setting loading state to true once the component mounts, then setting it to false once the ProductCard image is loaded.
