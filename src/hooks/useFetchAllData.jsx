@@ -4,6 +4,7 @@ import { db } from '../firebase/config';
 
 function useFetchAllData() {
     const [allData, setAllData] = useState({});
+    
 
     useEffect(() => {
         fetchAll();
@@ -83,6 +84,7 @@ function useFetchAllData() {
         };
         localStorage.setItem('allData', JSON.stringify(dataToCache));
     };
+
     return allData;
 }
 

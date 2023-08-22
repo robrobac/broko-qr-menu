@@ -1,57 +1,65 @@
 import { useEffect, useState } from 'react';
 import { collection, query, orderBy, onSnapshot } from 'firebase/firestore';
 import { db } from '../firebase/config';
+import { useAuthCheck } from './useAuth';
+
 
 function useFetchAllDataWithSnapshot() {
     const [data, setData] = useState({ drink: [], food: [] });
 
     useEffect(() => {
+        let categoryUnsubscribe = () => {};
+        let drinkUnsubscribe = () => {};
+        let foodUnsubscribe = () => {};
+
         const fetchData = async () => {
-            const fetchCategoryData = async (mainCategory) => {
-                const categoriesPath = `menu/${mainCategory}/categories`;
-                const categoriesQuery = query(collection(db, categoriesPath), orderBy('orderTimestamp', 'asc'));
+            drinkUnsubscribe = await fetchCategoryData('drink');
+            foodUnsubscribe = await fetchCategoryData('food');
+        };
 
-                const unsubscribe = onSnapshot(categoriesQuery, (categoriesSnapshot) => {
-                    const categoryData = [];
+        const fetchCategoryData = async (mainCategory) => {
+            const categoriesPath = `menu/${mainCategory}/categories`;
+            const categoriesQuery = query(collection(db, categoriesPath), orderBy('orderTimestamp', 'asc'));
 
-                    categoriesSnapshot.forEach((categoryDoc) => {
-                        const category = categoryDoc.data();
-                        category.id = categoryDoc.id;
+            categoryUnsubscribe = onSnapshot(categoriesQuery, (categoriesSnapshot) => {
+                const categoryData = [];
 
-                        const itemsPath = `menu/${mainCategory}/categories/${category.id}/items`;
-                        const itemsQuery = query(collection(db, itemsPath), orderBy('orderTimestamp', 'asc'));
+                categoriesSnapshot.forEach((categoryDoc) => {
+                    const category = categoryDoc.data();
+                    category.id = categoryDoc.id;
 
-                        onSnapshot(itemsQuery, (itemsSnapshot) => {
-                            const items = [];
-                            itemsSnapshot.forEach((itemDoc) => {
-                                items.push(itemDoc.data());
-                            });
+                    const itemsPath = `menu/${mainCategory}/categories/${category.id}/items`;
+                    const itemsQuery = query(collection(db, itemsPath), orderBy('orderTimestamp', 'asc'));
 
-                            category.items = items;
-
-                            setData((prevData) => ({
-                                ...prevData,
-                                [mainCategory]: [...categoryData],
-                            }));
+                    onSnapshot(itemsQuery, (itemsSnapshot) => {
+                        const items = [];
+                        itemsSnapshot.forEach((itemDoc) => {
+                            items.push(itemDoc.data());
                         });
 
-                        categoryData.push(category);
+                        category.items = items;
+
+                        setData((prevData) => ({
+                            ...prevData,
+                            [mainCategory]: [...categoryData],
+                        }));
                     });
+
+                    categoryData.push(category);
                 });
+            });
 
-                return unsubscribe;
-            };
-
-            const drinkUnsubscribe = await fetchCategoryData('drink');
-            const foodUnsubscribe = await fetchCategoryData('food');
-
-            return () => {
-                drinkUnsubscribe();
-                foodUnsubscribe();
-            };
+            return categoryUnsubscribe;
         };
 
         fetchData();
+
+        return () => {
+            // Unsubscribe from listeners when the component unmounts or auth state changes
+            categoryUnsubscribe();
+            drinkUnsubscribe();
+            foodUnsubscribe();
+        };
     }, []);
 
     return data;

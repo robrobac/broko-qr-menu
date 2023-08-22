@@ -8,7 +8,6 @@ import useFetchAllDataWithSnapshot from '../hooks/useFetchAllDataWithSnapshot';
 function Admin() {
     const {isLoading, handleLoading} = useContext(AppContext)
     const data = useFetchAllDataWithSnapshot();
-    console.log(data)
 
     //  Setting loading state to true once the component mounts, then setting it to false once the ProductCard image is loaded.
     useEffect(() => {
