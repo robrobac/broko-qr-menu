@@ -6,15 +6,15 @@ const TabsContainer = styled.main`
 const Tabs = styled.div`
     display: flex;
     position: sticky;
-    top: -10px;
+    top: 46px;
     z-index: 3;
-    padding-top: 20px;
+    padding-top: 10px;
     background-color: #5b7e6c;
 
 `
 const Tab = styled.button`
     flex: 3;
-    height: 64px;
+    height: 48px;
     background-color: ${props => (props.$isActive ? "white" : "#5b7e6c")};
     border-radius: 5px 5px 0 0;
     color: ${props => (props.$isActive ? "#235239" : "white")};

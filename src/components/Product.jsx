@@ -21,7 +21,7 @@ function Product({ item, itemIndex, categoryProductsLength }) {
     }
 
     const handleLoading = (isLoading) => {
-        console.log("loading", isLoading)
+        
     }
     
     //  Creating a date object for date created
@@ -74,10 +74,10 @@ function Product({ item, itemIndex, categoryProductsLength }) {
                         <EditItemModal item={item}/>
                     </AdminButtons>
                     <AdminButtons>
-                        <UpDownButton $isActive={itemIndex === 0 ? "true" : undefined}>
+                        <UpDownButton $isActive={itemIndex === 0}>
                             <UpIcon height="100%" onClick={() => handleReorderProduct(item, "up")}/>
                         </UpDownButton>
-                        <UpDownButton $isActive={itemIndex === categoryProductsLength ? "true" : undefined}>
+                        <UpDownButton $isActive={itemIndex === categoryProductsLength}>
                             <DownIcon height="100%" onClick={() => handleReorderProduct(item, "down")}/>
                         </UpDownButton>
                     </AdminButtons>

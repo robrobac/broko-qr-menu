@@ -11,6 +11,7 @@ function TabNavigation({ isAdmin, userMenuData, adminMenuData, selectedTab }) {
     const { i18n } = useTranslation()
     const scrollContainerRef = useRef(null);
 
+
     useEffect(() => {
         if (isAdmin) {
             setCategories(adminMenuData[selectedTab])
@@ -31,7 +32,7 @@ function TabNavigation({ isAdmin, userMenuData, adminMenuData, selectedTab }) {
     const handleActive = (e) => {
         setTimeout(() => {
             setActiveCategory(e);
-        }, 1);
+        }, 501);
     }
 
     //  Horizontal scroll to active category
@@ -62,10 +63,9 @@ function TabNavigation({ isAdmin, userMenuData, adminMenuData, selectedTab }) {
                     key={category.id}
                     to={category.id}
                     spy={true}
-                    // smooth={true}
+                    smooth={true}
                     offset={-208}
-                    // duration={200}
-                    >
+                    duration={500}>
                         <NavigationButton $isActive={activeCategory === category.id ? "true" : undefined}>
                             {handleTranslate(category.categoryEng, i18n) ? category.categoryEng : category.category}
                         </NavigationButton>

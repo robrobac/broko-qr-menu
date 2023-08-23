@@ -8,6 +8,7 @@ function useFetchAllData() {
 
     useEffect(() => {
         fetchAll();
+        console.log("Home Menu Data Fetched")
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -19,6 +20,7 @@ function useFetchAllData() {
         if (cachedData) {
             const parsedData = JSON.parse(cachedData);
             fetchedData = await fetchLocalStorage(parsedData);
+            console.log("Fetched from Local Storage")
         }
 
         if (!fetchedData) {
@@ -29,8 +31,10 @@ function useFetchAllData() {
                 drink: drinkData,
                 food: foodData,
             };
+            console.log("Fetched from Firebase")
             addToLocalStorage(fetchedData);
         }
+        
         setAllData(fetchedData);
     };
 

@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const TabNav = styled.ul`
     position: sticky;
-    top: 74px;
+    top: 104px;
     padding: 1rem;
     display: flex;
     justify-items: center;

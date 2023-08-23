@@ -50,7 +50,7 @@ function useFetchAllDataWithSnapshot() {
 
             return categoryUnsubscribe;
         };
-
+        console.log("Admin Menu Data Fetched with Snapshot")
         fetchData();
 
         return () => {

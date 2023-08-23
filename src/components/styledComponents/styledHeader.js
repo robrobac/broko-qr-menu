@@ -1,7 +1,9 @@
 import styled from 'styled-components'
 
 export const HeaderWrap = styled.header`
-    padding: 1rem;
+    position: sticky;
+    top: 0;
+    padding: .5rem 1rem;
     background-color: #235239;
     display: flex;
     justify-content: space-between;

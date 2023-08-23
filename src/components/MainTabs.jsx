@@ -36,22 +36,22 @@ export default function MainTabs({isAdmin, userMenuData, adminMenuData}) {
             <Tabs>
                 <Tab
                 onClick={() => handleSelectedTab("drink")}
-                $isActive={selectedTab === "drink" ? "true" : undefined}>
-                    <Icon $isActive={selectedTab === "drink" ? "true" : undefined}>
+                $isActive={selectedTab === "drink"}>
+                    <Icon $isActive={selectedTab === "drink"}>
                         <DrinkIcon height="100%"/>
                     </Icon>
                 </Tab>
                 <Tab
                 onClick={() => handleSelectedTab("food")}
-                $isActive={selectedTab === "food" ? "true" : undefined}>
-                    <Icon $isActive={selectedTab === "food" ? "true" : undefined}>
+                $isActive={selectedTab === "food"}>
+                    <Icon $isActive={selectedTab === "food"}>
                         <FoodIcon height="100%"/>
                     </Icon>
                 </Tab>
                 <Tab style={{flex: "1"}}
                 onClick={() => handleSelectedTab("search")}
-                $isActive={selectedTab === "search" ? "true" : undefined}>
-                    <Icon $isActive={selectedTab === "search" ? "true" : undefined}>
+                $isActive={selectedTab === "search"}>
+                    <Icon $isActive={selectedTab === "search"}>
                         <SearchIcon height="100%"/>
                     </Icon>
                 </Tab>
