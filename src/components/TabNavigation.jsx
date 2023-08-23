@@ -2,38 +2,23 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Nav, TabNav } from './styledComponents/StyledNavigation';
 import { NavigationButton } from './styledComponents/StyledButtons';
 import { Link } from 'react-scroll';
-import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
-import { db } from '../firebase/config';
 import { useTranslation } from 'react-i18next';
 import { handleTranslate } from '../helpers/handleTranslate';
 
-function TabNavigation({selectedTab, homeMenuData}) {
+function TabNavigation({ isAdmin, userMenuData, adminMenuData, selectedTab }) {
     const [categories, setCategories] = useState([])
     const [activeCategory, setActiveCategory] = useState();
-    const scrollContainerRef = useRef(null);
     const { i18n } = useTranslation()
+    const scrollContainerRef = useRef(null);
 
-    //  If homeMenuData is passed from CategoryTabs.jsx, set categories that will show in the navigation
     useEffect(() => {
-        if (homeMenuData && selectedTab) {
-            setCategories(homeMenuData[selectedTab])
+        if (isAdmin) {
+            setCategories(adminMenuData[selectedTab])
         }
-
-        //  if no homeMenuData is passed from CategoryTabs.jsx, get data from Firebase onSnapshot
-        if (!homeMenuData) {
-            const q = query(collection(db, `menu/${selectedTab}/categories`), orderBy("orderTimestamp", "asc"));
-            const unsubscribe = onSnapshot(q, (querySnapshot) => {
-                const snapshotData = [];
-                querySnapshot.forEach((doc) => {
-                    snapshotData.push(doc.data());
-                });
-                setCategories(snapshotData)
-            });
-            return () => {
-                unsubscribe();
-            }
+        if (!isAdmin) {
+            setCategories(userMenuData[selectedTab])
         }
-    }, [selectedTab, homeMenuData])
+    }, [adminMenuData, userMenuData, selectedTab])
 
     //  set initial active category
     useEffect(() => {

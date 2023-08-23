@@ -6,12 +6,11 @@ import Compressor from 'compressorjs';
 import { deleteObject, getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { Divider, Form, FormInput, FormLabel, FormSection, FormSelect, FormTextarea, FormUpload, PriceConversion, UploadedImage } from '../../styledComponents/StyledForm';
 import { AddCategoryButton, SubmitButton } from '../../styledComponents/StyledButtons';
-import { EditContext } from '../../AdminItems';
 import { useTranslation } from 'react-i18next';
 import { handleTranslate } from '../../../helpers/handleTranslate';
+import { handleEdit } from '../../../helpers/handleEdit';
 
 function EditItemModalForm({item, setIsEditing, setIsUploading}) {
-    const {handleEdit} = useContext(EditContext)    //  Edit item function passed from AdminItems.jsx via context.
     const [title, setTitle] = useState(item.title); //  Current Item Title
     const [titleEng, setTitleEng] = useState(item.titleEng);
     const [priceEUR, setPriceEUR] = useState(parseFloat(item.priceEUR));    //  Current Item Price in EUR

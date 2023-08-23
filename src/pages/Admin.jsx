@@ -1,13 +1,12 @@
 import React, { useContext, useEffect } from 'react'
 import Header from '../components/Header';
-import CategoryTabs from '../components/CategoryTabs';
-import Loading from '../components/Loading';
 import { AppContext } from '../App';
-import useFetchAllDataWithSnapshot from '../hooks/useFetchAllDataWithSnapshot';
+import useFetchAllDataWithSnapshot from '../hooks/useFetchAllDataWithSnapshot'
+import MainTabs from '../components/MainTabs';
 
 function Admin() {
     const {isLoading, handleLoading} = useContext(AppContext)
-    const data = useFetchAllDataWithSnapshot();
+    const adminMenuData = useFetchAllDataWithSnapshot();
 
     //  Setting loading state to true once the component mounts, then setting it to false once the ProductCard image is loaded.
     useEffect(() => {
@@ -17,14 +16,11 @@ function Admin() {
  
     return (
         <div>
-            <Loading loading={isLoading ? 1 : 0}/>
+            {/* <Loading loading={isLoading ? 1 : 0}/> */}
             <Header/>
-            <main>
-                <CategoryTabs isAdmin={true}/>
-            </main>
+            <MainTabs isAdmin={true} adminMenuData={adminMenuData}/>
         </div>
     )
-
 }
 
 export default Admin

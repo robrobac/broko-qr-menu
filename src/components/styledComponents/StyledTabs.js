@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-const TabsContainer = styled.div`
+const TabsContainer = styled.main`
 
 `
 const Tabs = styled.div`
