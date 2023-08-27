@@ -18,7 +18,7 @@ function Admin() {
         <div>
             {/* <Loading loading={isLoading ? 1 : 0}/> */}
             <Header/>
-            <MainTabs isAdmin={true} adminMenuData={adminMenuData}/>
+            <MainTabs isAdmin={true} menuData={adminMenuData}/>
         </div>
     )
 }

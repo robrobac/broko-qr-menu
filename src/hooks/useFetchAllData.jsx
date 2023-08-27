@@ -4,90 +4,99 @@ import { db } from '../firebase/config';
 
 function useFetchAllData() {
     const [allData, setAllData] = useState({});
+    console.log("Fetched User Data", allData)
     
 
+    //  Fetching data from Firestore or LocalStorage, depending on the last edited timestamp.
     useEffect(() => {
-        fetchAll();
-        console.log("Home Menu Data Fetched")
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
-    const fetchAll = async () => {
-        let fetchedData = null;
+        //  Fetching data from Firestore if no Local Storage is available, after the fetch save the current data to Local Storage for later use.
+        const fetchData = async (mainCategory) => {
+            
+            try {
+                //  Categories path, query and snapshot.
+                const menuPath = `menu/${mainCategory}/categories`;
+                const menuQuery = query(collection(db, menuPath), orderBy("orderTimestamp", "asc"))
+                const menuSnapshot = await getDocs(menuQuery)
 
-        const cachedData = localStorage.getItem("allData");
+                const categories = []
 
-        if (cachedData) {
-            const parsedData = JSON.parse(cachedData);
-            fetchedData = await fetchLocalStorage(parsedData);
-            console.log("Fetched from Local Storage")
+                const categoryPromises = menuSnapshot.docs.map(async (doc) => {
+                    const categoryData = doc.data();
+
+                    //  Category Items path, query and snapshot
+                    const itemsPath = `menu/${mainCategory}/categories/${doc.id}/items`;
+                    const itemsQuery = query(collection(db, itemsPath), orderBy("orderTimestamp", "asc"))
+                    const itemsSnapshot = await getDocs(itemsQuery)
+
+                    //  Fetching category's respective items and settings it as categoryData's items.
+                    const items = itemsSnapshot.docs.map((itemDoc) => itemDoc.data());
+                    categoryData.items = items;
+
+                    return categoryData
+                })
+
+                //  Pushing all fetched data to categories object
+                const categoryData = await Promise.all(categoryPromises);
+                categories.push(...categoryData);
+
+                console.log("fetched from firestore")
+                return categories
+                
+            }
+            catch (error) {
+                console.log(error)
+            }
         }
 
-        if (!fetchedData) {
-            const drinkData = await fetchData("drink");
-            const foodData = await fetchData("food");
+        //  Fetching all data either from Firebase or Local Storage, depending on when was the last update and last visit.
+        const fetchAllData = async () => {
+            let allData = null;
 
-            fetchedData = {
-                drink: drinkData,
-                food: foodData,
-            };
-            console.log("Fetched from Firebase")
-            addToLocalStorage(fetchedData);
+            //  Fetching data from Local Storage.
+            const cachedData = localStorage.getItem("allData");
+
+            if (cachedData) {
+                const parsedData = JSON.parse(cachedData);
+
+                //  Fetching last edited timestamp to handle data fetching from Firebase or Local Storage
+                const lastEditedPath = "/menu/additional";
+                const lastEditedQuery = doc(db, lastEditedPath)
+                const lastEditedSnapshot = await getDoc(lastEditedQuery)
+                const lastEdited = lastEditedSnapshot.data().lastedited;
+
+                if (lastEdited < parsedData.timestamp) {
+                    //  If last edited timestamp is after the timestamp of saving to Local Storage, fetch from Firebase since new data is available. If not then just fetch from Local Storage since data is same as before.
+                    allData = parsedData.data;
+                    console.log("fetched from local storage")
+                }
+            }
+
+            if (!allData) {
+                //  If no data is fetched from Local Storage, continue and fetch from Firestore then save to Local Storage.
+                const drinkData = await fetchData("drink")
+                const foodData = await fetchData("food")
+
+                allData = {
+                    drink: drinkData,
+                    food: foodData,
+                }
+
+                //  Save data and timestamp to Local Storage.
+                const dataToCache = {
+                    data: allData,
+                    timestamp: Date.now(),
+                };
+                localStorage.setItem('allData', JSON.stringify(dataToCache));
+            }
+
+            //  Save the data to homeMenuData State
+            setAllData(allData)
         }
-        
-        setAllData(fetchedData);
-    };
 
-    const fetchData = async (mainCategory) => {
-        try {
-            const menuPath = `menu/${mainCategory}/categories`;
-            const menuQuery = query(collection(db, menuPath), orderBy("orderTimestamp", "asc"))
-            const menuSnapshot = await getDocs(menuQuery)
-
-            const categories = []
-
-            const categoryPromises = menuSnapshot.docs.map(async (doc) => {
-                const categoryData = doc.data();
-
-                const itemsPath = `menu/${mainCategory}/categories/${doc.id}/items`;
-                const itemsQuery = query(collection(db, itemsPath), orderBy("orderTimestamp", "asc"))
-                const itemsSnapshot = await getDocs(itemsQuery)
-
-                const items = itemsSnapshot.docs.map((itemDoc) => itemDoc.data());
-                categoryData.items = items;
-
-                return categoryData
-            })
-
-            const categoryData = await Promise.all(categoryPromises);
-            categories.push(...categoryData);
-
-            return categories
-        }
-        catch (error) {
-            console.log("Firestore fetch failed", error)
-        }
-    }
-
-    const fetchLocalStorage = async (parsedData) => {
-        const lastEditedPath = "/menu/additional";
-        const lastEditedQuery = doc(db, lastEditedPath);
-        const lastEditedSnapshot = await getDoc(lastEditedQuery);
-        const lastEdited = lastEditedSnapshot.data().lastedited;
-
-        if (lastEdited < parsedData.timestamp) {
-            return parsedData.data;
-        }
-        return null;
-    }
-
-    const addToLocalStorage = (data) => {
-        const dataToCache = {
-            data,
-            timestamp: Date.now(),
-        };
-        localStorage.setItem('allData', JSON.stringify(dataToCache));
-    };
+        fetchAllData()
+    }, [])
+    //  End of Fetching data from Firestore or LocalStorage.
 
     return allData;
 }

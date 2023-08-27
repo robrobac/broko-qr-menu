@@ -1,24 +1,17 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { AdminButtons, AdminTimestamp, Card, CardAdmin, CardBody, CardDesc, CardImage, CardPrice, CardTitle, List, ListAdmin, ListBody, ListDesc, ListHeader, ListPrice, ListTitle, PriceEUR, PriceEURlist, PriceKN, PriceKNlist, TruncateDots, TruncateWrap } from './styledComponents/StyledCard'
 import noimage from "../noimage.png"
-import { ReactComponent as TrashIcon } from "../icons/trashicon.svg";
-import { ReactComponent as UpIcon } from "../icons/upicon.svg";
-import { ReactComponent as DownIcon } from "../icons/downicon.svg";
 import { handleTranslate } from '../helpers/handleTranslate';
 import { useTranslation } from 'react-i18next';
 import { DeleteButton, UpDownButton } from './styledComponents/StyledButtons';
 import EditItemModal from './modals/editItemModal/EditItemModal'
+import { AdminContext } from './MainTabs';
+import DeleteProduct from './DeleteProduct';
+import ReorderProduct from './ReorderProduct';
 
-function Product({ item, itemIndex, categoryProductsLength }) {
+function Product({ item, itemIndex, category }) {
+    const { isAdmin } = useContext(AdminContext)
     const { t, i18n } = useTranslation()
-
-    const handleDeleteProduct = (category) => {
-        console.log("Delete Product", category.category)
-    }
-
-    const handleReorderProduct = (category, direction) => {
-        console.log("Move Product", direction)
-    }
 
     const handleLoading = (isLoading) => {
         
@@ -66,28 +59,21 @@ function Product({ item, itemIndex, categoryProductsLength }) {
                         <PriceKN>({item.priceKN}kn)</PriceKN>
                     </PriceEUR>
                 </CardPrice>
-                <CardAdmin>
-                    <AdminButtons>
-                        <DeleteButton onClick={() => handleDeleteProduct(item)}>
-                            <TrashIcon height="100%"/>
-                        </DeleteButton>
-                        <EditItemModal item={item}/>
-                    </AdminButtons>
-                    <AdminButtons>
-                        <UpDownButton $isActive={itemIndex === 0}>
-                            <UpIcon height="100%" onClick={() => handleReorderProduct(item, "up")}/>
-                        </UpDownButton>
-                        <UpDownButton $isActive={itemIndex === categoryProductsLength}>
-                            <DownIcon height="100%" onClick={() => handleReorderProduct(item, "down")}/>
-                        </UpDownButton>
-                    </AdminButtons>
-                </CardAdmin>
-                <CardAdmin>
-                    <AdminButtons>
-                        <AdminTimestamp>{t("Published")} {formattedDateCreated}</AdminTimestamp>
-                        <AdminTimestamp>{t("Edited")}  {formattedDateEdited}</AdminTimestamp>
-                    </AdminButtons>
-                </CardAdmin>
+                {isAdmin && <>
+                    <CardAdmin>
+                        <AdminButtons>
+                            <DeleteProduct item={item}/>
+                            <EditItemModal item={item}/>
+                        </AdminButtons>
+                        <ReorderProduct item={item} itemIndex={itemIndex} category={category}/>
+                    </CardAdmin>
+                    <CardAdmin>
+                        <AdminButtons>
+                            <AdminTimestamp>{t("Published")} {formattedDateCreated}</AdminTimestamp>
+                            <AdminTimestamp>{t("Edited")}  {formattedDateEdited}</AdminTimestamp>
+                        </AdminButtons>
+                    </CardAdmin>
+                </> }
             </CardBody>
         </Card>
     )

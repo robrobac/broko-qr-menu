@@ -18,7 +18,7 @@ function Home() {
         <div>
             {/* <Loading loading={isLoading ? 1 : 0}/> */}
             <Header/>
-            <MainTabs isAdmin={false} userMenuData={userMenuData}/>
+            <MainTabs isAdmin={false} menuData={userMenuData}/>
         </div>
     )
 }

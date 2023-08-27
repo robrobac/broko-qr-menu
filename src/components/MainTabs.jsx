@@ -6,13 +6,12 @@ import { ReactComponent as FoodIcon } from "../icons/foodicon.svg";
 import { ReactComponent as SearchIcon } from "../icons/searchicon.svg";
 import TabNavigation from './TabNavigation';
 import Categories from './Categories';
+import NewItemModal from './modals/newItemModal/NewItemModal';
 
-export const ViewContext = createContext();
+export const AdminContext = createContext()
 
-export default function MainTabs({isAdmin, userMenuData, adminMenuData}) {
+export default function MainTabs({isAdmin, menuData}) {
     const [selectedTab, setSelectedTab] = useState("food")
-    const [allAdminItems, setAllAdminItems] = useState([])  //  state array that hold all items to use them in search bar
-    
 
     //  On tab change scroll to top and reset the active category navigation
     useEffect(() => {
@@ -32,6 +31,7 @@ export default function MainTabs({isAdmin, userMenuData, adminMenuData}) {
     }
     
     return (
+        <AdminContext.Provider value={{isAdmin}}>
         <TabsContainer>
             <Tabs>
                 <Tab
@@ -56,11 +56,18 @@ export default function MainTabs({isAdmin, userMenuData, adminMenuData}) {
                     </Icon>
                 </Tab>
             </Tabs>
-            <ContentHome>
-                <TabNavigation isAdmin={isAdmin} userMenuData={userMenuData} adminMenuData={adminMenuData} selectedTab={selectedTab}/>
-                <Categories isAdmin={isAdmin} userMenuData={userMenuData} adminMenuData={adminMenuData} selectedTab={selectedTab}/>
+            <ContentHome $isActive={selectedTab === "drink"}>
+                <TabNavigation menuData={menuData["drink"]} selectedTab={selectedTab}/>
+                <Categories menuData={menuData["drink"]} selectedTab={"drink"}/>
+                {isAdmin && <NewItemModal isDrink={true}/>}
+            </ContentHome>
+            <ContentHome $isActive={selectedTab === "food"}>
+                <TabNavigation menuData={menuData["food"]} selectedTab={selectedTab}/>
+                <Categories menuData={menuData["food"]} selectedTab={"food"}/>
+                {isAdmin && <NewItemModal isDrink={false}/>}
             </ContentHome>
         </TabsContainer>
+        </AdminContext.Provider>
         
     )
 }

@@ -33,7 +33,7 @@ export const CardTitle = styled.h3`
 
 `
 export const CardPrice = styled.div`
-    border-radius: 10px;
+    border-radius: 5px;
     color: white;
     background-color: #235239;
     padding: .5rem;

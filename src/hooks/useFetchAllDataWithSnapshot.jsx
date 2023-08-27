@@ -5,6 +5,7 @@ import { db } from '../firebase/config';
 
 function useFetchAllDataWithSnapshot() {
     const [data, setData] = useState({ drink: [], food: [] });
+    console.log("Fetched Admin Data", data)
 
     useEffect(() => {
         let categoryUnsubscribe = () => {};

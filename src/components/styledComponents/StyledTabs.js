@@ -24,12 +24,9 @@ const Tab = styled.button`
     cursor: pointer;
 `
 
-const ContentAdmin = styled.div`
-    background-color: white;
-    ${props => (props.$isActive ? "" : "display:none")}
-`
 const ContentHome = styled.div`
     background-color: white;
+    ${props => (props.$isActive ? "" : "display:none")}
 `
 
 const Icon = styled.div`
@@ -40,4 +37,4 @@ const Icon = styled.div`
 // background-color: ${props => (props.active ? "white" : "#5b7e6c")};
 // ${props => (props.active ? "" : "display:none")}
 
-export { TabsContainer, Tabs, Tab, ContentAdmin, ContentHome, Icon }
+export { TabsContainer, Tabs, Tab, ContentHome, Icon }

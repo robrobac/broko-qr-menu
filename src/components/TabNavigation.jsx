@@ -1,38 +1,31 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { Nav, TabNav } from './styledComponents/StyledNavigation';
 import { NavigationButton } from './styledComponents/StyledButtons';
 import { Link } from 'react-scroll';
 import { useTranslation } from 'react-i18next';
 import { handleTranslate } from '../helpers/handleTranslate';
+import { AdminContext } from './MainTabs';
 
-function TabNavigation({ isAdmin, userMenuData, adminMenuData, selectedTab }) {
-    const [categories, setCategories] = useState([])
+function TabNavigation({ menuData, selectedTab }) {
     const [activeCategory, setActiveCategory] = useState();
     const { i18n } = useTranslation()
     const scrollContainerRef = useRef(null);
 
-
-    useEffect(() => {
-        if (isAdmin) {
-            setCategories(adminMenuData[selectedTab])
-        }
-        if (!isAdmin) {
-            setCategories(userMenuData[selectedTab])
-        }
-    }, [adminMenuData, userMenuData, selectedTab])
-
     //  set initial active category
     useEffect(() => {
-        if (categories?.length > 0) {
-            setActiveCategory(categories[0].id)
+        if (menuData?.length > 0) {
+            setActiveCategory(menuData[0].id)
+            scrollContainerRef.current.scrollTo({
+                left: 0,
+            });
         }
-    }, [categories, selectedTab])
+    }, [selectedTab])
 
     //  Set new active category
     const handleActive = (e) => {
         setTimeout(() => {
             setActiveCategory(e);
-        }, 501);
+        }, 10);
     }
 
     //  Horizontal scroll to active category
@@ -50,11 +43,11 @@ function TabNavigation({ isAdmin, userMenuData, adminMenuData, selectedTab }) {
                 });
             }
         }
-    }, [activeCategory, categories]);
+    }, [activeCategory, menuData, selectedTab]);
 
     return (
         <TabNav ref={scrollContainerRef}>
-            {categories?.map((category) => (
+            {menuData?.map((category) => (
                 <Nav key={category.id}>
                     <Link
                     activeClass='active'
@@ -63,9 +56,10 @@ function TabNavigation({ isAdmin, userMenuData, adminMenuData, selectedTab }) {
                     key={category.id}
                     to={category.id}
                     spy={true}
-                    smooth={true}
+                    // smooth={true}
                     offset={-208}
-                    duration={500}>
+                    // duration={500}
+                    >
                         <NavigationButton $isActive={activeCategory === category.id ? "true" : undefined}>
                             {handleTranslate(category.categoryEng, i18n) ? category.categoryEng : category.category}
                         </NavigationButton>

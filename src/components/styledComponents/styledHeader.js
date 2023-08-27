@@ -2,6 +2,7 @@ import styled from 'styled-components'
 
 export const HeaderWrap = styled.header`
     position: sticky;
+    z-index: 10;
     top: 0;
     padding: .5rem 1rem;
     background-color: #235239;
