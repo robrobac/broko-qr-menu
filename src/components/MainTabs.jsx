@@ -1,12 +1,13 @@
 import React, { createContext, useEffect, useState } from 'react'
 import { scrollToTop } from '../helpers/scrollToTop'
-import { ContentAdmin, ContentHome, Icon, Tab, Tabs, TabsContainer } from './styledComponents/StyledTabs'
+import { ContentHome, Icon, Tab, Tabs, TabsContainer } from './styledComponents/StyledTabs'
 import { ReactComponent as DrinkIcon } from "../icons/drinkicon.svg";
 import { ReactComponent as FoodIcon } from "../icons/foodicon.svg";
 import { ReactComponent as SearchIcon } from "../icons/searchicon.svg";
 import TabNavigation from './TabNavigation';
 import Categories from './Categories';
 import NewItemModal from './modals/newItemModal/NewItemModal';
+import SearchBar from './SearchBar';
 
 export const AdminContext = createContext()
 
@@ -65,6 +66,9 @@ export default function MainTabs({isAdmin, menuData}) {
                 <TabNavigation menuData={menuData["food"]} selectedTab={selectedTab}/>
                 <Categories menuData={menuData["food"]} selectedTab={"food"}/>
                 {isAdmin && <NewItemModal isDrink={false}/>}
+            </ContentHome>
+            <ContentHome $isActive={selectedTab === "search"}>
+                <SearchBar menuData={menuData} selectedTab={selectedTab}/>
             </ContentHome>
         </TabsContainer>
         </AdminContext.Provider>

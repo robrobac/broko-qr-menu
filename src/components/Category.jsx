@@ -1,17 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext } from 'react'
 import { Element } from 'react-scroll'
-import { CategoryContainer, CategoryControls, CategoryItems, CategoryTitle } from './styledComponents/StyledCategory'
-import { DeleteButton, UpDownButton, ViewButton, ViewContainer } from './styledComponents/StyledButtons'
+import { CategoryContainer, CategoryControls,  CategoryTitle } from './styledComponents/StyledCategory'
 import { handleTranslate } from '../helpers/handleTranslate'
 import { useTranslation } from 'react-i18next'
 import EditCategoryModal from './modals/EditCategoryModal'
-
-import { ReactComponent as UpIcon } from "../icons/upicon.svg";
-import { ReactComponent as DownIcon } from "../icons/downicon.svg";
 import CategoryProducts from './CategoryProducts'
 import { AdminContext } from './MainTabs'
 import DeleteCategory from './DeleteCategory'
-import ReorderProduct from './ReorderProduct'
 import ReorderCategory from './ReorderCategory'
 
 

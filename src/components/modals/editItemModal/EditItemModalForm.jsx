@@ -1,5 +1,5 @@
 import { collection, query } from 'firebase/firestore';
-import React, { useContext, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { db, storage } from '../../../firebase/config';
 import Compressor from 'compressorjs';
@@ -17,9 +17,20 @@ function EditItemModalForm({item, setIsEditing, setIsUploading}) {
     const [priceKN, setPriceKN] = useState(item.priceKN);   //  Current Item Price in KN
     const [category, setCategory] = useState(item.category);    //  Current Item Category, not changeable yet
     const [description, setDescription] = useState(item.description);   //  Current Item Description
-    const [descriptionEng, setDescriptionEng] = useState(item.description);
+    const [descriptionEng, setDescriptionEng] = useState(item.descriptionEng);
     const [compressedFile, setCompressedFile] = useState(null); //  State that holds data of image compressed with handleCompressedImage function
     const fileInputRef = useRef(null);  //  Ref to a file input element
+
+    useEffect(() => {
+        setTitle(item.title)
+        setTitleEng(item.titleEng)
+        setPriceEUR(item.priceEUR)
+        setPriceKN(item.priceKN)
+        setCategory(item.category)
+        setDescription(item.description)
+        setDescriptionEng(item.descriptionEng)
+
+    }, [item])
 
     const { t, i18n } = useTranslation()
 

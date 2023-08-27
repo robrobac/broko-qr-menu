@@ -1,15 +1,14 @@
 import React, { useContext } from 'react'
-import { AdminButtons, AdminTimestamp, Card, CardAdmin, CardBody, CardDesc, CardImage, CardPrice, CardTitle, List, ListAdmin, ListBody, ListDesc, ListHeader, ListPrice, ListTitle, PriceEUR, PriceEURlist, PriceKN, PriceKNlist, TruncateDots, TruncateWrap } from './styledComponents/StyledCard'
+import { AdminButtons, AdminTimestamp, Card, CardAdmin, CardBody, CardDesc, CardImage, CardPrice, CardTitle, PriceEUR, PriceKN, TruncateWrap } from './styledComponents/StyledCard'
 import noimage from "../noimage.png"
 import { handleTranslate } from '../helpers/handleTranslate';
 import { useTranslation } from 'react-i18next';
-import { DeleteButton, UpDownButton } from './styledComponents/StyledButtons';
 import EditItemModal from './modals/editItemModal/EditItemModal'
 import { AdminContext } from './MainTabs';
 import DeleteProduct from './DeleteProduct';
 import ReorderProduct from './ReorderProduct';
 
-function Product({ item, itemIndex, category }) {
+function Product({ item, itemIndex, category, isSearch }) {
     const { isAdmin } = useContext(AdminContext)
     const { t, i18n } = useTranslation()
 
@@ -65,7 +64,8 @@ function Product({ item, itemIndex, category }) {
                             <DeleteProduct item={item}/>
                             <EditItemModal item={item}/>
                         </AdminButtons>
-                        <ReorderProduct item={item} itemIndex={itemIndex} category={category}/>
+                        {!isSearch && <ReorderProduct item={item} itemIndex={itemIndex} category={category}/> }
+                        
                     </CardAdmin>
                     <CardAdmin>
                         <AdminButtons>

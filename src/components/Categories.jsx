@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React from 'react'
 import Category from './Category'
 
-function Categories({ menuData, selectedTab }) {
+function Categories({ menuData }) {
     
     return (
         <>

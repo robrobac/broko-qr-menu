@@ -1,10 +1,9 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Nav, TabNav } from './styledComponents/StyledNavigation';
 import { NavigationButton } from './styledComponents/StyledButtons';
 import { Link } from 'react-scroll';
 import { useTranslation } from 'react-i18next';
 import { handleTranslate } from '../helpers/handleTranslate';
-import { AdminContext } from './MainTabs';
 
 function TabNavigation({ menuData, selectedTab }) {
     const [activeCategory, setActiveCategory] = useState();

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import NewItemModalForm from './NewItemModalForm';
 import { AddProductButton } from '../../styledComponents/StyledButtons';
 import { HeaderClose, HeaderTitle, Modal, ModalBody, ModalContent, ModalHeader } from '../../styledComponents/StyledModal';
@@ -12,6 +12,14 @@ function NewItemModal({isDrink}) {
     const [isUploading, setIsUploading] = useState(false)
 
     const { t } = useTranslation()
+
+    useEffect(() => {
+        if (showFoodModal || showDrinkModal) {
+          document.body.classList.add('modal-open');
+        } else {
+          document.body.classList.remove('modal-open');
+        }
+    }, [showFoodModal, showDrinkModal]);
 
     //  Close modal once clicked or tapped outside the modal.
     const outsideClick = (e) => {

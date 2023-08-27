@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import EditItemModalForm from './EditItemModalForm'
 import { EditButton } from '../../styledComponents/StyledButtons';
 import { HeaderClose, HeaderTitle, Modal, ModalBody, ModalContent, ModalHeader } from '../../styledComponents/StyledModal';
@@ -11,6 +11,14 @@ function EditItemModal({item}) {
     const [isEditing, setIsEditing] = useState(false)
     const [isUploading, setIsUploading] = useState(false)
     const { t } = useTranslation()
+
+    useEffect(() => {
+        if (isEditing) {
+          document.body.classList.add('modal-open');
+        } else {
+          document.body.classList.remove('modal-open');
+        }
+    }, [isEditing]);
 
     return (
         <>

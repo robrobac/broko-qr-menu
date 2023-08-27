@@ -31,7 +31,7 @@ const FormInput = styled.input`
 
     &::placeholder {
         font-weight: 300;
-        color: #235239;
+        color: #5b7e6c80;
     }
 
     &:focus {
@@ -54,7 +54,7 @@ const FormSelect = styled.select`
 
     &::placeholder {
         font-weight: 300;
-        color: #235239;
+        color: #5b7e6c80;
     }
 
     &:focus {
@@ -76,7 +76,7 @@ const FormTextarea = styled.textarea`
 
     &::placeholder {
         font-weight: 300;
-        color: #235239;
+        color: #5b7e6c80;
     }
 
     &:focus {
