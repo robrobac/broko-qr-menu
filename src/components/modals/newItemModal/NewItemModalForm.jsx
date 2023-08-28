@@ -11,6 +11,8 @@ import { AddCategoryButton, SubmitButton } from '../../styledComponents/StyledBu
 import { useTranslation } from 'react-i18next';
 import { handleTranslate } from '../../../helpers/handleTranslate';
 
+// TODO: Add remove image button to completely remove uploaded image
+
 function NewItemModalForm({ isDrink, setIsUploading }) {
     const [title, setTitle] = useState("");
     const [titleEng, setTitleEng] = useState("");
