@@ -8,10 +8,9 @@ import TabNavigation from './TabNavigation';
 import Categories from './Categories';
 import NewItemModal from './modals/newItemModal/NewItemModal';
 import SearchBar from './SearchBar';
+import { useAuthCheck } from '../hooks/useAuth';
 
-export const AdminContext = createContext()
-
-export default function MainTabs({isAdmin, menuData}) {
+export default function MainTabs({ menuData}) {
     const [selectedTab, setSelectedTab] = useState("food")
 
     //  On tab change scroll to top and reset the active category navigation
@@ -32,7 +31,6 @@ export default function MainTabs({isAdmin, menuData}) {
     }
     
     return (
-        <AdminContext.Provider value={{isAdmin}}>
         <TabsContainer>
             <Tabs>
                 <Tab
@@ -60,18 +58,17 @@ export default function MainTabs({isAdmin, menuData}) {
             <ContentHome $isActive={selectedTab === "drink"}>
                 <TabNavigation menuData={menuData["drink"]} selectedTab={selectedTab}/>
                 <Categories menuData={menuData["drink"]} selectedTab={"drink"}/>
-                {isAdmin && <NewItemModal isDrink={true}/>}
+                {useAuthCheck() && <NewItemModal isDrink={true}/>}
             </ContentHome>
             <ContentHome $isActive={selectedTab === "food"}>
                 <TabNavigation menuData={menuData["food"]} selectedTab={selectedTab}/>
                 <Categories menuData={menuData["food"]} selectedTab={"food"}/>
-                {isAdmin && <NewItemModal isDrink={false}/>}
+                {useAuthCheck() && <NewItemModal isDrink={false}/>}
             </ContentHome>
             <ContentHome $isActive={selectedTab === "search"}>
                 <SearchBar menuData={menuData} selectedTab={selectedTab}/>
             </ContentHome>
         </TabsContainer>
-        </AdminContext.Provider>
         
     )
 }

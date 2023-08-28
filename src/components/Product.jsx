@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { memo, useContext } from 'react'
 import { AdminButtons, AdminTimestamp, Card, CardAdmin, CardBody, CardDesc, CardImage, CardPrice, CardTitle, PriceEUR, PriceKN, TruncateWrap } from './styledComponents/StyledCard'
 import noimage from "../noimage.png"
 import { handleTranslate } from '../helpers/handleTranslate';
@@ -7,11 +7,12 @@ import EditItemModal from './modals/editItemModal/EditItemModal'
 import { AdminContext } from './MainTabs';
 import DeleteProduct from './DeleteProduct';
 import ReorderProduct from './ReorderProduct';
+import { useAuthCheck } from '../hooks/useAuth';
 
-function Product({ item, itemIndex, category, isSearch }) {
-    const { isAdmin } = useContext(AdminContext)
+const Product = memo(function Product({item, itemIndex, category, isSearch}) {
     const { t, i18n } = useTranslation()
 
+    console.log(item.title)
     const handleLoading = (isLoading) => {
         
     }
@@ -58,7 +59,7 @@ function Product({ item, itemIndex, category, isSearch }) {
                         <PriceKN>({item.priceKN}kn)</PriceKN>
                     </PriceEUR>
                 </CardPrice>
-                {isAdmin && <>
+                {useAuthCheck() && <>
                     <CardAdmin>
                         <AdminButtons>
                             <DeleteProduct item={item}/>
@@ -77,6 +78,6 @@ function Product({ item, itemIndex, category, isSearch }) {
             </CardBody>
         </Card>
     )
-}
+})
 
 export default Product

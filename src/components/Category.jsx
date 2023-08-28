@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { memo, useContext } from 'react'
 import { Element } from 'react-scroll'
 import { CategoryContainer, CategoryControls,  CategoryTitle } from './styledComponents/StyledCategory'
 import { handleTranslate } from '../helpers/handleTranslate'
@@ -8,10 +8,10 @@ import CategoryProducts from './CategoryProducts'
 import { AdminContext } from './MainTabs'
 import DeleteCategory from './DeleteCategory'
 import ReorderCategory from './ReorderCategory'
+import { useAuthCheck } from '../hooks/useAuth'
 
 
-function Category({ category, categoryIndex, menuData }) {
-    const { isAdmin } = useContext(AdminContext)
+const Category = memo(function Category({category, categoryIndex, menuData}) {
     const { i18n } = useTranslation()
 
     return (
@@ -20,7 +20,7 @@ function Category({ category, categoryIndex, menuData }) {
                     <CategoryTitle id={category.id}>
                         {handleTranslate(category.categoryEng, i18n) ? category.categoryEng : category.category}
                     </CategoryTitle>
-                    {isAdmin && 
+                    {useAuthCheck() && 
                         <CategoryControls >
                             <DeleteCategory category={category} />
                             <EditCategoryModal category={category} />
@@ -31,6 +31,6 @@ function Category({ category, categoryIndex, menuData }) {
                 </Element>
         </CategoryContainer>
     )
-}
+})
 
 export default Category
