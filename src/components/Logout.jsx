@@ -10,17 +10,12 @@ function Logout() {
     const {isAuth} = useContext(AppContext)
     const { t } = useTranslation()
 
-    const navigate = useNavigate();
+
 
     if (isAuth) {
         return (
             <AuthButton onClick={handleLogout}>{t("Logout")}</AuthButton>
         )
-    } else {
-        return (
-            <AuthButton onClick={() => navigate('/login')}>{t("Login")}</AuthButton>
-        )
     }
-    
 }
 export default Logout

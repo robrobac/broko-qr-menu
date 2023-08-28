@@ -13,7 +13,7 @@ export const HeaderWrap = styled.header`
 
 export const HeaderRight = styled.div`
     display: flex;
-    width: 170px;
+    width: 180px;
     justify-content: space-between;
 `
 
@@ -75,4 +75,23 @@ export const LanguageTitleSticky = styled.p`
 export const LanguageIconSticky = styled(LanguageIcon)`
     background-color: #5b7e6c;
     fill: white;
+`
+
+export const BurgerSlide = styled.div`
+    overflow: hidden;
+    padding: 0 64px 0 1rem;
+    top: 0;
+    opacity: ${(props) => (props.$isOpen) ? 1 : 0};
+    right: 0px;
+    width: ${(props) => (props.$isOpen) ? "100%" : "0"};
+    position: absolute;
+    z-index: 20;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    background-color: #23523999;
+    backdrop-filter: blur(3px);
+    transition: opacity .5s ease, width .5s ease-out;
 `

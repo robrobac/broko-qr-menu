@@ -15,6 +15,7 @@ i18next.use(initReactI18next).init({
                 //  Logout.jsx
                 Login: "Login",
                 Logout: "Logout",
+                Manage: "Manage",
 
                 //  Login.jsx
                 "Email Address": "Email Address",
@@ -81,6 +82,7 @@ i18next.use(initReactI18next).init({
                 //  Logout.jsx
                 Login: "Prijava",
                 Logout: "Odjava",
+                Manage: "Upravljaj",
 
                 //  Login.jsx
                 "Email Address": "Email Adresa",

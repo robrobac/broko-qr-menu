@@ -29,7 +29,7 @@ const BackButton = styled(Button)`
 `
 
 const AuthButton = styled(Button)`
-    background-color: unset;
+    background-color: #23523999;
     color: white;
     border: 1px solid white;
 `

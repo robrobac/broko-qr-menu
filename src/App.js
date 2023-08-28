@@ -14,12 +14,6 @@ function App() {
     const isAuth = useAuthCheck()
     const [isLoading, setIsLoading] = useState(true)
 
-    // useEffect(() => {
-    //     setTimeout(() => {
-    //         setIsLoading(false)
-    //     }, 10000)
-    // }, [])
-
     const handleLoading = (loading) => {
         setTimeout(() => {
             setIsLoading(loading)
