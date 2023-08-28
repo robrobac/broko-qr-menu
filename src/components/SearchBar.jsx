@@ -7,7 +7,7 @@ import { normalizeString } from '../helpers/normalizeString'
 import { TabNav } from './styledComponents/StyledNavigation';
 import { FormInput } from './styledComponents/StyledForm';
 
-function SearchBar({menuData, selectedTab}) {
+function SearchBar({menuData, selectedTab, isAdmin}) {
     const [searchValue, setSearchValue] = useState("")  //  Handling search input value
     const [searchItems, setSearchItems] = useState([])
     const [filteredItems, setFilteredItems] = useState([])    //  Filtered items that will appear in search result
@@ -110,7 +110,7 @@ function SearchBar({menuData, selectedTab}) {
             </TabNav>
             <CategoryItems>
                 {filteredItems?.map((item, index) => (
-                        <Product item={item} key={item.id} isSearch={true}/>
+                        <Product item={item} key={item.id} isSearch={true} isAdmin={isAdmin}/>
                 ))}
             </CategoryItems>
             <SearchMessage>{noResult}</SearchMessage>

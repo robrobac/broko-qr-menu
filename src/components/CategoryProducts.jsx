@@ -3,12 +3,12 @@ import Product from './Product';
 import { CategoryItems } from './styledComponents/StyledCategory';
 
 
-function CategoryProducts({ category }) {
+function CategoryProducts({ category, isAdmin }) {
 
     return (
         <CategoryItems>
             {category.items?.map((item, index) => (
-                <Product key={item.id} item={item} itemIndex={index} category={category}/>
+                <Product isAdmin={isAdmin} key={item.id} item={item} itemIndex={index} category={category}/>
             ))}
         </CategoryItems>
     )

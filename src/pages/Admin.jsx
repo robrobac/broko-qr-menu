@@ -3,6 +3,7 @@ import Header from '../components/Header';
 import { AppContext } from '../App';
 import useFetchAllDataWithSnapshot from '../hooks/useFetchAllDataWithSnapshot'
 import MainTabs from '../components/MainTabs';
+import Loading from '../components/Loading';
 
 function Admin() {
     const {isLoading, handleLoading} = useContext(AppContext)
@@ -16,9 +17,9 @@ function Admin() {
  
     return (
         <div>
-            {/* <Loading loading={isLoading ? 1 : 0}/> */}
+            <Loading loading={isLoading ? 1 : 0}/>
             <Header/>
-            <MainTabs menuData={adminMenuData}/>
+            <MainTabs isAdmin={true} menuData={adminMenuData}/>
         </div>
     )
 }

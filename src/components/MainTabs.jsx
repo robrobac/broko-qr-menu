@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { scrollToTop } from '../helpers/scrollToTop'
 import { ContentHome, Icon, Tab, Tabs, TabsContainer } from './styledComponents/StyledTabs'
 import { ReactComponent as DrinkIcon } from "../icons/drinkicon.svg";
@@ -10,7 +10,7 @@ import NewItemModal from './modals/newItemModal/NewItemModal';
 import SearchBar from './SearchBar';
 import { useAuthCheck } from '../hooks/useAuth';
 
-export default function MainTabs({ menuData}) {
+export default function MainTabs({ menuData, isAdmin}) {
     const [selectedTab, setSelectedTab] = useState("food")
 
     //  On tab change scroll to top and reset the active category navigation
@@ -57,16 +57,16 @@ export default function MainTabs({ menuData}) {
             </Tabs>
             <ContentHome $isActive={selectedTab === "drink"}>
                 <TabNavigation menuData={menuData["drink"]} selectedTab={selectedTab}/>
-                <Categories menuData={menuData["drink"]} selectedTab={"drink"}/>
+                <Categories isAdmin={isAdmin} menuData={menuData["drink"]} selectedTab={"drink"}/>
                 {useAuthCheck() && <NewItemModal isDrink={true}/>}
             </ContentHome>
             <ContentHome $isActive={selectedTab === "food"}>
                 <TabNavigation menuData={menuData["food"]} selectedTab={selectedTab}/>
-                <Categories menuData={menuData["food"]} selectedTab={"food"}/>
+                <Categories isAdmin={isAdmin} menuData={menuData["food"]} selectedTab={"food"}/>
                 {useAuthCheck() && <NewItemModal isDrink={false}/>}
             </ContentHome>
             <ContentHome $isActive={selectedTab === "search"}>
-                <SearchBar menuData={menuData} selectedTab={selectedTab}/>
+                <SearchBar isAdmin={isAdmin} menuData={menuData} selectedTab={selectedTab}/>
             </ContentHome>
         </TabsContainer>
         

@@ -1,7 +1,5 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from './firebase/config';
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import "./App.scss"
 import Home from "./pages/Home";
 import Admin from "./pages/Admin";
@@ -16,8 +14,16 @@ function App() {
     const isAuth = useAuthCheck()
     const [isLoading, setIsLoading] = useState(true)
 
+    // useEffect(() => {
+    //     setTimeout(() => {
+    //         setIsLoading(false)
+    //     }, 10000)
+    // }, [])
+
     const handleLoading = (loading) => {
-        setIsLoading(loading)
+        setTimeout(() => {
+            setIsLoading(loading)
+        }, 200)
     }
 
     return (

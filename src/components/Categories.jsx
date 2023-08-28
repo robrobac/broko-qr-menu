@@ -1,12 +1,12 @@
 import React from 'react'
 import Category from './Category'
 
-function Categories({ menuData }) {
+function Categories({ menuData, isAdmin }) {
     
     return (
         <>
             {menuData?.map((category, index) => (
-                <Category key={category.id} category={category} categoryIndex={index} menuData={menuData}/>
+                <Category isAdmin={isAdmin} key={category.id} category={category} categoryIndex={index} menuData={menuData}/>
             ))}
         </>
     )

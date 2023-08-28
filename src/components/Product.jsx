@@ -4,18 +4,16 @@ import noimage from "../noimage.png"
 import { handleTranslate } from '../helpers/handleTranslate';
 import { useTranslation } from 'react-i18next';
 import EditItemModal from './modals/editItemModal/EditItemModal'
-import { AdminContext } from './MainTabs';
+
 import DeleteProduct from './DeleteProduct';
 import ReorderProduct from './ReorderProduct';
-import { useAuthCheck } from '../hooks/useAuth';
+import { AppContext } from '../App';
 
-const Product = memo(function Product({item, itemIndex, category, isSearch}) {
+const Product = memo(function Product({item, itemIndex, category, isSearch, isAdmin}) {
+    const {handleLoading} = useContext(AppContext)
     const { t, i18n } = useTranslation()
 
     console.log(item.title)
-    const handleLoading = (isLoading) => {
-        
-    }
     
     //  Creating a date object for date created
     const dateCreatedTimestamp = item.dateCreated
@@ -59,7 +57,7 @@ const Product = memo(function Product({item, itemIndex, category, isSearch}) {
                         <PriceKN>({item.priceKN}kn)</PriceKN>
                     </PriceEUR>
                 </CardPrice>
-                {useAuthCheck() && <>
+                {isAdmin && <>
                     <CardAdmin>
                         <AdminButtons>
                             <DeleteProduct item={item}/>

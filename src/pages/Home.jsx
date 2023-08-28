@@ -3,6 +3,7 @@ import Header from '../components/Header'
 import { AppContext } from '../App'
 import useFetchAllData from '../hooks/useFetchAllData'
 import MainTabs from '../components/MainTabs'
+import Loading from '../components/Loading'
 
 function Home() {
     const {isLoading, handleLoading} = useContext(AppContext)
@@ -16,7 +17,7 @@ function Home() {
 
     return (
         <div>
-            {/* <Loading loading={isLoading ? 1 : 0}/> */}
+            <Loading loading={isLoading ? 1 : 0}/>
             <Header/>
             <MainTabs menuData={userMenuData}/>
         </div>

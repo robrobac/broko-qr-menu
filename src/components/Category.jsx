@@ -1,17 +1,14 @@
-import React, { memo, useContext } from 'react'
+import React, { memo } from 'react'
 import { Element } from 'react-scroll'
 import { CategoryContainer, CategoryControls,  CategoryTitle } from './styledComponents/StyledCategory'
 import { handleTranslate } from '../helpers/handleTranslate'
 import { useTranslation } from 'react-i18next'
 import EditCategoryModal from './modals/EditCategoryModal'
 import CategoryProducts from './CategoryProducts'
-import { AdminContext } from './MainTabs'
 import DeleteCategory from './DeleteCategory'
 import ReorderCategory from './ReorderCategory'
-import { useAuthCheck } from '../hooks/useAuth'
 
-
-const Category = memo(function Category({category, categoryIndex, menuData}) {
+const Category = memo(function Category({category, categoryIndex, menuData, isAdmin}) {
     const { i18n } = useTranslation()
 
     return (
@@ -20,14 +17,14 @@ const Category = memo(function Category({category, categoryIndex, menuData}) {
                     <CategoryTitle id={category.id}>
                         {handleTranslate(category.categoryEng, i18n) ? category.categoryEng : category.category}
                     </CategoryTitle>
-                    {useAuthCheck() && 
+                    {isAdmin && 
                         <CategoryControls >
                             <DeleteCategory category={category} />
                             <EditCategoryModal category={category} />
                             <ReorderCategory category={category} categoryIndex={categoryIndex} tab={menuData}/>
                         </CategoryControls>
                     }
-                    <CategoryProducts category={category} />
+                    <CategoryProducts isAdmin={isAdmin} category={category} />
                 </Element>
         </CategoryContainer>
     )
