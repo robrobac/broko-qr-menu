@@ -8,6 +8,7 @@ import EditItemModal from './modals/editItemModal/EditItemModal'
 import DeleteProduct from './DeleteProduct';
 import ReorderProduct from './ReorderProduct';
 import { AppContext } from '../App';
+import LazyLoad from 'react-lazy-load';
 
 const Product = memo(function Product({item, itemIndex, category, isSearch, isAdmin}) {
     const {handleLoading} = useContext(AppContext)
@@ -55,7 +56,8 @@ const Product = memo(function Product({item, itemIndex, category, isSearch, isAd
                     <ListDesc>
                         {handleTranslate(item.descriptionEng, i18n) ? item.descriptionEng : item.description}
                     </ListDesc>
-                    {isAdmin && <>
+                    
+                    {isAdmin && <LazyLoad height={61}><div style={{display: "flex", flexDirection: "column", gap: "1rem"}}>
                         <CardAdmin>
                             <AdminButtons>
                                 <DeleteProduct item={item}/>
@@ -70,7 +72,8 @@ const Product = memo(function Product({item, itemIndex, category, isSearch, isAd
                                 <AdminTimestamp>{t("Edited")}  {formattedDateEdited}</AdminTimestamp>
                             </AdminButtons>
                         </CardAdmin>
-                    </>}
+                    </div></LazyLoad>}
+                    
                 </ListBody>
             </List>
         )
@@ -95,7 +98,8 @@ const Product = memo(function Product({item, itemIndex, category, isSearch, isAd
                             <PriceKN>({item.priceKN}kn)</PriceKN>
                         </PriceEUR>
                     </CardPrice>
-                    {isAdmin && <>
+                    
+                    {isAdmin && <LazyLoad height={61}><div style={{display: "flex", flexDirection: "column", gap: "1rem"}}>
                         <CardAdmin>
                             <AdminButtons>
                                 <DeleteProduct item={item}/>
@@ -110,7 +114,8 @@ const Product = memo(function Product({item, itemIndex, category, isSearch, isAd
                                 <AdminTimestamp>{t("Edited")}  {formattedDateEdited}</AdminTimestamp>
                             </AdminButtons>
                         </CardAdmin>
-                    </> }
+                    </div></LazyLoad> }
+                    
                 </CardBody>
             </Card>
         )

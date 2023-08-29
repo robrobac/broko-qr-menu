@@ -18,6 +18,7 @@ function TabNavigation({ menuData, selectedTab }) {
                 left: 0,
             });
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedTab])
 
     //  Set new active category
@@ -56,7 +57,7 @@ function TabNavigation({ menuData, selectedTab }) {
                     to={category.id}
                     spy={true}
                     // smooth={true}
-                    offset={-208}
+                    offset={-207}
                     // duration={500}
                     >
                         <NavigationButton $isActive={activeCategory === category.id ? "true" : undefined}>

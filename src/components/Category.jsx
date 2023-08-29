@@ -7,6 +7,7 @@ import EditCategoryModal from './modals/EditCategoryModal'
 import CategoryProducts from './CategoryProducts'
 import DeleteCategory from './DeleteCategory'
 import ReorderCategory from './ReorderCategory'
+import LazyLoad from 'react-lazy-load'
 
 const Category = memo(function Category({category, categoryIndex, menuData, isAdmin}) {
     const { i18n } = useTranslation()
@@ -17,13 +18,17 @@ const Category = memo(function Category({category, categoryIndex, menuData, isAd
                     <CategoryTitle id={category.id}>
                         {handleTranslate(category.categoryEng, i18n) ? category.categoryEng : category.category}
                     </CategoryTitle>
+                    
                     {isAdmin && 
+                    <LazyLoad height={36}>
                         <CategoryControls >
                             <DeleteCategory category={category} />
                             <EditCategoryModal category={category} />
                             <ReorderCategory category={category} categoryIndex={categoryIndex} tab={menuData}/>
                         </CategoryControls>
+                    </LazyLoad>
                     }
+                    
                     <CategoryProducts isAdmin={isAdmin} category={category} />
                 </Element>
         </CategoryContainer>
