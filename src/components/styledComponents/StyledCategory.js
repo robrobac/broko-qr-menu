@@ -5,7 +5,9 @@ export const CategoryContainer = styled.div`
 
     &:last-of-type {
         border-bottom: none;
+        padding-bottom: 5rem;
     }
+
 `
 
 export const CategoryItems = styled.div`
