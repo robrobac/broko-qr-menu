@@ -13,12 +13,12 @@ const Category = memo(function Category({category, categoryIndex, menuData, isAd
     const { i18n } = useTranslation()
 
     return (
+        
         <CategoryContainer key={category.id}>
                 <Element key={category.id} name={category.id}>
                     <CategoryTitle id={category.id}>
                         {handleTranslate(category.categoryEng, i18n) ? category.categoryEng : category.category}
                     </CategoryTitle>
-                    
                     {isAdmin && 
                     <LazyLoad height={36}>
                         <CategoryControls >
@@ -32,6 +32,7 @@ const Category = memo(function Category({category, categoryIndex, menuData, isAd
                     <CategoryProducts isAdmin={isAdmin} category={category} />
                 </Element>
         </CategoryContainer>
+        
     )
 })
 

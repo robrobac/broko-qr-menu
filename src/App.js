@@ -1,5 +1,5 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 import "./App.scss"
 import Home from "./pages/Home";
 import Admin from "./pages/Admin";

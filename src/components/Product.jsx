@@ -9,6 +9,7 @@ import DeleteProduct from './DeleteProduct';
 import ReorderProduct from './ReorderProduct';
 import { AppContext } from '../App';
 import LazyLoad from 'react-lazy-load';
+import { Reveal } from '../helpers/Reveal';
 
 const Product = memo(function Product({item, itemIndex, category, isSearch, isAdmin}) {
     const {handleLoading} = useContext(AppContext)
@@ -38,6 +39,7 @@ const Product = memo(function Product({item, itemIndex, category, isSearch, isAd
 
     if (item.mainCategory === "drink") {
         return (
+            <Reveal>
             <List id='list'>
                 <ListBody id='listBody'>
                     <ListHeader id='listHeader'>
@@ -76,9 +78,11 @@ const Product = memo(function Product({item, itemIndex, category, isSearch, isAd
                     
                 </ListBody>
             </List>
+            </Reveal>
         )
     } else  {
         return (
+            <Reveal>
             <Card>
                 <CardImage src={item?.fileUrl} key={item?.id} onError={(e) => { e.target.src = noimage}} onLoad={() => handleLoading(false)}/>
                 <CardBody>
@@ -118,6 +122,7 @@ const Product = memo(function Product({item, itemIndex, category, isSearch, isAd
                     
                 </CardBody>
             </Card>
+            </Reveal>
         )
     }
 
