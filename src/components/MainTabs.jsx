@@ -58,12 +58,12 @@ export default function MainTabs({ menuData, isAdmin}) {
             <ContentHome $isActive={selectedTab === "drink"}>
                 <TabNavigation menuData={menuData["drink"]} selectedTab={selectedTab}/>
                 <Categories isAdmin={isAdmin} menuData={menuData["drink"]} selectedTab={"drink"}/>
-                {useAuthCheck() && <NewItemModal isDrink={true}/>}
+                {isAdmin && <NewItemModal isDrink={true}/>}
             </ContentHome>
             <ContentHome $isActive={selectedTab === "food"}>
                 <TabNavigation menuData={menuData["food"]} selectedTab={selectedTab}/>
                 <Categories isAdmin={isAdmin} menuData={menuData["food"]} selectedTab={"food"}/>
-                {useAuthCheck() && <NewItemModal isDrink={false}/>}
+                {isAdmin && <NewItemModal isDrink={false}/>}
             </ContentHome>
             <ContentHome $isActive={selectedTab === "search"}>
                 <SearchBar isAdmin={isAdmin} menuData={menuData} selectedTab={selectedTab}/>
